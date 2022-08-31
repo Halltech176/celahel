@@ -66,14 +66,17 @@ const AddProperties = () => {
       const data = await axios.post(url, properties, config);
       console.log(data);
     } catch (err) {
+      // if(err.)
+      console.log(err);
+      if (err.message === "timeout exceeded") {
+        ErrorNotification("please check your internet connection");
+      }
       ErrorNotification(err.response.data.message);
       if (err.response.data.message.split(" ").length > 12) {
         setTimeout(() => {
           navigate("/upgrade");
         }, 3000);
       }
-      console.log(err.response.data.message.split(" ").length);
-      console.log(err.response);
     }
   };
   const Back = () => {
@@ -214,6 +217,7 @@ const AddProperties = () => {
               </label>
               <input
                 // value={image}
+                multiple
                 onChange={handleChange}
                 type="file"
                 className="form-control"

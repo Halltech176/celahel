@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Sidebar from "../../Common/Sidebar/Sidebar";
 import Loader from "../../Common/Loader";
@@ -11,6 +12,7 @@ import Property_details from "./Properties_data.json";
 
 const Properties = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const allProperties = async () => {
     try {
@@ -27,7 +29,9 @@ const Properties = () => {
   const docs = useSelector((state) => state.properties.properties?.docs);
   const loading = useSelector((state) => state.properties.loading);
 
-  console.log(docs);
+  if (docs.length === 0) {
+    navigate("/addproperty");
+  }
 
   const agent_properties = docs.map((data) => {
     return (
