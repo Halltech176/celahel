@@ -1,0 +1,35 @@
+$main-color: #f4f4f4;
+$max-width: 1024px;
+
+.bg-black{
+    padding: 3rem;
+    background-color: black;
+    color: $main-color;
+    min-height: 25vh;
+}
+.store{
+    margin: 15px 0;
+    padding: 0 !important;
+    line-height: 1rem !important;
+}
+.container{
+    .footer{
+        text-align: left;
+    }
+}
+@media screen and (max-width: 500px) {
+        .container{
+            .footer{
+                display: grid;
+                grid-template-columns: 12;
+                grid-row-gap: 0;
+                text-align: left;
+                display: none;
+                ul li{
+                    margin: .5rem 0;
+                    cursor: pointer;
+                    color: #d3d3d3;
+                }
+            }
+        }
+    }

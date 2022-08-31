@@ -1,0 +1,16 @@
+.notificationbody {
+  // display: none !important;
+  text-overflow: ellipsis;
+}
+td {
+  max-height: 15px !important;
+  overflow: hidden;
+}
+.notification_container {
+  margin: 1rem 1rem 1rem 22rem;
+}
+@media (max-width: 600px) {
+  .notification_container {
+    margin: 1rem;
+  }
+}

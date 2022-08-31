@@ -1,0 +1,36 @@
+.about {
+  padding: 0 !important;
+  box-sizing: content-box;
+  display: none !important;
+  z-index: -1;
+
+  .pos-left {
+    position: absolute !important;
+    left: 4rem !important;
+  }
+  .pos-right {
+    position: absolute !important;
+    right: 4rem !important;
+  }
+}
+.bg-purple {
+  background-color: var(--bs-purple) !important;
+  color: white;
+}
+.about_text {
+  display: none !important;
+}
+@media screen and (max-width: 500px) {
+  .about {
+    padding: 0 !important;
+    box-sizing: content-box;
+    .pos-left {
+      position: absolute !important;
+      left: 4rem !important;
+    }
+    .pos-right {
+      position: absolute !important;
+      right: 0 !important;
+    }
+  }
+}

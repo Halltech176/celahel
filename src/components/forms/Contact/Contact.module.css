@@ -1,0 +1,20 @@
+.contact_container {
+    width: 50% !important;
+    /* background-color: #fff; */
+}
+.contact_footer_img {
+    display: block !important;
+    max-width: 80% !important;
+    margin: 0 auto !important;
+}
+.contact_footer {
+    display: flex !important;
+}
+@media (max-width : 500px) {
+    .contact_container  {
+        width: 100% !important;
+    }
+    .contact_footer {
+        display: block !important;
+    }
+}

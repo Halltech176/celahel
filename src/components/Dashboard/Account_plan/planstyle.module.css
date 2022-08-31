@@ -1,0 +1,26 @@
+/* .head {
+  display: none !important;
+  width: 45vw;
+  margin: 10px auto;
+  text-align: center;
+  margin-left: 20rem !important;
+}
+.regular {
+  display: none !important;
+  max-width: 30%;
+  padding: 10px 25px;
+  border-radius: 15px;
+}
+.bg-purple {
+  background-color: #4a3aff !important;
+  color: #fff;
+} */
+.planstyleContainer {
+  margin-top: 2rem;
+  margin-left: 22rem;
+}
+@media (max-width: 600px) {
+  .planstyleContainer {
+    margin-left: 0rem;
+  }
+}

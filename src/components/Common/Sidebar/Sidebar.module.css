@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono&family=Fira+Code:wght@500&family=Inter:wght@500&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,900;1,100;1,300;1,400;1,700&display=swap");
+.sidebar_container {
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  padding: 0.5rem 2rem 1rem 0rem !important;
+  background-color: #2563eb;
+  /* width: 18rem; */
+  /* transition: all 2s ease-in-out; */
+}
+.sidebar_nav {
+  display: none;
+}
+.toggle_btn {
+  /* display: none; */
+  animation-name: toggle;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: linear;
+  animation-direction: forwards;
+  width: 3rem !important;
+}
+@keyframes toggle {
+  25% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+  /* 75% {
+    transform: rotate(360deg);
+  } */
+}
+.profile_img {
+  background: transparent;
+  border: 1px solid blue;
+  padding: 0.5rem;
+  border-radius: 50%;
+}
+.profile_image {
+  width: 4rem;
+  height: 4rem;
+}
+.list_container {
+  padding: 0;
+}
+.sidebar_list:focus {
+  color: white;
+}
+.sidebar_list {
+  display: flex;
+  align-items: center;
+  font-family: "DM Mono", monospace;
+  margin: 0.5rem 0rem;
+  color: #fff;
+  font-size: 1.625rem;
+  cursor: pointer;
+  padding-left: 2rem;
+}
+.sidebar_list > img {
+  width: 1.5rem;
+}
+.sidebar_list > svg {
+  width: 1.8rem;
+}
+.sidebar_list:hover {
+  border-left: 2px solid #fff;
+}
+.sidebar_list > a:hover {
+  color: #fff;
+}
+.sidebar_link {
+  text-decoration: none;
+  color: white;
+  font-family: "DM Mono", monospace;
+  font-size: 1.2rem;
+}
+.close_menu_btn {
+  display: none;
+  position: absolute;
+  right: 0;
+  transition: display ease-in 5s;
+}
+.upgrade_btn {
+  /* display: none; */
+  width: 60%;
+  font-size: 1.25rem;
+  border: none;
+  color: #2563eb;
+  font-weight: 400;
+  border-radius: 5px;
+  text-transform: uppercase;
+}
+.upgrade_text {
+  font-family: inter;
+  /* font-weight: 100; */
+  font-size: 0.8rem;
+}
+.upgrade_link {
+  text-decoration: none;
+}
+
+@media (max-width: 540px) {
+  .sidebar_container {
+    /* display: none; */
+    z-index: 7;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    transition: all 2s ease transform 3.5s;
+    animation: Sidebar 0.7s ease forwards;
+    animation-duration: 1s;
+    padding: 0.5rem 3rem 3rem 0rem !important;
+  }
+  .show {
+    display: none;
+  }
+  .sidebar_nav {
+    display: flex;
+    justify-content: space-between;
+  }
+  .sidebar_link {
+    font-size: 1.1rem;
+  }
+  .sidebar_list > img {
+    /* display: none !important; */
+    width: 1.1rem;
+  }
+  .sidebar_list > img {
+    width: 1.1rem;
+  }
+  /* upgrade_btn */
+
+  .close_menu_btn {
+    display: block;
+  }
+  @keyframes Sidebar {
+    0% {
+      bottom: 80%;
+      width: 10%;
+      opacity: 0.2;
+    }
+    50% {
+      opacity: 0.5;
+      visibility: none !important;
+    }
+    100% {
+      bottom: 0;
+      width: 75%;
+    }
+  }
+}

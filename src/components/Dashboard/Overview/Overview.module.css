@@ -1,0 +1,9 @@
+.line_graph_container {
+  margin: 3rem 3rem 3rem 20rem;
+}
+@media (max-width: 600px) {
+  .line_graph_container {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}

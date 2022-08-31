@@ -1,0 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,900;1,100;1,300;1,400;1,700&display=swap");
+
+input:active,
+input:hover,
+input:focus,
+select {
+  border: 2px solid #d0d5dd;
+  box-shadow: none !important;
+}
+.signin_btn {
+  width: 20rem !important  ;
+}
+label {
+  font-family: "Inter", sans-serif;
+  color: #344054;
+  font-weight: 500 !important;
+}
+.login_container {
+  width: 30rem;
+}
