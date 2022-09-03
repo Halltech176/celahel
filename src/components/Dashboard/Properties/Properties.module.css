@@ -24,7 +24,7 @@
   font-family: "DM mono", monospace;
 }
 .add_btn {
-  background-color: #2563eb;
+  background-color: #225fe2;
   color: #fff !important;
   font-size: 1.2rem;
   width: 12rem;
@@ -44,9 +44,7 @@
   left: 0;
   right: 0;
   z-index: 4;
-  opacity: 0.3;
-  background-color: #195be9;
-  /* background-color: #2563eb; */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 .property_image {
   object-fit: cover;
@@ -86,17 +84,24 @@
   margin: 0 !important;
   padding: 0 !important;
   color: #ff476b;
-  font-size: 0.75rem;
+  font-weight: 800;
+  font-size: 1rem;
 }
 .property_location {
   margin: 0 !important;
   font-size: 0.75rem;
   padding: 0 !important;
+  color: #ff476b;
+  font-size: 1rem;
+  font-weight: 600;
 }
 .property_name {
   margin: 0 !important;
   padding: 0 !important;
   font-size: 1rem;
+  font-weight: 600;
+  color: #2563eb;
+  text-transform: capitalize;
 }
 a {
   text-decoration: none;

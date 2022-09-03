@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState } from "react";
 import sidebar from "./Sidebar.module.css";
 import { Link } from "react-router-dom";
 import { MdMenu, MdClose } from "react-icons/md";
@@ -7,13 +7,9 @@ import { IoMdNotifications } from "react-icons/io";
 import LogoDark from "../../../Assets/DarkLogo.png";
 import Vector1 from "../../../Assets/Vector-1.png";
 import Vector2 from "../../../Assets/Vector-2.png";
-import Vector3 from "../../../Assets/Vector-3.png";
-import Vector4 from "../../../Assets/Vector-4.png";
 import Vector from "../../../Assets/Vector.png";
-import profile_image from "../../../Assets/profile_image.png";
-import male_avatar from "../../../Assets/male.png";
-import female_avatar from "../../../Assets/female.png";
 import { useSelector } from "react-redux";
+import About2 from "../../../Assets/user1.png";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(true);
@@ -25,7 +21,11 @@ const Sidebar = () => {
   const logout = () => {
     localStorage.clear();
   };
-  const user = JSON.parse(window.localStorage.getItem("user"));
+  const { candidate } = useSelector((state) => state);
+  const user = candidate.user;
+  const avatar = candidate.user.avatar;
+  console.log(avatar.url);
+
   const { firstName, lastName } = user;
   // console.log(user);
 
@@ -53,35 +53,26 @@ const Sidebar = () => {
           />
         )}
       </div>
-      <aside
-        // style={{ display: open }}
-        className={`${sidebar.sidebar_container} ${open && sidebar.show}`}
-      >
-        {/* <div className={`${sidebar.close_menu_btn}`}></div> */}
+      <aside className={`${sidebar.sidebar_container} ${open && sidebar.show}`}>
         <div
           className={`${sidebar.profile} d-flex flex-column justify-content-center align-items-center my-4`}
         >
-          <div className={`${sidebar.profile_img}`}>
-            <Link to="/profile">
-              {/* <img
-                src={userAvatar}
-                alt="user-profile"
-                className={`${sidebar.profile_image}`}
-              /> */}
-            </Link>
-          </div>
-          <Link to="/profile" className={`${sidebar.sidebar_link}`}>
-            <h6>
-              {firstName} {lastName}
-            </h6>
+          <Link to="/profile">
+            <div className="profile-image-container-sb">
+              <img
+                src={avatar.url !== undefined ? avatar.url : About2}
+                className="profile-image"
+                alt="profile image"
+              />
+              <h6 className={`${sidebar.sidebar_link} mt-2`}>
+                {firstName} {lastName}
+              </h6>
+            </div>
           </Link>
         </div>
+
         <ul className={`${sidebar.list_container}`}>
           <li className={`${sidebar.sidebar_list}`}>
-            {/* <MdOtherHouses
-              color="white"
-              className="me-2 d-inline-block text-center"
-            /> */}
             <img src={Vector} alt="img-1" className="me-2 d-inline-block" />
             <Link to="/overview" className={`${sidebar.sidebar_link}`}>
               Overview

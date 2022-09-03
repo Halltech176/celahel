@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
+import Demo from "./demo";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Footer from "./components/Common/Footer/Footer";
 import Navbar from "./components/Common/Navbar/Navbar";
 import UserRoute from "./components/Common/userRoute";
 import InactiveAgent from "./components/Common/InactiveAgent";
 import Upload from "./components/Common/Upload";
-// import Sidebar from "./components/Common/Sidebar/Sidebar";
 
 import Home from "./components/pages/Home/Home";
 import About from "./components/pages/About/About";
@@ -15,8 +15,6 @@ import Properties from "./components/Dashboard/Properties/Properties";
 import AddProperties from "./components/Dashboard/AddProperties/AddProperties";
 import Notifications from "./components/Dashboard/Notifications/Notifications.component";
 import Overview from "./components/Dashboard/Overview/Overview";
-import Admin from "./components/Dashboard/admin/admin";
-import Allusers from "./components/Dashboard/admin/AllUsers";
 import Plan from "./components/Dashboard/Account_plan/Plan.component";
 
 import Contact from "./components/forms/Contact/Contact";
@@ -26,13 +24,9 @@ import Login from "./components/forms/Login/Login";
 import ForgotPassword from "./components/forms/Login/forgotPassword";
 import EmailVal from "./components/forms/Login/emailVal";
 import Faq from "./components/forms/Faq/Faq";
-import { AgentAuth, AdminAuth } from "./Redux/RequireAuth";
-
-import Result from "./components/Results/Result.component";
+import { AgentAuth } from "./Redux/auth/RequireAuth";
 import "./App.css";
 import NoMatch from "./components/routes/NoMatch";
-import { LineWave } from "react-loader-spinner";
-// import "react-loader-spinner/dist/loader/css/react-loader-spinner.css";
 
 function App() {
   const location = useLocation();
@@ -51,23 +45,15 @@ function App() {
         ) : (
           ""
         )}
-        <div className="loader.">
-          <LineWave
-            height="200"
-            width="200"
-            firstLineColor="red"
-            middleLineColor="green"
-            color="blue"
-            visible={false}
-          />
-        </div>
+
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/demo" element={<Demo />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/about" element={<About />} />
           <Route path="/auth-user" element={<UserRoute />} />
-          <Route path="/active-agent" element={<InactiveAgent />} />
+          <Route path="/activate-agent" element={<InactiveAgent />} />
 
           <Route path="/faqs" element={<Faq />} />
           <Route path="/about" element={<About />} />
@@ -77,22 +63,6 @@ function App() {
           <Route path="/uploading..." element={<Upload />} />
           <Route path="/forgottenPassword" element={<ForgotPassword />} />
           <Route path="/validateEmail" element={<EmailVal />} />
-          <Route
-            path="/admin"
-            element={
-              <AdminAuth>
-                <Admin />
-              </AdminAuth>
-            }
-          />
-          <Route
-            path="/allusers"
-            element={
-              <AdminAuth>
-                <Allusers />
-              </AdminAuth>
-            }
-          />
 
           <Route
             path="/profile"
@@ -144,7 +114,7 @@ function App() {
               </AgentAuth>
             }
           />
-          <Route path="/results" element={<Result />} />
+
           <Route path="*" element={<NoMatch />} />
         </Routes>
         {path === "/" ||

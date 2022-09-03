@@ -20,6 +20,7 @@ function Navbar() {
     }
     console.log(e.target);
   };
+
   console.log(open);
   console.log(location.pathname === "/", location.pathname);
   location.pathname !== "/"

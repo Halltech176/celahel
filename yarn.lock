@@ -8027,16 +8027,22 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
   "version" "18.2.0"
 
+"react-is@^18.2.0":
+  "integrity" "sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w=="
+  "resolved" "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
+  "version" "18.2.0"
+
 "react-lifecycles-compat@^3.0.0":
   "integrity" "sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA=="
   "resolved" "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz"
   "version" "3.0.4"
 
-"react-loader-spinner@^5.2.0":
-  "integrity" "sha512-a+hPTXpitnyb3fyaSIpCyegb5wmn+zOHspAypomIFcYtBBzUx1YfCi4Jp2mUa/7So2za85XSUmgZTA+Ywd694A=="
-  "resolved" "https://registry.npmjs.org/react-loader-spinner/-/react-loader-spinner-5.2.0.tgz"
-  "version" "5.2.0"
+"react-loader-spinner@^5.3.3":
+  "integrity" "sha512-eEUmZBsVli0VAZwsUjeYHU0X3P/utv/Oz5zI8oQa0Xx+ttIZMXYa/WmqHoL2jmqPM01zGB3fyMZjs7xsl+uvRw=="
+  "resolved" "https://registry.npmjs.org/react-loader-spinner/-/react-loader-spinner-5.3.3.tgz"
+  "version" "5.3.3"
   dependencies:
+    "react-is" "^18.2.0"
     "styled-components" "^5.3.5"
     "styled-tools" "^1.7.2"
 
@@ -8158,10 +8164,10 @@
     "lodash.debounce" "^4.0.8"
     "resize-observer-polyfill" "^1.5.0"
 
-"react-toastify@^9.0.5":
-  "integrity" "sha512-dszPCeQINY+Nm6HmsiAXT/7wsazPqv0S/RuhIYLAW+fTKcd3T1iRjZG0XqrN9nvAzqaE5J6uxMaiBrOevxjY8g=="
-  "resolved" "https://registry.npmjs.org/react-toastify/-/react-toastify-9.0.5.tgz"
-  "version" "9.0.5"
+"react-toastify@^9.0.8":
+  "integrity" "sha512-EwM+teWt49HSHx+67qI08yLAW1zAsBxCXLCsUfxHYv1W7/R3ZLhrqKalh7j+kjgPna1h5LQMSMwns4tB4ww2yQ=="
+  "resolved" "https://registry.npmjs.org/react-toastify/-/react-toastify-9.0.8.tgz"
+  "version" "9.0.8"
   dependencies:
     "clsx" "^1.1.1"
 

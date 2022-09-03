@@ -1,13 +1,15 @@
-import React from 'react'
-import nomatch from './NoMatch.module.css'
+import React from "react";
+import "./NoMatch.css";
 const NoMatch = () => {
   return (
-    <div className={`${nomatch.nomatch_container}`}>
-        <h1 className="text-primary-fw-bold text-center">
-        Whoops!!! Sorry the page you are looking for cannot be found
-        </h1>
+    <div className="nomatch_container">
+      <h1 className="nomatch_head">
+        404 ERR0R <br />
+        <span>PAGE NOT FOUND</span>
+      </h1>
+      <h4 className="nomatch_text">😯😯😯!!!</h4>
     </div>
-  )
-}
+  );
+};
 
-export default NoMatch
+export default NoMatch;

@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, Zoom } from "react-toastify";
+import { ErrorNotification } from "../../Common/ErrorToast";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 const EmailVal = () => {
   const [email, setEmail] = useState("");
@@ -13,15 +16,19 @@ const EmailVal = () => {
       console.log(response);
       if (response.status === 200 || response.status === 201)
         navigate("/forgottenPassword");
-        console.log(response)
+      console.log(response);
       // return response;
     } catch (err) {
+      if (err.message === "Network Error") {
+        ErrorNotification("Please check your internet connection");
+      }
       console.log(err);
     }
   };
- 
+
   return (
     <>
+      <ToastContainer transition={Zoom} autoClose={800} />
       <h4 className="verify-heading">Forgot Password</h4>
       <div className="verify-container">
         <label className="verify-text">

@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Users } from "../Redux/actions";
+import { Users } from "../actions";
 
 export const AgentAuth = ({ children }) => {
   const candidate = useSelector((state) => state.candidate.user);
@@ -12,11 +12,11 @@ export const AgentAuth = ({ children }) => {
   if (candidate === null) {
     return <Navigate to="/login" />;
   }
-  if (candidate.status === 'inactive' && candidate != undefined) {
+  if (candidate.status === "inactive" && candidate != undefined) {
     return <Navigate to="/activate-agent" />;
   }
- 
-  if (candidate.type === "user") {
+
+  if (candidate.type !== "agent") {
     return <Navigate to="/auth-user" />;
   } else {
     return children;
@@ -25,5 +25,4 @@ export const AgentAuth = ({ children }) => {
 
 export const AdminAuth = ({ children }) => {
   const dispatch = useDispatch();
-
 };

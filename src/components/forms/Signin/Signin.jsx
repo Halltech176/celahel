@@ -4,7 +4,7 @@ import signin from "./Signin.module.css";
 import { FormInput } from "./FormInputs";
 import { useDispatch, useSelector } from "react-redux";
 import { Validate } from "./ValidateForm";
-import { signup} from "../../../Redux/actions";
+import { signup } from "../../../Redux/actions";
 import { userCredential } from "../../../Redux/slices/userStates";
 import { ToastContainer, Zoom } from "react-toastify";
 import Loader from "../../Common/Loader";
@@ -35,6 +35,7 @@ const Signin = () => {
   const [values, setValues] = useState(initial_values);
   const [formErrors, setFormErrors] = useState("");
   const [checked, setChecked] = useState(initial_checked);
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -49,9 +50,12 @@ const Signin = () => {
     }
   };
   const userInputs = Object.assign(values, checked);
+  console.log(userInputs);
   useEffect(() => {
     setFormErrors(Validate(values));
   }, [values]);
+  console.log(values.password);
+  console.log(confirmPassword);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,19 +71,34 @@ const Signin = () => {
         type: userInputs.type,
         phone: userInputs.number,
       };
+      if (userData.password !== confirmPassword) {
+        throw "Password confirmation went wrong!!!";
+      }
       const response = await dispatch(signup(userData)).unwrap();
-      const user = dispatch(userCredential(response))
-      console.log(user)
+      setTimeout(() => {
+        console.log("hi");
+      }, 1000);
+      const user = dispatch(userCredential(response));
+      console.log(user);
       InfoNotification(response.message);
       console.log(response);
+
       setTimeout(() => {
-        // navigate("/verify");
-      }, 1000);
+        navigate("/verify");
+      }, 2000);
     } catch (err) {
-      if (err) {
-        ErrorNotification(err.message);
-      }
       console.log(err);
+      if (err) {
+        if (err.message === "Rejected") {
+          return ErrorNotification("please check your internet connection!!!");
+        }
+        if (err.message) {
+          return ErrorNotification(err.message);
+        }
+
+        ErrorNotification(err);
+      }
+
       console.log("fail");
     }
   };
@@ -106,73 +125,74 @@ const Signin = () => {
   ));
   return (
     <>
-     {
-      loading ? <Loader/> : 
-    <div>
-      <ToastContainer transition={Zoom} autoClose={800} />
+      {loading ? (
+        <Loader />
+      ) : (
+        <div>
+          <ToastContainer transition={Zoom} autoClose={800} />
 
-      <div className={`container`}>
-        <div className={`text-center`}>
-          <h1 style={{ color: "#101828", fontWeight: "500" }} className="">
-            Welcome
-          </h1>
-          <p className="">Welcome! Please enter your details</p>
+          <div className={`container`}>
+            <div className={`text-center`}>
+              <h1 style={{ color: "#101828", fontWeight: "500" }} className="">
+                Welcome
+              </h1>
+              <p className="">Welcome! Please enter your details</p>
+            </div>
+            <form
+              onSubmit={handleSubmit}
+              id="form-container"
+              className="w-75 m-auto row g-2 justify-content-center"
+            >
+              {renderInputs}
+              <div className="m-1 col-md-5">
+                <label htmlFor="" className="form-label">
+                  confirm password
+                </label>
+                <input
+                  required
+                  type="password"
+                  name="password"
+                  className="form-control"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  value={confirmPassword}
+                />
+              </div>
+
+              <div className="col-md-5">
+                <select
+                  name="gender"
+                  value={values.gender}
+                  onChange={handleChange}
+                  className="w-100 my-4 p-2"
+                  id=""
+                >
+                  <option value="male">male</option>
+                  <option value="female">female</option>
+                </select>
+              </div>
+              <div className="col-md-5">
+                <select
+                  name="type"
+                  value={values.type}
+                  onChange={handleChange}
+                  className="w-100 my-4 p-2"
+                  id=""
+                >
+                  <option value="agent">agent</option>
+                </select>
+              </div>
+
+              <button
+                type="submit"
+                className={` ${signin.signin_btn} btn  btn-primary my-5 py-2 px-5`}
+                onClick={handleSubmit}
+              >
+                Create Account
+              </button>
+            </form>
+          </div>
         </div>
-        <form
-          onSubmit={handleSubmit}
-          id="form-container"
-          className="w-75 m-auto row g-2 justify-content-center"
-        >
-          {renderInputs}
-          <div className="col-md-5">
-            <select
-              name="gender"
-              value={values.gender}
-              onChange={handleChange}
-              className="w-100 my-4 p-2"
-              id=""
-            >
-              <option value="male">male</option>
-              <option value="female">female</option>
-            </select>
-            <select
-              name="type"
-              value={values.type}
-              onChange={handleChange}
-              className="w-100 my-4 p-2"
-              id=""
-            >
-             
-              <option value="agent">agent</option>
-            </select>
-          </div>
-
-          <div className="col-md-5">
-            <input
-              type="checkbox"
-              checked={checked.check_state}
-              name="checkbox"
-              onChange={handleCheck}
-            />
-            <label htmlFor="remember" className="ms-2">
-              Remember me for 30 days
-            </label>
-          </div>
-          <div className="col-md-5">
-            <label htmlFor="forgot">Forgotten password</label>
-          </div>
-          {/* {!loading ? <div className="loading">Loading</div> : ""} */}
-          <button
-            type="submit"
-            className={` ${signin.signin_btn} btn  btn-primary my-5 py-2 px-5`}
-            onClick={handleSubmit}
-          >
-            Create Account
-          </button>
-        </form>
-      </div>
-      </div>
-        }
+      )}
     </>
   );
 };

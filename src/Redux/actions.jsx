@@ -67,3 +67,21 @@ export const Properties = createAsyncThunk("properties", async () => {
     console.log(err);
   }
 });
+
+export const Notification = createAsyncThunk("notifications", async () => {
+  try {
+    const token = window.JSON.parse(localStorage.getItem("token"));
+    const response = await axios.get(
+      "https://celahl.herokuapp.com/api//notification",
+      {
+        headers: {
+          Authorization: `Bearer ${token} `,
+        },
+      }
+    );
+    return response.data.data;
+  } catch (err) {
+    throw err;
+    console.log(err);
+  }
+});

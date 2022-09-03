@@ -1,14 +1,13 @@
 import React from "react";
 import planstyle from "./planstyle.module.css";
-import axios from 'axios'
+import axios from "axios";
 import BasicIcon from "../../../Assets/Plane.png";
 import PremiumIcon from "../../../Assets/Paper Plane.png";
 import EnterpriseIcon from "../../../Assets/Rocket.png";
 import Sidebar from "../../Common/Sidebar/Sidebar";
-
-// import ModalComponent from "../Modal/Modal.component";
-// import OTP from "../OTP/OTP";
-// import MakePayment from "../forms/Payment/MakePayment";
+import { ToastContainer, Zoom } from "react-toastify";
+import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
+import "react-toastify/dist/ReactToastify.css";
 
 function Plan() {
   const [modalState, setModalState] = React.useState(false);
@@ -18,43 +17,51 @@ function Plan() {
   const planSubscribe = async (amount) => {
     try {
       const token = window.JSON.parse(localStorage.getItem("token"));
-   
-      // https://celahl.herokuapp.com/api/
-      const generate_transaction = await axios.post('https://celahl.herokuapp.com/api//transaction/generate', {
-        amount : amount,
-        purpose : "Plan"
-      },  {
-        headers: {
-          Authorization: `Bearer ${token} `,
-        },
-      })
-      const web_url = await axios.post('https://celahl.herokuapp.com/api//transaction/initiate', {
-        reference : generate_transaction.data.data.reference,
-        callback_url : null
-      },  {
-        headers: {
-          Authorization: `Bearer ${token} `,
-        },
-      })
-     
 
-      if(web_url.status === 200) {
-       const url =  window.open(web_url.data.data.authorization_url, "_blank")
-       console.log(url)
+      // https://celahl.herokuapp.com/api/
+      const generate_transaction = await axios.post(
+        "https://celahl.herokuapp.com/api//transaction/generate",
+        {
+          amount: amount,
+          purpose: "Plan",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token} `,
+          },
+        }
+      );
+      const web_url = await axios.post(
+        "https://celahl.herokuapp.com/api//transaction/initiate",
+        {
+          reference: generate_transaction.data.data.reference,
+          callback_url: null,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token} `,
+          },
+        }
+      );
+
+      if (web_url.status === 200) {
+        const url = window.open(web_url.data.data.authorization_url, "_blank");
+        console.log(url);
         // return <iframe src={web_url.data.data.authorization_url}></iframe>
       }
-      console.log(web_url)
+      console.log(web_url);
+    } catch (err) {
+      if (err.message === "Network Error") {
+        ErrorNotification("Please check your internet connection");
+      }
+      // ErrorNotification(err.message);
+      console.log(err);
     }
-    catch(err) {
-      console.log(err)
-    }
-
-
-    }
-  
+  };
 
   return (
     <div>
+      <ToastContainer transition={Zoom} autoClose={800} />
       <Sidebar />
       <div className={`${planstyle.planstyleContainer}`}>
         <div>
@@ -142,7 +149,7 @@ function Plan() {
 
             <button
               className="btn btn-block btn-primary bg-primary rounded-pill my-3 py-3"
-              onClick={() => planSubscribe(100)}
+              onClick={() => planSubscribe(200)}
             >
               Get started
             </button>
@@ -223,7 +230,10 @@ function Plan() {
               <span className="h1 display-2 text-light">$199</span> /monthly
             </p>
 
-            <button className="btn btn-block btn-light rounded-pill my-3 py-3">
+            <button
+              onClick={() => planSubscribe(200)}
+              className="btn btn-block btn-light rounded-pill my-3 py-3"
+            >
               Get started
             </button>
           </div>
@@ -300,7 +310,10 @@ function Plan() {
               <span className="h1 display-2 text-primary">$399</span> /monthly
             </p>
 
-            <button className="btn btn-block bg-primary btn-primary rounded-pill my-3 py-3">
+            <button
+              onClick={() => planSubscribe(500)}
+              className="btn btn-block bg-primary btn-primary rounded-pill my-3 py-3"
+            >
               Get started
             </button>
           </div>

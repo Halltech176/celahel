@@ -68,3 +68,82 @@
   justify-content: center;
   /* opacity: 0.2; */
 }
+.auth-container {
+  text-transform: capitalize;
+  padding: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.auth-button {
+  background: #2562e9;
+  border: none;
+  color: white;
+  padding: 0.5rem 0.8rem;
+  border-radius: 5px;
+}
+.auth-text button {
+  background: #25e93f;
+  border: none;
+  color: white;
+  padding: 0.5rem 0.8rem;
+  border-radius: 5px;
+}
+.profile-image-container {
+  position: relative;
+  margin: 2rem 2rem;
+  max-width: 15rem;
+}
+.file-container {
+  width: 10rem;
+  height: 10rem;
+  /* border: 2px solid #eee; */
+  /* padding: 0.02rem; */
+  border-radius: 50%;
+}
+
+.profile-image-container .profile-image {
+  width: 10rem;
+  height: 10rem;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.profile-image-container-sb {
+  display: flex;
+  flex-direction: column;
+  margin: 3rem 0rem 3rem 0rem;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+}
+.profile-image-container-sb .profile-image {
+  width: 5rem;
+  height: 5rem;
+  object-fit: contain;
+  border-radius: 50%;
+}
+.file-upload {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.file-upload svg {
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+}
+.read,
+.unread {
+  text-align: center;
+  padding: 0.2rem 0.5rem !important;
+  margin: 0.2rem;
+  color: white;
+  border-radius: 5px;
+  background-color: #15803d !important;
+  border: none;
+}
+.unread {
+  background-color: #ff476b !important;
+}

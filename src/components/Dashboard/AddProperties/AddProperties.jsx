@@ -15,10 +15,17 @@ const AddProperties = () => {
   const [description, setDescription] = useState("nice place");
   const [price, setPrice] = useState("2000");
   const [address, setAddress] = useState("ile-ewe");
-  const [images, setImages] = useState();
+  const [images, setImages] = useState("");
+  const [image, setImage] = useState("properties");
   const [purpose, setPurpose] = useState("");
   const [specifications, setSpecifications] = useState("");
   const [type, setType] = useState("");
+  const [fileRef, setFileRef] = useState("");
+  const [mainImg, setMainImg] = useState(null);
+
+  const handleFile = (e) => {
+    setMainImg(e.target.src);
+  };
   const navigate = useNavigate();
 
   const checkPurpose = (e) => {
@@ -34,41 +41,62 @@ const AddProperties = () => {
     // console.log(type);
   };
   const handleChange = (e) => {
-    setImages(e.target.files[0]);
+    setImages(e.target.files);
+    console.log(e.target.files);
   };
+  console.log(images);
   const token = window.JSON.parse(localStorage.getItem("token"));
   const createProperty = async (e) => {
     e.preventDefault();
 
     try {
       const url = " https://celahl.herokuapp.com/api//property/";
-      const formData = new FormData();
-      formData.append("file", images);
-      formData.append("filename", images?.name);
+      //   let formData = new FormData();
+      //   formData.append("file", file);
+
+      //   Array.from(image).forEach((item) => {
+      //     formData.append("filename", item?.name);
+      //   });
+      //   console.log(formData);
+      // };
+      let formData = new FormData();
+
+      formData.append("file", image);
+      Array.from(images).forEach((item, index) => {
+        formData.append("images", item);
+      });
+      console.log(Array.from(formData));
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("price", price);
+      formData.append("address", address);
+      formData.append("specifications", specifications);
+      formData.append("type", type);
+      formData.append("purpose", purpose);
+
       console.log(formData);
-      const properties = {
-        name,
-        description,
-        price,
-        address,
-        specifications,
-        type,
-        purpose,
-        images,
-      };
-      console.log(properties);
       const config = {
         headers: {
           "content-type": "multipart/form-data",
           Authorization: `Bearer ${token} `,
         },
       };
-      const data = await axios.post(url, properties, config);
+      const data = await axios.post(url, formData, config);
+
+      if (data.status === 201) {
+        InfoNotification(data.data.message);
+        setTimeout(() => {
+          // navigate("/properties");
+        }, 2000);
+      }
       console.log(data);
     } catch (err) {
       // if(err.)
       console.log(err);
-      if (err.message === "timeout exceeded") {
+      if (
+        err.message === "timeout exceeded" ||
+        err.message === "Network Error"
+      ) {
         ErrorNotification("please check your internet connection");
       }
       ErrorNotification(err.response.data.message);
@@ -115,42 +143,22 @@ const AddProperties = () => {
           <div className={`${properties.properties_image} m3-4`}>
             <div className={`${properties.main_img_container}`}>
               <img
-                src={property_image}
+                src={mainImg}
                 className={`${properties.main_img}`}
                 alt="img"
               />
             </div>
             <div className={`${properties.image_container}`}>
-              <img
-                src={property_image}
-                alt="img"
-                className={`${properties.property_image}`}
-              />
-              <img
-                src={property_image}
-                alt="img"
-                className={`${properties.property_image}`}
-              />
-              <img
-                src={property_image}
-                alt="img"
-                className={`${properties.property_image}`}
-              />
-              <img
-                src={property_image}
-                alt="img"
-                className={`${properties.property_image}`}
-              />
-              <img
-                src={property_image}
-                alt="img"
-                className={`${properties.property_image}`}
-              />
-              <img
-                src={property_image}
-                alt="img"
-                className={`${properties.property_image}`}
-              />
+              {Array.from(images).map((item, index) => {
+                return (
+                  <img
+                    onClick={handleFile}
+                    key={index}
+                    className={`${properties.property_image}`}
+                    src={item ? URL.createObjectURL(item) : null}
+                  />
+                );
+              })}
             </div>
           </div>
           <h5 className="text-primary fw-100">

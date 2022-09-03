@@ -2,12 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { UserReducer } from "./UserSlice";
-import { loginReducer } from "./loginSlice";
-import { AllUserReducer } from "./AllUserSlice";
-import { PropertyReducer } from "./PropertiesSlice";
-import VerifyUser from "./VerifyUserSlice";
+import { UserReducer } from "./slices/UserSlice";
+import { loginReducer } from "./slices/loginSlice";
+import { AllUserReducer } from "./slices/AllUserSlice";
+import { PropertyReducer } from "./slices/PropertiesSlice";
+import VerifyUser from "./slices/VerifyUserSlice";
 import candidateReducer from "./slices/userStates";
+import { AllNotificationReducer } from "./slices/NotificationSlice";
 
 const persistConfig = {
   key: "root",
@@ -19,7 +20,8 @@ const reducers = combineReducers({
   allusers: AllUserReducer,
   properties: PropertyReducer,
   user: VerifyUser,
-  candidate : candidateReducer
+  candidate: candidateReducer,
+  notification: AllNotificationReducer,
 });
 const persistedReducers = persistReducer(persistConfig, reducers);
 const Store = configureStore({

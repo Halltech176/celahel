@@ -1,28 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { signup } from "./actions";
+import { Users } from "../actions";
 
 const initialState = {
   loading: false,
   user: null,
   error: "",
 };
-const UserSlice = createSlice({
+const AllUsers = createSlice({
   name: "signup",
   initialState,
   reducers: {},
   extraReducers: {
-    [signup.fulfilled]: (state, action) => {
+    [Users.fulfilled]: (state, action) => {
       state.loading = false;
       state.user = action.payload;
     },
-    [signup.pending]: (state) => {
+    [Users.pending]: (state) => {
       state.loading = true;
     },
-    [signup.rejected]: (state) => {
+    [Users.rejected]: (state) => {
       state.loading = false;
       state.error = "unable to fetch data";
     },
   },
 });
 
-export const UserReducer = UserSlice.reducer;
+export const AllUserReducer = AllUsers.reducer;

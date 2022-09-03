@@ -1,19 +1,26 @@
 import React, { useState } from "react";
+import About2 from "../../../Assets/user1.png";
+import { MdFileUpload } from "react-icons/md";
+import { useSelector, useDispatch } from "react-redux";
 import { CgArrowLongLeft } from "react-icons/cg";
 import profile from "./Profile.module.css";
 import Sidebar from "../../Common/Sidebar/Sidebar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { userCredential } from "../../../Redux/slices/userStates";
 import { FormInput } from "../../forms/Signin/FormInputs";
 import { ToastContainer, Zoom } from "react-toastify";
+
 import {
   ErrorNotification,
   SuccessNotification,
 } from "../../Common/ErrorToast";
 
 const Profile = () => {
-  const user = JSON.parse(window.localStorage.getItem("user"));
-  console.log(user);
+  const dispatch = useDispatch();
+  const { candidate } = useSelector((state) => state);
+  const user = candidate.user;
+  // console.log(user);
   const initial_values = {
     firstName: user.firstName,
     lastName: user.lastName,
@@ -29,11 +36,15 @@ const Profile = () => {
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [image, setImage] = useState();
+
+  const handleImage = (e) => {
+    setImage(e.target.files[0]);
+  };
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
   const token = window.JSON.parse(localStorage.getItem("token"));
-  console.log(values);
 
   const navigate = useNavigate();
   const inputs = FormInput.slice(0, FormInput.length - 1);
@@ -48,6 +59,52 @@ const Profile = () => {
     phone: values.phone,
     agency: values.agency,
   };
+
+  const uploadImage = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("file", image);
+      formData.append("filename", image?.name);
+
+      const token = window.JSON.parse(localStorage.getItem("token"));
+
+      console.log(image);
+      const response = await axios.post(
+        "https://celahl.herokuapp.com/api/users/profile-image",
+        { image: image },
+        {
+          headers: {
+            "content-type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        const populate = await axios.get(
+          "https://celahl.herokuapp.com/api//users/profile?populate=avatar",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (populate.status === 200) {
+          dispatch(userCredential(populate.data.data));
+          SuccessNotification(populate.data.message);
+        }
+        console.log(populate);
+      }
+
+      console.log(response);
+    } catch (err) {
+      if (err.message === "Network Error") {
+        ErrorNotification("Pleae check your internet connection");
+      }
+      ErrorNotification(err.response.data.message);
+      console.log(err);
+    }
+  };
   const updateProfile = async (e) => {
     e.preventDefault();
     try {
@@ -60,7 +117,8 @@ const Profile = () => {
           },
         }
       );
-      window.localStorage.setItem("user", JSON.stringify(response.data.data));
+      dispatch(userCredential(response.data.data));
+      // window.localStorage.setItem("user", JSON.stringify(response.data.data));
       SuccessNotification(response.data.message);
       // setTimeout(() => {
       //   navigate("/properties");
@@ -68,6 +126,9 @@ const Profile = () => {
 
       console.log(response.data);
     } catch (err) {
+      if (err.message === "Network Error") {
+        ErrorNotification("Please check your internet connection");
+      }
       console.log(err);
     }
   };
@@ -90,6 +151,10 @@ const Profile = () => {
       SuccessNotification(response.data.message);
       console.log(response.data.message);
     } catch (err) {
+      if (err.message === "Network Error") {
+        ErrorNotification("Please check your internet connection");
+      }
+      console.log(err);
       ErrorNotification(err.response.data.message);
       console.log(err.response.data.message);
     }
@@ -122,11 +187,30 @@ const Profile = () => {
         <div className="d-flex align-items-center">
           <CgArrowLongLeft onClick={Back} size="1.8rem" />
           <h2 className={`${profile.profile_text} ms-4  text-primary`}>
-            {" "}
             Edit Profile
           </h2>
         </div>
+        <div className="profile-image-container">
+          <div className="file-container">
+            <img
+              src={image ? URL.createObjectURL(image) : About2}
+              className="profile-image"
+              alt="profile image"
+            />
+          </div>
+          <div className="file-upload">
+            <input
+              onChange={handleImage}
+              type="file"
+              className="form-control"
+            />
 
+            <span onClick={uploadImage} className="upload-btn">
+              <label>click icon to upload</label>
+              <MdFileUpload />
+            </span>
+          </div>
+        </div>
         <form id="form-container" className="w-75 container  row g-2 ">
           {renderInputs}
           <div className="col-md-5">

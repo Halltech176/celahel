@@ -29,3 +29,17 @@ ul li a {
 .link-icon {
   display: none !important;
 }
+.inactive-container {
+  padding: 4rem 0rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+.inactive-container img {
+  width: 15rem;
+}
+.forgot-password {
+  text-decoration: underline;
+}

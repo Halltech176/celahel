@@ -7,7 +7,11 @@ import { ErrorNotification } from "../../Common/ErrorToast";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { login as loggin } from "../../../Redux/actions";
-import { Properties as AllProperties, Users } from "../../../Redux/actions";
+import {
+  Properties as AllProperties,
+  Users,
+  Notification,
+} from "../../../Redux/actions";
 import { userCredential } from "../../../Redux/slices/userStates";
 
 const Login = () => {
@@ -17,6 +21,7 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.properties);
+  const notify = useSelector((state) => state.notification);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -25,33 +30,45 @@ const Login = () => {
         password,
         username: email,
       };
-      const { payload } = await dispatch(loggin(requestdata));
-      if (payload === undefined) {
-        throw "Enter  a valid email and password";
+      const { error } = await dispatch(loggin(requestdata));
+      const val = await dispatch(loggin(requestdata));
+      console.log(val);
+      if (error?.message === "Network Error") {
+        throw "Pleae check your internet connection";
       }
-      console.log(payload);
+      if (error?.message === "Request failed with status code 401") {
+        throw "Please enter valid email and password";
+      }
+
+      console.log(error);
       const {
         payload: { data },
       } = await dispatch(loggin(requestdata));
       console.log(data);
       const { token, user } = data;
       // console.log(user)
-      const res =   dispatch(userCredential(user));
-     console.log(res)
+      const res = dispatch(userCredential(user));
+      console.log(res);
 
-      window.localStorage.setItem("user", JSON.stringify(user));
+      // window.localStorage.setItem("user", JSON.stringify(user));
       window.localStorage.setItem("token", JSON.stringify(token));
-      const properties = await dispatch(AllProperties());
-     
-      const docs = properties.payload.docs;
+      await dispatch(AllProperties());
+      const note = await dispatch(Notification());
+      console.log(note);
 
-      if (selector.loading) {
+      console.log(selector.loading);
+
+      if (selector.loading && notify.loading) {
       } else {
         navigate("/properties");
       }
       //
       console.log(token, user);
     } catch (err) {
+      if (err.message === "Network Error") {
+        ErrorNotification("please check your internet connections");
+      }
+      console.log(err);
       ErrorNotification(err);
     }
   };
@@ -62,78 +79,76 @@ const Login = () => {
 
   return (
     <>
-    {
-      selector.loading ? <Loader /> : <div>
-    
-      <ToastContainer transition={Zoom} autoClose={800} />
-      <div className="login my-5">
-        <div className="container">
-          <form
-            id="form-container"
-            className={`${login.login_container} row  g-3 mx-auto align-items-center justify-content-center`}
-          >
-            <div className="welcome text-left col-12 ">
-              <h4 className={`${login.heading_text}`}>Welcome back</h4>
-              <p className={`${login.welcome_text}`}>
-                Welcome back! Please enter your details
-              </p>
-            </div>
-            <div className="col-12">
-              <label htmlFor="" className="form-label">
-                Email
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="form-control"
-              />
-            </div>
-
-            <div className="col-12">
-              <label htmlFor="" className="form-label">
-                Password
-              </label>
-              <input
-                type="text"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="form-control"
-              />
-            </div>
-            <div className={`${login.verify} col-md-12`}>
-              <div className="checkbox ">
-                <input
-                  type="checkbox"
-                  value={password}
-                  className="me-2"
-                  name="checkbox"
-                  id="checkbox"
-                />
-                <label htmlFor="" className="">
-                  Remeber for 30 days
-                </label>
-              </div>
-              <div className="forgot_password">
-                <label className="forgot-password" onClick={resetPassword}>
-                  Forgotten Password
-                </label>
-              </div>
-            </div>
-            <div className="button_container col-md-12  text-center">
-              <button
-                type="submit"
-                onClick={handleLogin}
-                className={`${login.login_btn} w-100 btn btn-primary py-2 px-5`}
+      {selector.loading || notify.loading ? (
+        <Loader />
+      ) : (
+        <div>
+          <ToastContainer transition={Zoom} autoClose={800} />
+          <div className="login my-5">
+            <div className="container">
+              <form
+                id="form-container"
+                className={`${login.login_container} row  g-3 mx-auto align-items-center justify-content-center`}
               >
-                Sign in
-              </button>
+                <div className="welcome text-left col-12 ">
+                  <h4 className={`${login.heading_text}`}>Welcome back</h4>
+                  <p className={`${login.welcome_text}`}>
+                    Welcome back! Please enter your details
+                  </p>
+                </div>
+                <div className="col-12">
+                  <label htmlFor="" className="form-label">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="form-control"
+                  />
+                </div>
+
+                <div className="col-12">
+                  <label htmlFor="" className="form-label">
+                    Password
+                  </label>
+                  <input
+                    type="text"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="form-control"
+                  />
+                </div>
+                <div className={`${login.verify} col-md-12`}>
+                  <div className="checkbox ">
+                    <label
+                      htmlFor=""
+                      onClick={() => navigate("/signin")}
+                      className="forgot-password"
+                    >
+                      signup
+                    </label>
+                  </div>
+                  <div className="forgot_password">
+                    <label className="forgot-password" onClick={resetPassword}>
+                      Forgotten Password
+                    </label>
+                  </div>
+                </div>
+                <div className="button_container col-md-12  text-center">
+                  <button
+                    type="submit"
+                    onClick={handleLogin}
+                    className={`${login.login_btn} w-100 btn btn-primary py-2 px-5`}
+                  >
+                    Sign in
+                  </button>
+                </div>
+              </form>
             </div>
-          </form>
+          </div>
         </div>
-      </div>
-      </div>
-}
+      )}
     </>
   );
 };

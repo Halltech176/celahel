@@ -1,8 +1,30 @@
 import React from "react";
 import contact from "./Contact.module.css";
-import {FaMapMarkerAlt, FaMarker} from 'react-icons/fa'
+import { FaMapMarkerAlt, FaMarker } from "react-icons/fa";
 import contact_image from "../../../Assets/Image.png";
+import axios from "axios";
 const Contact = () => {
+  const sendMessage = async (e) => {
+    e.preventDefault();
+    try {
+      const token = JSON.parse(window.localStorage.getItem("token"));
+      console.log(token);
+      const response = await axios.post(
+        "https://celahl.herokuapp.com/api//users/contact",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+        {
+          message: "I need help",
+        }
+      );
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div id="contact_container">
       <div>
@@ -17,33 +39,6 @@ const Contact = () => {
               <p className="">
                 We'd love to hear from you <br /> Please out this form
               </p>
-            </div>
-            <div className="col-md-6">
-              <label htmlFor="" className="form-label">
-                First Name
-              </label>
-              <input type="text" className="form-control" required />
-            </div>
-
-            <div className="col-md-6">
-              <label htmlFor="" className="form-label">
-                Last name
-              </label>
-              <input type="text" className="form-control" required />
-            </div>
-
-            <div className="col-md-12">
-              <label htmlFor="" className="form-label">
-                Email
-              </label>
-              <input type="text" className="form-control" required />
-            </div>
-
-            <div className="col-md-12">
-              <label htmlFor="" className="form-label">
-                Phone Number
-              </label>
-              <input type="text" className="form-control" required />
             </div>
 
             <div className="col-md-12">
@@ -69,7 +64,9 @@ const Contact = () => {
             </div>
 
             <div className="d-grid col-md-12">
-              <button className="btn btn-primary btn-lg">Send Messsage</button>
+              <button onClick={sendMessage} className="btn btn-primary btn-lg">
+                Send Messsage
+              </button>
             </div>
           </form>
         </div>
@@ -86,7 +83,10 @@ const Contact = () => {
               </p>
             </section>
             <section>
-              <h4 className="h5"> <FaMapMarkerAlt color="blue"/> Sydney</h4>
+              <h4 className="h5">
+                {" "}
+                <FaMapMarkerAlt color="blue" /> Sydney
+              </h4>
               <h6 className="text-muted small">
                 100 George Street, Sydney NSW 2000 AU
               </h6>

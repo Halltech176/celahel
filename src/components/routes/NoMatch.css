@@ -1,0 +1,20 @@
+.nomatch_container {
+  margin: 4rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.nomatch_head {
+  font-size: 5rem;
+  color: rgb(131, 122, 122);
+  text-align: center;
+}
+.nomatch_head span {
+  color: rgb(97, 7, 7);
+  font-size: 4.2rem;
+}
+.nomatch_text {
+  font-size: 2rem;
+  color: rgb(39, 40, 41);
+}
