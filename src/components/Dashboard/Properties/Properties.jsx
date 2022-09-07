@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Sidebar from "../../Common/Sidebar/Sidebar";
@@ -8,25 +8,93 @@ import properties from "./Properties.module.css";
 import property_image from "../../../Assets/house.png";
 import searchBtn from "../../../Assets/SearchVector.png";
 import { Properties as AllProperties } from "../../../Redux/actions";
+import { Property } from "../../../Redux/actions";
+import { ToastContainer, Zoom } from "react-toastify";
+import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
+import "react-toastify/dist/ReactToastify.css";
 import Property_details from "./Properties_data.json";
+import axios from "axios";
 
 const Properties = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [count, setCount] = useState(2);
+  const items = useSelector((state) => state.properties.properties);
+  const values = useSelector((state) => state.properties);
+  const activeProperty = useSelector((state) => state.property);
+  useEffect(() => {
+    dispatch(AllProperties());
+  }, []);
+  console.log(activeProperty);
 
-  const allProperties = async () => {
+  const handleIncrease = async () => {
     try {
-      const response = await dispatch(AllProperties());
+      setCount(count + 1);
+
+      if (count === items.totalPages) {
+        setCount(1);
+      }
+
+      // await dispatch(AllProperties(1));
+      const response = await dispatch(AllProperties(count));
+      if (response.type === "properties/rejected") {
+        throw "please check your internet connection";
+      }
       console.log(response);
-      // return response;
     } catch (err) {
-      console.log(err);
+      ErrorNotification(err);
+      console.error(err);
     }
   };
-  useEffect(() => {
-    allProperties();
-  }, []);
+
+  const handleDecrease = async () => {
+    try {
+      setCount(count - 1);
+
+      if (count === 1) {
+        setCount(items.totalPages);
+      }
+
+      const response = await dispatch(AllProperties(count));
+      if (response.type === "properties/rejected") {
+        throw "please check your internet connection";
+      }
+    } catch (err) {
+      ErrorNotification(err);
+    }
+  };
+
+  const handlePaginate = async (index) => {
+    try {
+      setCount(index);
+
+      const response = await dispatch(AllProperties(count));
+      if (response.type === "properties/rejected") {
+        throw "please check your internet connection";
+      }
+    } catch (err) {
+      ErrorNotification(err);
+    }
+  };
+
+  const GetProperty = async (id) => {
+    try {
+      const response = await dispatch(Property(id));
+      if (response.type === "property/fulfilled") {
+        navigate("/editproperty");
+      }
+      if (response.type === "property/rejected") {
+        throw "please check your internet connection";
+      }
+      console.log(response);
+    } catch (err) {
+      ErrorNotification(err);
+    }
+  };
+
+  const docs1 = useSelector((state) => state.properties.properties);
   const docs = useSelector((state) => state.properties.properties?.docs);
+  console.log(docs1);
   const loading = useSelector((state) => state.properties.loading);
 
   if (docs.length === 0) {
@@ -35,77 +103,49 @@ const Properties = () => {
 
   const agent_properties = docs.map((data) => {
     return (
-      <Link key={data._id} className="text-decoration-none" to="/addproperty">
-        <div className={`${properties.image_container}`}>
-          <span
-            className={`${
-              data.purpose === "sale"
-                ? properties.sell_badge
-                : properties.rent_badge
-            } badge  px-2 py-1 text-center`}
-          >
-            {data.purpose}
-          </span>
-          <div className={`${properties.property_text}`}>
-            <p className={`${properties.property_name}`}>{data.name}</p>
-            <p className={`${properties.property_location}`}>{data.address}</p>
-            <p className={`${properties.property_price}`}>${data.price}</p>
-          </div>
+      <div
+        key={data._id}
+        onClick={() => GetProperty(data._id)}
+        className={`${properties.image_container}`}
+      >
+        <span
+          className={`${
+            data.purpose === "sale"
+              ? properties.sell_badge
+              : properties.rent_badge
+          } badge  px-2 py-1 text-center`}
+        >
+          {data.purpose}
+        </span>
+        <div className={`${properties.property_text}`}>
+          <p className={`${properties.property_name}`}>{data.name}</p>
+          <p className={`${properties.property_location}`}>{data.address}</p>
+          <p className={`${properties.property_price}`}>${data.price}</p>
+        </div>
+
+        <div className="d-flex flex-wrap align-center justify-center ">
           {data.images.map((img) => {
             return (
               <img
                 key={img._id}
                 src={img.url}
                 alt={img._id}
-                className={`${properties.property_image}`}
+                className={`${properties.property_image} mx-auto`}
               />
             );
           })}
         </div>
-      </Link>
-    );
-  });
-
-  const datas = Property_details.map((data, index) => {
-    return (
-      <Link key={index} className="text-decoration-none" to="/addproperty">
-        <div className={`${properties.image_container}`}>
-          <span
-            className={`${
-              data.property_tag === "For Sell"
-                ? properties.sell_badge
-                : properties.rent_badge
-            } badge  px-2 py-1 text-center`}
-          >
-            {data.property_tag}
-          </span>
-          <div className={`${properties.property_text}`}>
-            <p className={`${properties.property_name}`}>
-              {data.property_name}
-            </p>
-            <p className={`${properties.property_location}`}>
-              {data.property_location}
-            </p>
-            <p className={`${properties.property_price}`}>
-              ${data.property_price}
-            </p>
-          </div>
-          <img
-            src={property_image}
-            alt="img"
-            className={`${properties.property_image}`}
-          />{" "}
-        </div>
-      </Link>
+      </div>
     );
   });
 
   return (
     <>
-      {loading ? (
+      {loading || activeProperty.loading ? (
         <Loader />
       ) : (
         <div>
+          <ToastContainer transition={Zoom} autoClose={800} />
           <Sidebar />
           <div className={`${properties.property_container} row`}>
             <div className={`${properties.search_container}`}>
@@ -138,10 +178,34 @@ const Properties = () => {
             <div
               className={`${properties.properties_image} col-md-12 d-flex flex-wrap justify-content-between`}
             >
-              {/* {datas} */}
               {agent_properties}
             </div>
+            <div className="paginate-btns d-flex align-items-center justify-content-between my-3 flex-wrap ">
+              <button className="paginate-btn" onClick={handleDecrease}>
+                prev
+              </button>
+              <ul className="d-flex align-items-center">
+                {docs.map((doc, index) => {
+                  // if(inde)
+                  return index < items.totalPages ? (
+                    <li
+                      key={index}
+                      onClick={() => handlePaginate(index + 1)}
+                      className="mx-2"
+                    >
+                      {index + 1}
+                    </li>
+                  ) : (
+                    ""
+                  );
+                })}
+              </ul>
+              <button className="paginate-btn" onClick={handleIncrease}>
+                next
+              </button>
+            </div>
           </div>
+
           <div />
         </div>
       )}

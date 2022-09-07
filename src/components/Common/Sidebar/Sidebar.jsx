@@ -24,7 +24,7 @@ const Sidebar = () => {
   const { candidate } = useSelector((state) => state);
   const user = candidate.user;
   const avatar = candidate.user.avatar;
-  console.log(avatar.url);
+  // console.log(avatar.url);
 
   const { firstName, lastName } = user;
   // console.log(user);

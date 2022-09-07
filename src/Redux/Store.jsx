@@ -5,7 +5,8 @@ import storage from "redux-persist/lib/storage";
 import { UserReducer } from "./slices/UserSlice";
 import { loginReducer } from "./slices/loginSlice";
 import { AllUserReducer } from "./slices/AllUserSlice";
-import { PropertyReducer } from "./slices/PropertiesSlice";
+import { PropertiesReducer } from "./slices/PropertiesSlice";
+import { PropertyReducer } from "./slices/PropertySlice";
 import VerifyUser from "./slices/VerifyUserSlice";
 import candidateReducer from "./slices/userStates";
 import { AllNotificationReducer } from "./slices/NotificationSlice";
@@ -18,13 +19,15 @@ const reducers = combineReducers({
   userDetails: UserReducer,
   login: loginReducer,
   allusers: AllUserReducer,
-  properties: PropertyReducer,
+  properties: PropertiesReducer,
+  property: PropertyReducer,
   user: VerifyUser,
   candidate: candidateReducer,
   notification: AllNotificationReducer,
 });
-const persistedReducers = persistReducer(persistConfig, reducers);
+// const persistedReducers = persistReducer(persistConfig, reducers);
 const Store = configureStore({
-  reducer: persistedReducers,
+  reducer: reducers,
+  devTools: true,
 });
 export default Store;

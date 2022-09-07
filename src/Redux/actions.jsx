@@ -22,7 +22,7 @@ export const signup = createAsyncThunk("signup", async (userData) => {
 export const login = createAsyncThunk("login", async (loginData) => {
   try {
     const response = await axios.post(
-      "https://celahl.herokuapp.com/api/auth/login",
+      "https://celahl.herokuapp.com/api/auth/login?populate=avatar",
       loginData
     );
 
@@ -50,11 +50,11 @@ export const Users = createAsyncThunk("allusers", async (page = 2) => {
   }
 });
 
-export const Properties = createAsyncThunk("properties", async () => {
+export const Properties = createAsyncThunk("properties", async (page = 1) => {
   try {
     const token = window.JSON.parse(localStorage.getItem("token"));
     const response = await axios.get(
-      "https://celahl.herokuapp.com/api/property?populate=images",
+      `https://celahl.herokuapp.com/api/property?populate=images&page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${token} `,
@@ -68,11 +68,12 @@ export const Properties = createAsyncThunk("properties", async () => {
   }
 });
 
-export const Notification = createAsyncThunk("notifications", async () => {
+export const Property = createAsyncThunk("property", async (id) => {
   try {
     const token = window.JSON.parse(localStorage.getItem("token"));
+    // http://localhost:8089/api//property/:propertyId
     const response = await axios.get(
-      "https://celahl.herokuapp.com/api//notification",
+      `https://celahl.herokuapp.com/api//data/property/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token} `,
@@ -85,3 +86,23 @@ export const Notification = createAsyncThunk("notifications", async () => {
     console.log(err);
   }
 });
+export const Notification = createAsyncThunk(
+  "notifications",
+  async (page = 1) => {
+    try {
+      const token = window.JSON.parse(localStorage.getItem("token"));
+      const response = await axios.get(
+        `https://celahl.herokuapp.com/api//notification?page=${page}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token} `,
+          },
+        }
+      );
+      return response.data.data;
+    } catch (err) {
+      throw err;
+      console.log(err);
+    }
+  }
+);

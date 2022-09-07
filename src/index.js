@@ -1,4 +1,5 @@
 import React from "react";
+// import { dotenv } from "dotenv";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
@@ -9,16 +10,16 @@ import { persistStore } from "redux-persist";
 import { Provider } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-let persistor = persistStore(Store);
+// let persistor = persistStore(Store);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   // <React.StrictMode>
   <Provider store={Store}>
-    <PersistGate loading="null" persistor={persistor}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </PersistGate>
+    {/* <PersistGate loading="null" persistor={persistor}> */}
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+    {/* </PersistGate> */}
   </Provider>
 );

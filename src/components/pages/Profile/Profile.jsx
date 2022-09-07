@@ -91,7 +91,7 @@ const Profile = () => {
         );
         if (populate.status === 200) {
           dispatch(userCredential(populate.data.data));
-          SuccessNotification(populate.data.message);
+          SuccessNotification(response.data.message);
         }
         console.log(populate);
       }

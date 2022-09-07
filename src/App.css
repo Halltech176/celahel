@@ -147,3 +147,15 @@
 .unread {
   background-color: #ff476b !important;
 }
+.paginate-btn {
+  padding: 0.3rem 1.4rem !important;
+  border: none;
+  font-family: "DM Serif Display", serif !important;
+  color: #2562e9 !important;
+}
+.hide-spec {
+  display: none;
+}
+.property-spec {
+  display: block;
+}

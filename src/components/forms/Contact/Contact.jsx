@@ -1,32 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import contact from "./Contact.module.css";
 import { FaMapMarkerAlt, FaMarker } from "react-icons/fa";
 import contact_image from "../../../Assets/Image.png";
+import { ToastContainer, Zoom } from "react-toastify";
+import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 const Contact = () => {
+  const [message, setMessage] = useState("");
   const sendMessage = async (e) => {
     e.preventDefault();
     try {
       const token = JSON.parse(window.localStorage.getItem("token"));
       console.log(token);
-      const response = await axios.post(
-        "https://celahl.herokuapp.com/api//users/contact",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-        {
-          message: "I need help",
-        }
-      );
-      console.log(response);
+
+      console.log(message.split(" ").length);
+      if (message.split(" ").length <= 3) {
+        throw "Message should not be less than 3 words";
+      }
+      InfoNotification("message sent successfully");
     } catch (err) {
       console.log(err);
+      ErrorNotification(err);
     }
   };
   return (
     <div id="contact_container">
+      <ToastContainer transition={Zoom} autoClose={800} />
       <div>
         <div className="container bg-white py-5">
           <form
@@ -48,6 +48,8 @@ const Contact = () => {
               <textarea
                 className="form-control"
                 name="feedback"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 id=""
                 cols="15"
                 rows="5"

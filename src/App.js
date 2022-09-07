@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Demo from "./demo";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Footer from "./components/Common/Footer/Footer";
@@ -13,6 +13,7 @@ import Profile from "./components/pages/Profile/Profile";
 
 import Properties from "./components/Dashboard/Properties/Properties";
 import AddProperties from "./components/Dashboard/AddProperties/AddProperties";
+import EditProperty from "./components/Dashboard/AddProperties/EditProperty";
 import Notifications from "./components/Dashboard/Notifications/Notifications.component";
 import Overview from "./components/Dashboard/Overview/Overview";
 import Plan from "./components/Dashboard/Account_plan/Plan.component";
@@ -27,8 +28,14 @@ import Faq from "./components/forms/Faq/Faq";
 import { AgentAuth } from "./Redux/auth/RequireAuth";
 import "./App.css";
 import NoMatch from "./components/routes/NoMatch";
+import { useSelector } from "react-redux";
 
 function App() {
+  const selector = useSelector((state) => state.candidate);
+  const status = selector.user?.status;
+  const token = JSON.parse(window.localStorage.getItem("token"));
+  console.log(status);
+  // console.log(process.env.REACT_APP_BASE_URL);
   const location = useLocation();
   const path = location.pathname;
 
@@ -37,7 +44,6 @@ function App() {
       <div className="project-container">
         {path === "/about" ||
         path === "/faqs" ||
-        path === "/" ||
         path === "/login" ||
         path === "/signin" ||
         path === "/contact" ? (
@@ -47,9 +53,28 @@ function App() {
         )}
 
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* <Route path="/" element /> */}
+          <Route
+            path="/"
+            element={
+              token !== null ? (
+                <AgentAuth>
+                  <Properties />
+                </AgentAuth>
+              ) : (
+                <Home />
+              )
+            }
+          />
           <Route path="/demo" element={<Demo />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route
+            path="/contact"
+            element={
+              <AgentAuth>
+                <Contact />
+              </AgentAuth>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/about" element={<About />} />
           <Route path="/auth-user" element={<UserRoute />} />
@@ -90,6 +115,14 @@ function App() {
             }
           />
           <Route
+            path="/editproperty"
+            element={
+              <AgentAuth>
+                <EditProperty />
+              </AgentAuth>
+            }
+          />
+          <Route
             path="/upgrade"
             element={
               <AgentAuth>
@@ -117,10 +150,7 @@ function App() {
 
           <Route path="*" element={<NoMatch />} />
         </Routes>
-        {path === "/" ||
-        path === "/about" ||
-        path === "/faqs" ||
-        path === "/contact" ? (
+        {path === "/about" || path === "/faqs" || path === "/contact" ? (
           <Footer />
         ) : (
           ""

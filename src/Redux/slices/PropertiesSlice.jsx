@@ -25,4 +25,4 @@ const AllProperties = createSlice({
   },
 });
 
-export const PropertyReducer = AllProperties.reducer;
+export const PropertiesReducer = AllProperties.reducer;

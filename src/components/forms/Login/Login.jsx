@@ -7,6 +7,7 @@ import { ErrorNotification } from "../../Common/ErrorToast";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { login as loggin } from "../../../Redux/actions";
+import axios from "axios";
 import {
   Properties as AllProperties,
   Users,
@@ -16,12 +17,13 @@ import { userCredential } from "../../../Redux/slices/userStates";
 
 const Login = () => {
   const [email, setEmail] = useState("kunleolaakande@gmail.com");
-  const [password, setPassword] = useState("12345678");
+  const [password, setPassword] = useState("akande");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.properties);
   const notify = useSelector((state) => state.notification);
+  const loginState = useSelector((state) => state.login);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -40,35 +42,39 @@ const Login = () => {
         throw "Please enter valid email and password";
       }
 
-      console.log(error);
       const {
         payload: { data },
       } = await dispatch(loggin(requestdata));
-      console.log(data);
-      const { token, user } = data;
-      // console.log(user)
-      const res = dispatch(userCredential(user));
-      console.log(res);
 
-      // window.localStorage.setItem("user", JSON.stringify(user));
+      const { token, user } = data;
+
+      const fetchuser = await axios.get(
+        "https://celahl.herokuapp.com/api//users/profile?populate=avatar",
+        {
+          headers: {
+            Authorization: `Bearer ${token} `,
+          },
+        }
+      );
+
+      if (fetchuser.status === 200) {
+        dispatch(userCredential(fetchuser.data.data));
+      }
+
       window.localStorage.setItem("token", JSON.stringify(token));
       await dispatch(AllProperties());
       const note = await dispatch(Notification());
-      console.log(note);
-
-      console.log(selector.loading);
 
       if (selector.loading && notify.loading) {
       } else {
         navigate("/properties");
       }
       //
-      console.log(token, user);
     } catch (err) {
       if (err.message === "Network Error") {
         ErrorNotification("please check your internet connections");
       }
-      console.log(err);
+
       ErrorNotification(err);
     }
   };
@@ -76,10 +82,13 @@ const Login = () => {
   const resetPassword = () => {
     navigate("/validateEmail");
   };
+  useEffect(() => {
+    dispatch(AllProperties());
+  }, []);
 
   return (
     <>
-      {selector.loading || notify.loading ? (
+      {selector.loading || notify.loading || loginState.loading ? (
         <Loader />
       ) : (
         <div>
@@ -121,6 +130,7 @@ const Login = () => {
                 </div>
                 <div className={`${login.verify} col-md-12`}>
                   <div className="checkbox ">
+                    <label>Don't have an account?</label>
                     <label
                       htmlFor=""
                       onClick={() => navigate("/signin")}
