@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "../../Common/Sidebar/Sidebar";
 import { CgArrowLongLeft } from "react-icons/cg";
@@ -6,7 +6,11 @@ import properties from "./AddProperties.module.css";
 import Loader from "../../Common/Loader";
 import property_image from "../../../Assets/house.png";
 import { Link } from "react-router-dom";
-import { Properties as AllProperties, Property } from "../../../Redux/actions";
+import {
+  Properties as AllProperties,
+  Property as ActiveProperty,
+  EditProperty as Edit,
+} from "../../../Redux/actions";
 import { useNavigate } from "react-router-dom";
 import searchBtn from "../../../Assets/SearchVector.png";
 import { ToastContainer, Zoom } from "react-toastify";
@@ -14,18 +18,30 @@ import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
 const EditProperty = () => {
+  const id = window.JSON.parse(localStorage.getItem("id"));
   const dispatch = useDispatch();
-  const activeProperty = useSelector((state) => state.property.Property);
-  const { loading } = useSelector((state) => state.property);
+  useEffect(() => {
+    ActiveProperty(id);
+  }, []);
+
+  const { loading, Property, error } = useSelector((state) => state.property);
+  const propt = useSelector((state) => state);
+
   const allprop = useSelector((state) => state.properties);
-  console.log(loading);
-  const [name, setName] = useState(activeProperty.name);
-  const [description, setDescription] = useState(activeProperty.description);
-  const [price, setPrice] = useState(activeProperty.price);
-  const [address, setAddress] = useState(activeProperty.address);
+  const {
+    loading: editLoading,
+    error: editError,
+    editedproperty,
+  } = useSelector((state) => state.editproperty);
+
+
+  const [name, setName] = useState(Property?.name);
+  const [description, setDescription] = useState(Property?.description);
+  const [price, setPrice] = useState(Property?.price);
+  const [address, setAddress] = useState(Property?.address);
   const [images, setImages] = useState("");
   const [image, setImage] = useState("properties");
-  const [purpose, setPurpose] = useState(activeProperty.purpose);
+  const [purpose, setPurpose] = useState(Property?.purpose);
   const [house, setHouse] = useState(false);
   const [relaxation, setRelaxation] = useState(false);
   const [land, setLand] = useState(false);
@@ -74,7 +90,6 @@ const EditProperty = () => {
       setHostel(false);
     }
 
-    console.log(e.target.id);
   };
 
   const checkSpecifications = (e) => {
@@ -101,7 +116,7 @@ const EditProperty = () => {
       );
     }
   };
-  console.log(specifications);
+
   const handleChange = (e) => {
     setImages(e.target.files);
     console.log(e.target.files);
@@ -112,9 +127,6 @@ const EditProperty = () => {
     e.preventDefault();
 
     try {
-      // http://localhost:8089/api//property/:
-      const url = `https://celahl.herokuapp.com/api//property/${activeProperty._id}`;
-
       let formData = new FormData();
 
       formData.append("file", image);
@@ -134,28 +146,20 @@ const EditProperty = () => {
       console.log(specifications);
       console.log(Array.from(formData));
 
-      console.log(formData);
-      const config = {
-        headers: {
-          "content-type": "multipart/form-data",
-          Authorization: `Bearer ${token} `,
-        },
-      };
-      const data = await axios.put(url, formData, config);
+      const response = await dispatch(Edit(formData)).unwrap();
+     
 
-      if (data.status === 200) {
-        console.log();
-        const response = await dispatch(Property(data.data.data._id));
-        const allResponse = await dispatch(AllProperties());
+      if (response !== null) {
+        InfoNotification("property successfully updated");
+        const response = await dispatch(AllProperties());
+         console.log(response)
 
-        console.log(allResponse);
-        InfoNotification(data.data.message);
-        setTimeout(() => {
-          if (allResponse.type === "properties/fulfilled") {
-            navigate("/properties");
-          }
-        }, 2000);
+        if (response.type === "properties/fulfilled") {
+          navigate("/properties");
+        }
       }
+
+      // }
     } catch (err) {
       // if(err.)
       console.log(err);
@@ -166,7 +170,12 @@ const EditProperty = () => {
         ErrorNotification("please check your internet connection");
       }
       console.log(err);
-      ErrorNotification(err.response.data.message);
+      ErrorNotification(err?.response?.data?.message);
+      if (err?.response?.data?.message?.split(" ").length > 12) {
+        setTimeout(() => {
+          navigate("/upgrade");
+        }, 3000);
+      }
     }
   };
   const Back = () => {
@@ -174,7 +183,7 @@ const EditProperty = () => {
   };
   return (
     <>
-      {allprop.loading || loading ? (
+      {loading || editLoading ? (
         <Loader />
       ) : (
         <div>
@@ -182,7 +191,7 @@ const EditProperty = () => {
           <Sidebar />
           <div className={`${properties.property_container}`}>
             <div className="row">
-              <div className={`${properties.search_container}`}>
+              {/* <div className={`${properties.search_container}`}>
                 <div>
                   <input
                     className={`${properties.search_input} form-control`}
@@ -196,7 +205,7 @@ const EditProperty = () => {
                     />
                   </span>
                 </div>
-              </div>
+              </div> */}
               {/* <div></div> */}
               <div className="col-md-8 d-flex align-items-center">
                 <CgArrowLongLeft size="1.8rem" onClick={Back} />

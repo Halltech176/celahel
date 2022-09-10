@@ -23,94 +23,57 @@ ChartJS.register(
   Legend
 );
 
-const data = {
-  labels: [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "july",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ],
-  datasets: [
-    {
-      label: "Properties  Overview",
-      lineTension: 0.5,
-      backgroundColor: "whitesmoke",
-      borderColor: "blue",
-      borderWidth: 5,
-      pointRadius: 1,
-      pointHoverRadius: 10,
-      hoverBackgroundColor: "blue",
-      // hoverBorderColor: "none",
-      data: [65, 70, 80, 81, 56, 50, 70, 40, 70, 50, 57, 30],
-    },
-  ],
-};
-const config = {
-  scales: {
-    x: {
-      grid: {
-        display: false,
+const Visuals = (properties) => {
+  const data = {
+    labels: properties.property_month,
+    datasets: [
+      {
+        label: "Properties  Overview",
+        lineTension: 0.1,
+        backgroundColor: "whitesmoke",
+        borderColor: "#2563eb",
+        borderWidth: 3,
+        pointRadius: 1,
+        pointHoverRadius: 10,
+        hoverBackgroundColor: "#2563eb",
+        data: properties.sums,
       },
-    },
-    y: {
-      grid: {
-        display: false,
-      },
-    },
-  },
-  type: "line",
-  data: data,
-  options: {
-    reponsive: true,
-    elements: {
-      point: {
-        radius: 0,
-      },
-    },
-    plugins: {
-      legend: {
-        display: false,
-      },
-      title: {
-        display: true,
-        text: "property overview",
-      },
-    },
-  },
-};
-const Visuals = () => {
-  const selector = useSelector((state) => state);
-
-  const fetchData = async (id) => {
-    try {
-      const token = window.JSON.parse(localStorage.getItem("token"));
-
-      const response = await axios.get(
-        `https://celahl.herokuapp.com/api/property?populate=images&page=1&limit=${selector.totalDocs}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token} `,
-          },
-        }
-      );
-      console.log(response.data.data.docs);
-    } catch (err) {
-      throw err;
-      console.log(err);
-    }
+    ],
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const config = {
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        grid: {
+          display: false,
+        },
+      },
+    },
+    type: "line",
+    data: data,
+    options: {
+      reponsive: true,
+      elements: {
+        point: {
+          radius: 0,
+        },
+      },
+      plugins: {
+        legend: {
+          display: false,
+        },
+        title: {
+          display: true,
+          text: "property overview",
+        },
+      },
+    },
+  };
+  console.log(properties.sums);
   return (
     <>
       <Line data={data} options={config} />

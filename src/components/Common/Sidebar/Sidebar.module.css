@@ -77,6 +77,9 @@
   font-family: "DM Mono", monospace;
   font-size: 1.2rem;
 }
+.sidebar_link .profile_text {
+  font-size: 0.8rem !important;
+}
 .close_menu_btn {
   display: none;
   position: absolute;

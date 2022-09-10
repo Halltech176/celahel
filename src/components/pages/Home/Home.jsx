@@ -96,27 +96,25 @@ function Home() {
             </div>
           </div>
 
-          <motion.div
-            initial={{
-              opacity: 0,
-              transform: "scaleX(0.1)",
-              // transform: "translatex(5rem)",
-            }}
-            whileInView={{
-              opacity: 1,
-              transform: " scaleX(1.0)",
-              // transform: "translatex(5rem) translatex(5rem)",
-            }}
-            viewport={{ once: false }}
-            transition={{ duration: 0.5 }}
-          >
+    
             <div className="container text-center">
               <h2 className="semi_text">How It Works</h2>
               <p className="lead text_lead">
                 Our Unique process gives you peace of mind for all our services
               </p>
               <div className="row g-5 cards">
-                <div className="col-lg">
+                <motion.div initial={{
+              opacity: 0,
+              transform: "scaleX(0.1)",
+         
+            }}
+            whileInView={{
+              opacity: 1,
+              transform: " scaleX(1.0)",
+              
+            }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.5 }} className="col-lg">
                   <div className="card p-5 my-3 text-light shadow-lg">
                     <div className="circle bg-white text-center text-dark">
                       <span>1</span>
@@ -127,8 +125,19 @@ function Home() {
                       Voluptatum, repudiandae.
                     </p>
                   </div>
-                </div>
-                <div className="col-lg">
+                </motion.div>
+                <motion.div        initial={{
+              opacity: 0,
+              transform: "scaleX(0.1)",
+         
+            }}
+            whileInView={{
+              opacity: 1,
+              transform: " scaleX(1.0)",
+              
+            }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.5 }} className="col-lg">
                   <div className="card p-5 my-3 text-light shadow-lg">
                     <div className="circle bg-white text-center text-dark">
                       <span>2</span>
@@ -139,8 +148,19 @@ function Home() {
                       Voluptatum, repudiandae.
                     </p>
                   </div>
-                </div>
-                <div className="col-lg">
+                </motion.div>
+                <motion.div       initial={{
+              opacity: 0,
+              transform: "scaleX(0.1)",
+         
+            }}
+            whileInView={{
+              opacity: 1,
+              transform: " scaleX(1.0)",
+              
+            }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.5 }} className="col-lg">
                   <div className="card fade p-5 my-3 text-light shadow-lg">
                     <div className="circle bg-white text-center text-dark">
                       <span>3</span>
@@ -151,10 +171,10 @@ function Home() {
                       Voluptatum, repudiandae.
                     </p>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </div>
-          </motion.div>
+          
           <div className="my-5 p-3">
             <div className="container-fluid text-center">
               <h2>What Our Clients Say</h2>
@@ -164,7 +184,18 @@ function Home() {
               </p>
 
               <div className="row mid_col_container">
-                <div className="col mid_col">
+                <motion.div             initial={{
+              opacity: 0,
+              transform: "scaleX(0.8)",
+         
+            }}
+            whileInView={{
+              opacity: 1,
+              transform: " scaleX(1.0)",
+              
+            }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.5 }} className="col mid_col">
                   <div className="card p-3 marq-card">
                     <div className="d-flex flex-column justify-content-start align-items-start mb-3">
                       <div>
@@ -186,8 +217,19 @@ function Home() {
                     <p className="h3 text-primary card-title">John Carter</p>
                     <p className="small text-primary">Web Designer</p>
                   </div>
-                </div>
-                <div className="col mid_col">
+                </motion.div>
+                <motion.div  initial={{
+              opacity: 0,
+              transform: "scaleX(0.8)",
+         
+            }}
+            whileInView={{
+              opacity: 1,
+              transform: " scaleX(1.0)",
+              
+            }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.5 }} className="col mid_col">
                   {" "}
                   <div className="card p-3 marq-card">
                     <div className="d-flex flex-column justify-content-start align-items-start mb-3">
@@ -210,8 +252,19 @@ function Home() {
                     <p className="h3 text-primary card-title">Sophie Moore</p>
                     <p className="small text-primary">Head of Marketing</p>
                   </div>
-                </div>
-                <div className="col mid_col">
+                </motion.div>
+                <motion.div       initial={{
+              opacity: 0,
+              transform: "scaleX(0.8)",
+         
+            }}
+            whileInView={{
+              opacity: 1,
+              transform: " scaleX(1.0)",
+              
+            }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.5 }} className="col mid_col">
                   {" "}
                   <div className="card p-3 marq-card">
                     <div className="d-flex flex-column justify-content-start align-items-start mb-3">
@@ -234,8 +287,19 @@ function Home() {
                     <p className="h3 text-primary card-title">Matt Canon</p>
                     <p className="small text-primary">Lead Developer</p>
                   </div>
-                </div>
-                <div className="col mid_col">
+                </motion.div>
+                <motion.div       initial={{
+              opacity: 0,
+              transform: "scaleX(0.8)",
+         
+            }}
+            whileInView={{
+              opacity: 1,
+              transform: " scaleX(1.0)",
+              
+            }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.5 }}  className="col mid_col">
                   {" "}
                   <div className="card p-3 marq-card">
                     <div className="d-flex flex-column justify-content-start align-items-start mb-3">
@@ -258,7 +322,7 @@ function Home() {
                     <p className="h3 text-primary card-title">Andy Smith</p>
                     <p className="small text-primary">VP of Marketing</p>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </div>
           </div>

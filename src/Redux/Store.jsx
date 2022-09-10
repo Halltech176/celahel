@@ -2,11 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { UserReducer } from "./slices/UserSlice";
+import { SignUpReducer } from "./slices/UserSlice";
 import { loginReducer } from "./slices/loginSlice";
-import { AllUserReducer } from "./slices/AllUserSlice";
+import { UserReducer } from "./slices/UserProfile";
 import { PropertiesReducer } from "./slices/PropertiesSlice";
 import { PropertyReducer } from "./slices/PropertySlice";
+import { OverviewReducer } from "./slices/OverviewSlice";
+import { EditPropertyReducer } from "./slices/EditPropertySlice";
+import { CreatePropertyReducer } from "./slices/CreatePropertySlice";
 import VerifyUser from "./slices/VerifyUserSlice";
 import candidateReducer from "./slices/userStates";
 import { AllNotificationReducer } from "./slices/NotificationSlice";
@@ -16,14 +19,17 @@ const persistConfig = {
   storage,
 };
 const reducers = combineReducers({
-  userDetails: UserReducer,
+  userDetails: SignUpReducer,
   login: loginReducer,
-  allusers: AllUserReducer,
+  userprofile: UserReducer,
   properties: PropertiesReducer,
   property: PropertyReducer,
   user: VerifyUser,
   candidate: candidateReducer,
   notification: AllNotificationReducer,
+  editproperty: EditPropertyReducer,
+  newproperty: CreatePropertyReducer,
+  overview: OverviewReducer,
 });
 // const persistedReducers = persistReducer(persistConfig, reducers);
 const Store = configureStore({

@@ -21,12 +21,11 @@ const Sidebar = () => {
   const logout = () => {
     localStorage.clear();
   };
-  const { candidate } = useSelector((state) => state);
-  const user = candidate.user;
-  const avatar = candidate.user.avatar;
+  const { user, loading, error } = useSelector((state) => state.userprofile);
+  const avatar = user?.avatar;
   // console.log(avatar.url);
 
-  const { firstName, lastName } = user;
+  // const { firstName, lastName } = user;
   // console.log(user);
 
   return (
@@ -60,12 +59,12 @@ const Sidebar = () => {
           <Link to="/profile">
             <div className="profile-image-container-sb">
               <img
-                src={avatar.url !== undefined ? avatar.url : About2}
+                src={avatar?.url !== undefined ? avatar?.url : About2}
                 className="profile-image"
                 alt="profile image"
               />
-              <h6 className={`${sidebar.sidebar_link} mt-2`}>
-                {firstName} {lastName}
+              <h6 className={`${sidebar.sidebar_link} sidebar_profile_text  mt-2`}>
+                {user?.firstName} {user?.lastName}
               </h6>
             </div>
           </Link>

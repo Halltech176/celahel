@@ -11,7 +11,7 @@ export const signup = createAsyncThunk("signup", async (userData) => {
       const request = await axios.get(
         `https://celahl.herokuapp.com/api//auth/request-email-verification?email=${response.data.data.email}`
       );
-      console.log(request);
+      // console.log(request);
     }
     return response.data.data;
   } catch (err) {
@@ -32,11 +32,11 @@ export const login = createAsyncThunk("login", async (loginData) => {
   }
 });
 
-export const Users = createAsyncThunk("allusers", async (page = 2) => {
+export const User = createAsyncThunk("allusers", async () => {
   try {
     const token = window.JSON.parse(localStorage.getItem("token"));
     const response = await axios.get(
-      `https://celahl.herokuapp.com/api//admin/users?limit=10&page=${page}`,
+      "https://celahl.herokuapp.com/api//users/profile?populate=avatar",
       {
         headers: {
           Authorization: `Bearer ${token} `,
@@ -50,11 +50,30 @@ export const Users = createAsyncThunk("allusers", async (page = 2) => {
   }
 });
 
-export const Properties = createAsyncThunk("properties", async (page = 1) => {
+export const Properties = createAsyncThunk("properties", async (parameters) => {
+  console.log(parameters);
   try {
     const token = window.JSON.parse(localStorage.getItem("token"));
     const response = await axios.get(
-      `https://celahl.herokuapp.com/api/property?populate=images&page=${page}`,
+      `https://celahl.herokuapp.com/api/property?_searchBy=name&_keyword=${parameters?.value || ''}&populate=images&page=${parameters?.page || 1}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token} `,
+        },
+      }
+    );
+    return response.data.data;
+  } catch (err) {
+    throw err;
+    console.log(err);
+  }
+});
+
+export const Overview = createAsyncThunk("overview", async (totalPage) => {
+  try {
+    const token = window.JSON.parse(localStorage.getItem("token"));
+    const response = await axios.get(
+      `https://celahl.herokuapp.com/api/property?populate=images&page1=&limit=${totalPage}`,
       {
         headers: {
           Authorization: `Bearer ${token} `,
@@ -71,7 +90,7 @@ export const Properties = createAsyncThunk("properties", async (page = 1) => {
 export const Property = createAsyncThunk("property", async (id) => {
   try {
     const token = window.JSON.parse(localStorage.getItem("token"));
-    // http://localhost:8089/api//property/:propertyId
+
     const response = await axios.get(
       `https://celahl.herokuapp.com/api//data/property/${id}`,
       {
@@ -86,6 +105,68 @@ export const Property = createAsyncThunk("property", async (id) => {
     console.log(err);
   }
 });
+
+export const CreateProperty = createAsyncThunk(
+  "create/property",
+  async (data, { rejectWithValue }) => {
+    console.log(rejectWithValue());
+    console.log(data);
+    try {
+      const token = window.JSON.parse(localStorage.getItem("token"));
+      // const id = window.JSON.parse(localStorage.getItem("id"));
+
+      const response = await axios.post(
+        " https://celahl.herokuapp.com/api//property/",
+        data,
+        {
+          headers: {
+            "content-type": "multipart/form-data",
+            Authorization: `Bearer ${token} `,
+          },
+        }
+      );
+
+      return response.data.data;
+    } catch (err) {
+      if (err) {
+        console.log(rejectWithValue(err?.response?.data?.message));
+        throw rejectWithValue(err);
+      }
+      console.log(err.response.data.message);
+      // throw err;
+    }
+  }
+);
+
+export const EditProperty = createAsyncThunk(
+  "edit/property",
+  async (data, { rejectWithValue }) => {
+    try {
+      const token = window.JSON.parse(localStorage.getItem("token"));
+      const id = window.JSON.parse(localStorage.getItem("id"));
+
+      const response = await axios.put(
+        // `https://celahl.herokuapp.com/api//property/${id}`;
+        ` https://celahl.herokuapp.com/api//property/${id}`,
+        data,
+        {
+          headers: {
+            "content-type": "multipart/form-data",
+            Authorization: `Bearer ${token} `,
+          },
+        }
+      );
+
+      return response.data.data;
+    } catch (err) {
+      if (err) {
+        // console.log(rejectWithValue(err?.response?.data?.message));
+        throw rejectWithValue(err);
+      }
+      console.log(err);
+    }
+  }
+);
 export const Notification = createAsyncThunk(
   "notifications",
   async (page = 1) => {

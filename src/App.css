@@ -4,9 +4,11 @@
   padding: 0;
   box-sizing: border-box;
 }
-/* body {
-  overflow: hidden;
-} */
+*::selection {
+  background-color : #15803d;
+  color : white;
+ 
+}
 .loader-icon {
   color: red;
   background: white;
@@ -20,10 +22,9 @@
   right: 0;
   z-index: 5;
 }
-/* .loader-icon div {
-  width: 30rem;
-  height: 30rem;
-} */
+.sidebar_profile_text {
+  font-size: 0.9rem !important;
+}
 .text_lead {
   color: #6e7191 !important;
   font-family: "Public Sans", sans-serif !important;
@@ -70,25 +71,44 @@
 }
 .auth-container {
   text-transform: capitalize;
-  padding: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  height : 100vh;
   flex-direction: column;
+  background-color : whitesmoke;
+  font-family: "DM Mono" monospace !important;
+}
+.auth-container div {
+  padding : 2rem;
+ 
 }
 .auth-button {
   background: #2562e9;
   border: none;
   color: white;
-  padding: 0.5rem 0.8rem;
+  padding: 0.2rem 0.8rem;
   border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin : 3rem;
+ 
+} 
+.auth-text {
+  display : flex;
+  align-items : center;
+  flex-wrap:wrap;
+  justify-content : center;
+  font-family: "DM Serif Display", serif !important;
 }
 .auth-text button {
-  background: #25e93f;
+  background: #2562e9;
   border: none;
-  color: white;
-  padding: 0.5rem 0.8rem;
+  color: whitesmoke;
+  padding: 0.2rem 0.8rem;
   border-radius: 5px;
+  font-size:1rem;
+  margin-left:0.5rem;
+  font-family: "DM Serif Display", serif !important;
 }
 .profile-image-container {
   position: relative;
@@ -148,10 +168,33 @@
   background-color: #ff476b !important;
 }
 .paginate-btn {
-  padding: 0.3rem 1.4rem !important;
+  padding: 0.3rem 1.2rem !important;
   border: none;
-  font-family: "DM Serif Display", serif !important;
+  font-family: "Public Sans", sans-serif !important;
   color: #2562e9 !important;
+  border-radius: 5px;
+  font-weight: bolder;
+}
+.paginate-btn:hover {
+  transform: scale(0.8);
+  background: #2562e9 !important;
+  color: whitesmoke !important;
+}
+.inactive_page,
+.active_page {
+  background-color: #2562e9;
+  border-radius: 50%;
+  text-align: center;
+  width: 2rem;
+  padding: 0.2rem;
+  color: white !important;
+  transform: scale(1);
+  font-family: "Public Sans", sans-serif !important;
+}
+.inactive_page {
+  background-color: whitesmoke;
+  color: black !important;
+  transform: scale(0.8);
 }
 .hide-spec {
   display: none;

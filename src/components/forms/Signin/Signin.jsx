@@ -5,7 +5,7 @@ import { FormInput } from "./FormInputs";
 import { useDispatch, useSelector } from "react-redux";
 import { Validate } from "./ValidateForm";
 import { signup } from "../../../Redux/actions";
-import { userCredential } from "../../../Redux/slices/userStates";
+import { User } from "../../../Redux/actions";
 import { ToastContainer, Zoom } from "react-toastify";
 import Loader from "../../Common/Loader";
 import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
@@ -75,16 +75,14 @@ const Signin = () => {
         throw "Password confirmation went wrong!!!";
       }
       const response = await dispatch(signup(userData)).unwrap();
-      setTimeout(() => {
-        console.log("hi");
-      }, 1000);
-      const user = dispatch(userCredential(response));
+      console.log(response);
+      const user = await dispatch(User());
       console.log(user);
       InfoNotification(response.message);
       console.log(response);
 
       setTimeout(() => {
-        navigate("/verify");
+        // navigate("/verify");
       }, 2000);
     } catch (err) {
       console.log(err);

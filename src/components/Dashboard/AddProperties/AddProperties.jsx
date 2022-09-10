@@ -4,13 +4,18 @@ import Sidebar from "../../Common/Sidebar/Sidebar";
 import { CgArrowLongLeft } from "react-icons/cg";
 import properties from "./AddProperties.module.css";
 import property_image from "../../../Assets/house.png";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector} from "react-redux";
 import searchBtn from "../../../Assets/SearchVector.png";
 import { ToastContainer, Zoom } from "react-toastify";
+import { CreateProperty } from "../../../Redux/actions";
 import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../../Common/Loader";
 const AddProperties = () => {
+  const dispatch = useDispatch();
+  const {loading, error, newProperty}= useSelector((state) => state.newproperty);
+  console.log(newProperty)
   const [name, setName] = useState("d-villa");
   const [description, setDescription] = useState(
     "This is a really nice place where you can leave comfortable and you wont't have any problem. The house is really made of nice featueres and you will really enjure it sir"
@@ -106,7 +111,7 @@ const AddProperties = () => {
     e.preventDefault();
 
     try {
-      const url = " https://celahl.herokuapp.com/api//property/";
+      // const url = " https://celahl.herokuapp.com/api//property/";
 
       let formData = new FormData();
 
@@ -128,21 +133,8 @@ const AddProperties = () => {
       console.log(Array.from(formData));
 
       console.log(formData);
-      const config = {
-        headers: {
-          "content-type": "multipart/form-data",
-          Authorization: `Bearer ${token} `,
-        },
-      };
-      const data = await axios.post(url, formData, config);
-
-      if (data.status === 201) {
-        InfoNotification(data.data.message);
-        setTimeout(() => {
-          navigate("/properties");
-        }, 2000);
-      }
-      console.log(data);
+      const response = await dispatch(CreateProperty(formData)).unwrap();
+      console.log(response);
     } catch (err) {
       // if(err.)
       console.log(err);
@@ -153,8 +145,8 @@ const AddProperties = () => {
         ErrorNotification("please check your internet connection");
       }
       console.log(err);
-      ErrorNotification(err.response.data.message);
-      if (err.response.data.message.split(" ").length > 12) {
+      ErrorNotification(err?.response?.data?.message);
+      if (err?.response?.data?.message?.split(" ").length > 12) {
         setTimeout(() => {
           navigate("/upgrade");
         }, 3000);
@@ -165,12 +157,17 @@ const AddProperties = () => {
     navigate(-1);
   };
   return (
+
     <>
+    {
+loading && !error ? <Loader/> : 
+    
+    <div> 
       <ToastContainer transition={Zoom} autoClose={800} />
       <Sidebar />
       <div className={`${properties.property_container}`}>
         <div className="row">
-          <div className={`${properties.search_container}`}>
+          {/* <div className={`${properties.search_container}`}>
             <div>
               <input
                 className={`${properties.search_input} form-control`}
@@ -184,7 +181,7 @@ const AddProperties = () => {
                 />
               </span>
             </div>
-          </div>
+          </div> */}
           {/* <div></div> */}
           <div className="col-md-8 d-flex align-items-center">
             <CgArrowLongLeft size="1.8rem" onClick={Back} />
@@ -633,7 +630,20 @@ const AddProperties = () => {
           </form>
         </div>
       </div>
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   </div>
+   }
     </>
+
   );
 };
 

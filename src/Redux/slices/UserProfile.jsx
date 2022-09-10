@@ -1,30 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Properties } from "../actions";
+import { User } from "../actions";
 
 const initialState = {
   loading: false,
-  properties: null,
+  user: null,
   error: false,
 };
-const AllProperties = createSlice({
-  name: "properties",
+const UserProfile = createSlice({
+  name: "signup",
   initialState,
   reducers: {},
   extraReducers: {
-    [Properties.fulfilled]: (state, action) => {
+    [User.fulfilled]: (state, action) => {
       state.loading = false;
-      state.properties = action.payload;
+      state.user = action.payload;
       state.error = false;
     },
-    [Properties.pending]: (state) => {
+    [User.pending]: (state) => {
       state.loading = true;
       state.error = false;
+      state.user = null;
     },
-    [Properties.rejected]: (state) => {
+    [User.rejected]: (state) => {
       state.loading = false;
       state.error = true;
+      state.user = null;
     },
   },
 });
 
-export const PropertiesReducer = AllProperties.reducer;
+export const UserReducer = UserProfile.reducer;

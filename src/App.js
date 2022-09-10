@@ -1,5 +1,5 @@
 import React from "react";
-import Demo from "./demo";
+// import Demo from "./demo";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Footer from "./components/Common/Footer/Footer";
 import Navbar from "./components/Common/Navbar/Navbar";
@@ -25,16 +25,15 @@ import Login from "./components/forms/Login/Login";
 import ForgotPassword from "./components/forms/Login/forgotPassword";
 import EmailVal from "./components/forms/Login/emailVal";
 import Faq from "./components/forms/Faq/Faq";
-import { AgentAuth } from "./Redux/auth/RequireAuth";
+import { AgentAuth, ContactAuth } from "./Redux/auth/RequireAuth";
 import "./App.css";
 import NoMatch from "./components/routes/NoMatch";
 import { useSelector } from "react-redux";
 
 function App() {
-  const selector = useSelector((state) => state.candidate);
-  const status = selector.user?.status;
   const token = JSON.parse(window.localStorage.getItem("token"));
-  console.log(status);
+  const id = JSON.parse(window.localStorage.getItem("id"));
+
   // console.log(process.env.REACT_APP_BASE_URL);
   const location = useLocation();
   const path = location.pathname;
@@ -66,13 +65,13 @@ function App() {
               )
             }
           />
-          <Route path="/demo" element={<Demo />} />
+          {/* <Route path="/demo" element={<Demo />} /> */}
           <Route
             path="/contact"
             element={
-              <AgentAuth>
+              <ContactAuth>
                 <Contact />
-              </AgentAuth>
+              </ContactAuth>
             }
           />
           <Route path="/login" element={<Login />} />
@@ -117,9 +116,12 @@ function App() {
           <Route
             path="/editproperty"
             element={
+              id !== null ?
               <AgentAuth>
                 <EditProperty />
-              </AgentAuth>
+              </AgentAuth> : <AgentAuth>
+                <Properties />
+              </AgentAuth> 
             }
           />
           <Route

@@ -1,30 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Properties } from "../actions";
+import { EditProperty } from "../actions";
 
 const initialState = {
   loading: false,
-  properties: null,
+  editedproperty: null,
   error: false,
 };
-const AllProperties = createSlice({
-  name: "properties",
+const Property = createSlice({
+  name: "editedproperty",
   initialState,
   reducers: {},
   extraReducers: {
-    [Properties.fulfilled]: (state, action) => {
+    [EditProperty.fulfilled]: (state, action) => {
       state.loading = false;
-      state.properties = action.payload;
+      state.editedproperty = action.payload;
       state.error = false;
     },
-    [Properties.pending]: (state) => {
+    [EditProperty.pending]: (state) => {
       state.loading = true;
       state.error = false;
     },
-    [Properties.rejected]: (state) => {
+    [EditProperty.rejected]: (state) => {
       state.loading = false;
       state.error = true;
     },
   },
 });
 
-export const PropertiesReducer = AllProperties.reducer;
+export const EditPropertyReducer = Property.reducer;

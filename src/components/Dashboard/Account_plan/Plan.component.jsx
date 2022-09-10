@@ -8,8 +8,10 @@ import Sidebar from "../../Common/Sidebar/Sidebar";
 import { ToastContainer, Zoom } from "react-toastify";
 import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
 import "react-toastify/dist/ReactToastify.css";
+import {useNavigate} from 'react-router-dom'
 
 function Plan() {
+  const navigate = useNavigate()
   const [modalState, setModalState] = React.useState(false);
   const handleOpen = () => setModalState(true);
   const handleClose = () => setModalState(false);
@@ -35,7 +37,7 @@ function Plan() {
         "https://celahl.herokuapp.com/api//transaction/initiate",
         {
           reference: generate_transaction.data.data.reference,
-          callback_url: null,
+          callback_url: "http://localhost:3000/addproperty",
         },
         {
           headers: {
@@ -144,22 +146,17 @@ function Plan() {
               </label>
             </div>
             <p>
-              <span className="h1 display-2 text-primary">$99</span> /monthly
+              <span className=" display-4 text-primary">Free trial</span> 
             </p>
 
             <button
               className="btn btn-block btn-primary bg-primary rounded-pill my-3 py-3"
-              onClick={() => planSubscribe(200)}
+             onClick ={() => navigate('/addproperties')}
             >
               Get started
             </button>
           </div>
-          {/* <ModalComponent handleClose={handleClose} open={modalState}> */}
-          {/* Our Modal Here */}
-          {/* <MakePayment /> */}
-          {/* </ModalComponent> */}
-          {/* ************************** INVERTED
-           ************************* */}
+       
           <div className="col-12 col-md card shadow-lg bg-purple px-3 mx-lg-3 py-5 inverted bg-primary text-white">
             <div className="d-flex">
               <div className="bg-light p-2 m-3 rounded-lg">
@@ -227,11 +224,11 @@ function Plan() {
               </label>
             </div>
             <p>
-              <span className="h1 display-2 text-light">$199</span> /monthly
+              <span className="display-4 text-light">&#8358;10000</span> / 3month
             </p>
 
             <button
-              onClick={() => planSubscribe(200)}
+              onClick={() => planSubscribe(10000)}
               className="btn btn-block btn-light rounded-pill my-3 py-3"
             >
               Get started
@@ -307,11 +304,11 @@ function Plan() {
               </label>
             </div>
             <p>
-              <span className="h1 display-2 text-primary">$399</span> /monthly
+              <span className=" display-4 text-primary">&#8358;100000</span> /5years
             </p>
 
             <button
-              onClick={() => planSubscribe(500)}
+              onClick={() => planSubscribe(100000)}
               className="btn btn-block bg-primary btn-primary rounded-pill my-3 py-3"
             >
               Get started

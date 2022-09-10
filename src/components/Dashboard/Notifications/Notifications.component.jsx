@@ -1,19 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import notificationstyles from "./notifications.module.scss";
 import Sidebar from "../../Common/Sidebar/Sidebar";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { Notification } from "../../../Redux/actions";
 import Loader from "../../Common/Loader";
+import { IoMdCheckmarkCircle } from "react-icons/io";
+import { MdOutlineMarkunread } from "react-icons/md";
+import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
 
 const Notifications = () => {
   const dispatch = useDispatch();
   const [count, setCount] = useState(2);
-  const { notification } = useSelector((state) => state);
-  const notifications = notification.notifications;
-  console.log(notification);
-  // const items = useSelector((state) => state.notifications.notifications);
-  const { docs } = notifications;
+  const { notifications, error, loading } = useSelector(
+    (state) => state.notification
+  );
+
+  useEffect(() => {
+    dispatch(Notification());
+  }, []);
 
   const handleIncrease = async () => {
     setCount(count + 1);
@@ -21,8 +26,7 @@ const Notifications = () => {
     if (count === notifications.totalPages) {
       setCount(1);
     }
-    console.log(count);
-    // await dispatch(AllProperties(1));
+
     await dispatch(Notification(count));
   };
 
@@ -32,14 +36,27 @@ const Notifications = () => {
     if (count === 1) {
       setCount(notifications.totalPages);
     }
-    console.log(count);
-    // await dispatch(AllProperties(1));
+
     await dispatch(Notification(count));
+  };
+
+  const handlePaginate = async (index) => {
+    try {
+    
+
+      const response = await dispatch(Notification(index));
+      if (response.type === "properties/rejected") {
+        throw "please check your internet connection";
+      }
+    } catch (err) {
+      console.log(err);
+      // ErrorNotification(err);
+    }
   };
 
   const readNotification = async (id, readStatus) => {
     const token = JSON.parse(window.localStorage.getItem("token"));
-    console.log(token, id);
+
     try {
       const response = await axios.put(
         `https://celahl.herokuapp.com/api//notification/${id}`,
@@ -51,6 +68,7 @@ const Notifications = () => {
         }
       );
       if (response.status === 200) {
+        await dispatch(Notification());
         readStatus = response.data.data.read;
         console.log(readStatus);
       }
@@ -60,34 +78,32 @@ const Notifications = () => {
     }
   };
 
-  const renderNotes = docs.map((doc, index) => {
+  const renderNotes = notifications?.docs.map((doc, index) => {
     return (
       <tr key={index} className="mb-3" scope="row">
         <td scope="col-3">{new Date(doc.createdAt).toLocaleDateString()}</td>
         <td scope="col-8" className={`${notificationstyles.notificationbody}`}>
           {doc.message}
         </td>
-        {/* <td scope="col-3">{doc.read}</td> */}
-        <td scope="col-3">
+
+        <td scope="col-3" className="text-center">
           <button
+            className="text-center"
             onClick={() => {
               readNotification(doc._id, doc.read);
             }}
             className={`${doc.read ? "read" : "unread"} `}
           >
-            {doc.read ? "read" : "unread"}
+            {doc.read ? <IoMdCheckmarkCircle /> : <MdOutlineMarkunread />}
           </button>
         </td>
       </tr>
     );
-    // console.log(doc.message);
   });
-  docs.map((doc) => {
-    console.log(doc.read);
-  });
+
   return (
     <>
-      {notification.loading ? (
+      {loading ? (
         <Loader />
       ) : (
         <div>
@@ -102,21 +118,49 @@ const Notifications = () => {
                     <tr>
                       <th scope="col-3">Date</th>
                       <th scope="col-3">Body</th>
-                      <th scope="col-6">Read</th>
+                      <th scope="col-6">Mark as read</th>
                     </tr>
                   </thead>
                   <tbody>{renderNotes}</tbody>
                 </table>
               </div>
             </div>
-            <div className="paginate-btns d-flex justify-content-between my-3 flex-wrap ">
-              <button className="paginate-btn" onClick={handleDecrease}>
+            {
+              notifications ?.totalPages === 1 ? "" :    <div className="paginate-btns d-flex align-items-center justify-content-between my-3 flex-wrap ">
+              {
+                notifications ?.page === 1 ? <div> </div> : <button className="paginate-btn" onClick={handleDecrease}>
                 prev
               </button>
-              <button className="paginate-btn" onClick={handleIncrease}>
+              }
+              
+              <ul className="d-flex align-items-center">
+                {notifications?.docs?.map((doc, index) => {
+                  return index < notifications?.totalPages ? (
+                    <li
+                      key={index}
+                      className={`${
+                        notifications?.page === index + 1
+                          ? "active_page"
+                          : "inactive_page"
+                      } mx-2`}
+                      onClick={() => handlePaginate(index + 1)}
+                    >
+                      {index + 1}
+                    </li>
+                  ) : (
+                    ""
+                  );
+                })}
+              </ul>
+              {
+                 notifications ?.page ===  notifications ?.totalPages ? <div> </div> : <button className="paginate-btn" onClick={handleIncrease}>
                 next
               </button>
+              }
+              
             </div>
+            }
+          
           </div>
         </div>
       )}

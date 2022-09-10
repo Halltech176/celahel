@@ -19,13 +19,15 @@ const EditProperty = () => {
   const { loading } = useSelector((state) => state.property);
   const allprop = useSelector((state) => state.properties);
   console.log(loading);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [address, setAddress] = useState("");
+
+  
+  const [name, setName] = useState(activeProperty.name);
+  const [description, setDescription] = useState(activeProperty.description);
+  const [price, setPrice] = useState(activeProperty.price);
+  const [address, setAddress] = useState(activeProperty.address);
   const [images, setImages] = useState("");
   const [image, setImage] = useState("properties");
-  const [purpose, setPurpose] = useState("");
+  const [purpose, setPurpose] = useState(activeProperty.purpose);
   const [house, setHouse] = useState(false);
   const [relaxation, setRelaxation] = useState(false);
   const [land, setLand] = useState(false);
@@ -108,14 +110,12 @@ const EditProperty = () => {
   };
   // console.log(images);
   const token = window.JSON.parse(localStorage.getItem("token"));
-  const id = window.JSON.parse(localStorage.getItem("id"));
   const UpdateProperty = async (e) => {
     e.preventDefault();
 
     try {
       // http://localhost:8089/api//property/:
-      const url = `https://celahl.herokuapp.com/api//property/6305d7c683bfbf50de2c8053`;
-      // const url = `https://celahl.herokuapp.com/api//property/${id}`;
+      const url = `https://celahl.herokuapp.com/api//property/${activeProperty._id}`;
 
       let formData = new FormData();
 
