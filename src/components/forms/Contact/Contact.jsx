@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import contact from "./Contact.module.css";
 import { FaMapMarkerAlt, FaMarker } from "react-icons/fa";
 import contact_image from "../../../Assets/Image.png";
@@ -25,7 +26,12 @@ const Contact = () => {
     }
   };
   return (
-    <div id="contact_container">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.7 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
+      id="contact_container"
+    >
       <ToastContainer transition={Zoom} autoClose={800} />
       <div>
         <div className="container bg-white py-5">
@@ -103,7 +109,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import {useNavigate} from 'react-router-dom'
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import Visuals from "./Visuals";
 import overview_style from "./Overview.module.css";
 import Sidebar from "../../Common/Sidebar/Sidebar";
@@ -12,7 +13,7 @@ import {
 import Loader from "../../Common/Loader";
 const Overview = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { loading, error, overview } = useSelector((state) => state.overview);
   const {
     loading: propertyLoading,
@@ -57,7 +58,11 @@ const Overview = () => {
       {propertyLoading && loading ? (
         <Loader />
       ) : (
-        <div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <Sidebar />
           <div className={`${overview_style.line_graph_container}`}>
             <h1 className="text-primary">Properties overviews</h1>
@@ -71,12 +76,16 @@ const Overview = () => {
                 Math.ceil((1 * property_slice?.length) / 4)
               )}
             />
-            <div className='d-flex justify-content-end'>
-               <button onClick={() => navigate('/properties')} className='btn-primary h6 shadow-md px-4 my-3 border-0 rounded-1 py-2'>See More</button>
-               </div>
+            <div className="d-flex justify-content-end">
+              <button
+                onClick={() => navigate("/properties")}
+                className="btn-primary h6 shadow-md px-4 my-3 border-0 rounded-1 py-2"
+              >
+                See More
+              </button>
+            </div>
           </div>
-       
-        </div>
+        </motion.div>
       )}
     </>
   );

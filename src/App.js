@@ -12,6 +12,7 @@ import About from "./components/pages/About/About";
 import Profile from "./components/pages/Profile/Profile";
 
 import Properties from "./components/Dashboard/Properties/Properties";
+import Wallet from "./components/Dashboard/Wallet/Wallet";
 import AddProperties from "./components/Dashboard/AddProperties/AddProperties";
 import EditProperty from "./components/Dashboard/AddProperties/EditProperty";
 import Notifications from "./components/Dashboard/Notifications/Notifications.component";
@@ -87,6 +88,7 @@ function App() {
           <Route path="/uploading..." element={<Upload />} />
           <Route path="/forgottenPassword" element={<ForgotPassword />} />
           <Route path="/validateEmail" element={<EmailVal />} />
+          <Route path="/agent-wallet" element={<Wallet />} />
 
           <Route
             path="/profile"
@@ -116,12 +118,15 @@ function App() {
           <Route
             path="/editproperty"
             element={
-              id !== null ?
-              <AgentAuth>
-                <EditProperty />
-              </AgentAuth> : <AgentAuth>
-                <Properties />
-              </AgentAuth> 
+              id !== null ? (
+                <AgentAuth>
+                  <EditProperty />
+                </AgentAuth>
+              ) : (
+                <AgentAuth>
+                  <Properties />
+                </AgentAuth>
+              )
             }
           />
           <Route

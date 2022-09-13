@@ -178,6 +178,11 @@
       right: 3rem;
       z-index: 1;
       margin: 3rem 0 !important;
+      animation-name: scaleup;
+      animation-duration: 3s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+      animation-direction: normal;
     }
   }
 }

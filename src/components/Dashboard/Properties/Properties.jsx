@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../Common/Loader";
@@ -18,22 +19,17 @@ const Properties = () => {
     (state) => state.properties
   );
   const [count, setCount] = useState(2);
- 
 
   const handleIncrease = async () => {
     try {
-      console.log(count)
-        if (count === properties?.totalPages) {
+      console.log(count);
+      if (count === properties?.totalPages) {
         setCount(1);
       }
       setCount(count + 1);
 
-    
-
       // await dispatch(AllProperties(1));
-      const response = await dispatch(
-        AllProperties({ page: count})
-      );
+      const response = await dispatch(AllProperties({ page: count }));
       if (response.type === "properties/rejected") {
         throw "please check your internet connection";
       }
@@ -62,8 +58,6 @@ const Properties = () => {
 
   const handlePaginate = async (index) => {
     try {
-      
-
       const response = await dispatch(AllProperties({ page: index }));
       if (response.type === "properties/rejected") {
         throw "please check your internet connection";
@@ -73,8 +67,8 @@ const Properties = () => {
     }
   };
 
- const handleSearch = async (val) => {
-    const response =   properties?.docs?.filter((data) => {
+  const handleSearch = async (val) => {
+    const response = properties?.docs?.filter((data) => {
       return (
         data?.name === val ||
         data?.price === val ||
@@ -82,14 +76,12 @@ const Properties = () => {
         data?.purpose === val
       );
     });
-    const result = await dispatch(AllProperties({  value : val }));
-      console.log(result)
-    return result
-  
+    const result = await dispatch(AllProperties({ value: val }));
+    console.log(result);
+    return result;
   };
 
-
-// console.log(searchIt)
+  // console.log(searchIt)
   const GetProperty = async (id) => {
     try {
       console.log(id);
@@ -119,7 +111,11 @@ const Properties = () => {
       {loading && !error ? (
         <Loader />
       ) : (
-        <div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <ToastContainer transition={Zoom} autoClose={800} />
           <PropertyView
             property={properties?.docs}
@@ -130,7 +126,7 @@ const Properties = () => {
             GetProperty={GetProperty}
             handleSearch={handleSearch}
           />
-        </div>
+        </motion.div>
       )}
     </>
   );

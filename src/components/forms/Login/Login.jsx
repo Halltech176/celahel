@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Loader from "../../Common/Loader";
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import login from "./Login.module.css";
 import { ToastContainer, Zoom } from "react-toastify";
@@ -9,12 +10,7 @@ import {
 } from "../../Common/ErrorToast";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  login as loggin,
-  Properties as AllProperties,
-  Users,
-  Notification,
-} from "../../../Redux/actions";
+import { login as loggin, Users } from "../../../Redux/actions";
 import axios from "axios";
 
 import { userCredential } from "../../../Redux/slices/userStates";
@@ -25,41 +21,35 @@ const Login = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const selector = useSelector((state) => state.properties);
-  const notify = useSelector((state) => state.notification);
   const loginState = useSelector((state) => state.login);
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     try {
       const requestdata = {
         password,
         username: email,
       };
-      const { error } = await dispatch(loggin(requestdata));
-      const val = await dispatch(loggin(requestdata));
-      console.log(val);
-      if (val.type === "login/fulfilled") {
+      const { error, type, payload } = await dispatch(loggin(requestdata));
+
+      if (type === "login/fulfilled") {
         window.localStorage.setItem(
           "token",
-          JSON.stringify(val.payload.data.token)
+          JSON.stringify(payload.data.token)
         );
-        setTimeout(() => {
-          navigate("/properties");
-        }, 1000);
+        // setTimeout(() => {
+        navigate("/properties");
+        // }, 1000);
 
-        SuccessNotification(val.payload.message);
-        console.log(val.payload);
+        SuccessNotification(payload.message);
+        console.log(payload);
       }
       if (error?.message === "Network Error") {
-        throw "Pleae check your internet connection";
+        throw "Please check your internet connection";
       }
       if (error?.message === "Request failed with status code 401") {
         throw "Please enter valid email and password";
       }
-
-      const note = await dispatch(Notification());
-      console.log(note);
     } catch (err) {
       if (err.message === "Network Error") {
         ErrorNotification("please check your internet connections");
@@ -78,7 +68,11 @@ const Login = () => {
       {loginState.loading ? (
         <Loader />
       ) : (
-        <div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <ToastContainer transition={Zoom} autoClose={800} />
           <div className="login my-5">
             <div className="container">
@@ -144,7 +138,7 @@ const Login = () => {
               </form>
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
     </>
   );

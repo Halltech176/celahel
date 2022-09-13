@@ -1,5 +1,5 @@
 import { ToastContainer, Zoom } from "react-toastify";
-import {useState} from 'react'
+import { useState } from "react";
 import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
 import properties from "./Properties.module.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,15 +9,13 @@ import { Link } from "react-router-dom";
 import searchBtn from "../../../Assets/SearchVector.png";
 
 const PropertyView = (docs) => {
+  const [search, setSearch] = useState("");
 
-const [search, setSearch] = useState('')
+  const handleSearchFuntion = () => {
+    docs?.handleSearch(search);
+  };
+  console.log(search);
 
-const handleSearchFuntion = () => {
-  docs?.handleSearch(search)
-} 
-console.log(search)
-  
- 
   const agent_properties = docs?.property?.map((data) => {
     return (
       <div
@@ -44,11 +42,11 @@ console.log(search)
           {data.images.map((img) => {
             return (
               // <div key={img._id} className={`${properties.image_border}`} >
-              <img    
+              <img
                 src={img.url}
                 alt={img._id}
                 className={`${properties.property_image} mx-auto`}
-                loading = 'eager'
+                loading="eager"
               />
               // </div>
             );
@@ -62,15 +60,17 @@ console.log(search)
       <Sidebar />
       <div className={`${properties.property_container} row`}>
         <div className={`${properties.search_container}`}>
-        <p className={`${properties.info_label}`}>note : <br/> click on a property to edit </p>
+          <p className={`${properties.info_label}`}>
+            note : <br /> click on a property to edit{" "}
+          </p>
           <div>
             <input
-            value ={search}
-            onChange = {(e) => setSearch(e.target.value)}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               className={`${properties.search_input}  form-control`}
               placeholder="search by property name"
             />
-            <span onClick ={handleSearchFuntion}>
+            <span onClick={handleSearchFuntion}>
               <img
                 className={`${properties.search_icon}`}
                 src={searchBtn}
@@ -95,47 +95,51 @@ console.log(search)
         <div
           className={`${properties.properties_image} col-md-12 d-flex flex-wrap justify-content-between`}
         >
-        {agent_properties}</div>
+          {agent_properties}
+        </div>
         <div>
-        {
-          docs.properties?.totalPages === 1 ? '' :   <div className="paginate-btns d-flex align-items-center justify-content-between my-3 flex-wrap ">
-          {
-             docs?.properties?.page === 1 ? <div> </div> : <button className="paginate-btn" onClick={docs.handleDecrease}>
-            prev
-          </button>
-          }
-          
-          <ul className="d-flex align-items-center">
-            {docs?.property?.map((doc, index) => {
-              // if(inde)
-              return index < docs.properties?.totalPages ? (
-                <li
-                  key={index}
-                  onClick={() => docs.handlePaginate(index + 1)}
-                  className={`${
-                    docs?.properties?.page === index + 1
-                      ? "active_page"
-                      : "inactive_page"
-                  } mx-2`}
-                >
-                  {index + 1}
-                </li>
+          {docs.properties?.totalPages === 1 ? (
+            ""
+          ) : (
+            <div className="paginate-btns d-flex align-items-center justify-content-between my-3 flex-wrap ">
+              {docs?.properties?.page === 1 ? (
+                <div> </div>
               ) : (
-                ""
-              );
-            })}
-          </ul>
-          {
-            docs?.properties?.page === docs.properties?.totalPages ? <div> </div> : <button className="paginate-btn" onClick={docs.handleIncrease}>
-            next
-          </button>
-          }
-          
+                <button className="paginate-btn" onClick={docs.handleDecrease}>
+                  prev
+                </button>
+              )}
+
+              <ul className="d-flex align-items-center">
+                {docs?.property?.map((doc, index) => {
+                  // if(inde)
+                  return index < docs.properties?.totalPages ? (
+                    <li
+                      key={index}
+                      onClick={() => docs.handlePaginate(index + 1)}
+                      className={`${
+                        docs?.properties?.page === index + 1
+                          ? "active_page"
+                          : "inactive_page"
+                      } mx-2`}
+                    >
+                      {index + 1}
+                    </li>
+                  ) : (
+                    ""
+                  );
+                })}
+              </ul>
+              {docs?.properties?.page === docs.properties?.totalPages ? (
+                <div> </div>
+              ) : (
+                <button className="paginate-btn" onClick={docs.handleIncrease}>
+                  next
+                </button>
+              )}
+            </div>
+          )}
         </div>
-        }
-        </div>
-        
-      
       </div>
     </>
   );

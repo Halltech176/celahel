@@ -36,7 +36,7 @@ export const User = createAsyncThunk("allusers", async () => {
   try {
     const token = window.JSON.parse(localStorage.getItem("token"));
     const response = await axios.get(
-      "https://celahl.herokuapp.com/api//users/profile?populate=avatar",
+      "https://celahl.herokuapp.com/api//users/profile?orderBy=wallet.histories.updatedAt&populate=avatar&populate=wallet.histories&populate=bankAccounts",
       {
         headers: {
           Authorization: `Bearer ${token} `,
@@ -55,7 +55,9 @@ export const Properties = createAsyncThunk("properties", async (parameters) => {
   try {
     const token = window.JSON.parse(localStorage.getItem("token"));
     const response = await axios.get(
-      `https://celahl.herokuapp.com/api/property?_searchBy=name&_keyword=${parameters?.value || ''}&populate=images&page=${parameters?.page || 1}`,
+      `https://celahl.herokuapp.com/api/property?_searchBy=name&_keyword=${
+        parameters?.value || ""
+      }&populate=images&page=${parameters?.page || 1}`,
       {
         headers: {
           Authorization: `Bearer ${token} `,
@@ -169,11 +171,11 @@ export const EditProperty = createAsyncThunk(
 );
 export const Notification = createAsyncThunk(
   "notifications",
-  async (page = 1) => {
+  async ({ page = 1, limit = 10 }) => {
     try {
       const token = window.JSON.parse(localStorage.getItem("token"));
       const response = await axios.get(
-        `https://celahl.herokuapp.com/api//notification?page=${page}`,
+        `https://celahl.herokuapp.com/api//notification?page=${page}&limit=${limit}`,
         {
           headers: {
             Authorization: `Bearer ${token} `,
@@ -187,3 +189,21 @@ export const Notification = createAsyncThunk(
     }
   }
 );
+
+export const BankAccounts = createAsyncThunk("bankaccounts", async () => {
+  try {
+    const token = window.JSON.parse(localStorage.getItem("token"));
+    const response = await axios.get(
+      " https://celahl.herokuapp.com/api//wallet/banks",
+      {
+        headers: {
+          Authorization: `Bearer ${token} `,
+        },
+      }
+    );
+    return response.data.data;
+  } catch (err) {
+    throw err;
+    console.log(err);
+  }
+});

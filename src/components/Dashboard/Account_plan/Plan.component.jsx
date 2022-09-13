@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import planstyle from "./planstyle.module.css";
 import axios from "axios";
 import BasicIcon from "../../../Assets/Plane.png";
@@ -8,10 +9,10 @@ import Sidebar from "../../Common/Sidebar/Sidebar";
 import { ToastContainer, Zoom } from "react-toastify";
 import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
 import "react-toastify/dist/ReactToastify.css";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 function Plan() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [modalState, setModalState] = React.useState(false);
   const handleOpen = () => setModalState(true);
   const handleClose = () => setModalState(false);
@@ -62,7 +63,11 @@ function Plan() {
   };
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.7 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <ToastContainer transition={Zoom} autoClose={800} />
       <Sidebar />
       <div className={`${planstyle.planstyleContainer}`}>
@@ -146,17 +151,17 @@ function Plan() {
               </label>
             </div>
             <p>
-              <span className=" display-4 text-primary">Free trial</span> 
+              <span className=" display-4 text-primary">Free trial</span>
             </p>
 
             <button
               className="btn btn-block btn-primary bg-primary rounded-pill my-3 py-3"
-             onClick ={() => navigate('/addproperties')}
+              onClick={() => navigate("/addproperties")}
             >
               Get started
             </button>
           </div>
-       
+
           <div className="col-12 col-md card shadow-lg bg-purple px-3 mx-lg-3 py-5 inverted bg-primary text-white">
             <div className="d-flex">
               <div className="bg-light p-2 m-3 rounded-lg">
@@ -224,7 +229,8 @@ function Plan() {
               </label>
             </div>
             <p>
-              <span className="display-4 text-light">&#8358;10000</span> / 3month
+              <span className="display-4 text-light">&#8358;10000</span> /
+              3month
             </p>
 
             <button
@@ -304,7 +310,8 @@ function Plan() {
               </label>
             </div>
             <p>
-              <span className=" display-4 text-primary">&#8358;100000</span> /5years
+              <span className=" display-4 text-primary">&#8358;100000</span>{" "}
+              /5years
             </p>
 
             <button
@@ -316,7 +323,7 @@ function Plan() {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

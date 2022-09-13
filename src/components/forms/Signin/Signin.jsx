@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import signin from "./Signin.module.css";
 import { FormInput } from "./FormInputs";
@@ -126,7 +127,11 @@ const Signin = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <ToastContainer transition={Zoom} autoClose={800} />
 
           <div className={`container`}>
@@ -189,7 +194,7 @@ const Signin = () => {
               </button>
             </form>
           </div>
-        </div>
+        </motion.div>
       )}
     </>
   );

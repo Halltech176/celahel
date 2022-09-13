@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import axios from "axios";
 import Sidebar from "../../Common/Sidebar/Sidebar";
 import { CgArrowLongLeft } from "react-icons/cg";
@@ -33,7 +34,6 @@ const EditProperty = () => {
     error: editError,
     editedproperty,
   } = useSelector((state) => state.editproperty);
-
 
   const [name, setName] = useState(Property?.name);
   const [description, setDescription] = useState(Property?.description);
@@ -89,7 +89,6 @@ const EditProperty = () => {
       setHouse(false);
       setHostel(false);
     }
-
   };
 
   const checkSpecifications = (e) => {
@@ -147,12 +146,11 @@ const EditProperty = () => {
       console.log(Array.from(formData));
 
       const response = await dispatch(Edit(formData)).unwrap();
-     
 
       if (response !== null) {
         InfoNotification("property successfully updated");
         const response = await dispatch(AllProperties());
-         console.log(response)
+        console.log(response);
 
         if (response.type === "properties/fulfilled") {
           navigate("/properties");
@@ -186,7 +184,11 @@ const EditProperty = () => {
       {loading || editLoading ? (
         <Loader />
       ) : (
-        <div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <ToastContainer transition={Zoom} autoClose={800} />
           <Sidebar />
           <div className={`${properties.property_container}`}>
@@ -667,7 +669,7 @@ const EditProperty = () => {
               </form>
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
     </>
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import sidebar from "./Sidebar.module.css";
 import { Link } from "react-router-dom";
 import { MdMenu, MdClose } from "react-icons/md";
@@ -8,11 +8,20 @@ import LogoDark from "../../../Assets/DarkLogo.png";
 import Vector1 from "../../../Assets/Vector-1.png";
 import Vector2 from "../../../Assets/Vector-2.png";
 import Vector from "../../../Assets/Vector.png";
-import { useSelector } from "react-redux";
+import { Notification } from "../../../Redux/actions";
+import { useSelector, useDispatch } from "react-redux";
 import About2 from "../../../Assets/user1.png";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(true);
+  const { user, loading, error } = useSelector((state) => state.userprofile);
+  const { nLoading, nError, notifications } = useSelector(
+    (state) => state.notification
+  );
+  const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(Notification());
+  // }, []);
 
   const handleToggle = () => {
     setOpen(!open);
@@ -21,12 +30,9 @@ const Sidebar = () => {
   const logout = () => {
     localStorage.clear();
   };
-  const { user, loading, error } = useSelector((state) => state.userprofile);
-  const avatar = user?.avatar;
-  // console.log(avatar.url);
 
-  // const { firstName, lastName } = user;
-  // console.log(user);
+  const avatar = user?.avatar;
+  console.log(notifications);
 
   return (
     <>
@@ -63,7 +69,9 @@ const Sidebar = () => {
                 className="profile-image"
                 alt="profile image"
               />
-              <h6 className={`${sidebar.sidebar_link} sidebar_profile_text  mt-2`}>
+              <h6
+                className={`${sidebar.sidebar_link} sidebar_profile_text  mt-2`}
+              >
                 {user?.firstName} {user?.lastName}
               </h6>
             </div>
@@ -97,6 +105,13 @@ const Sidebar = () => {
             <IoMdNotifications className="me-2  d-inline-block" />
             <Link to="/notifications" className={`${sidebar.sidebar_link}`}>
               Notification
+            </Link>
+          </li>
+
+          <li className={`${sidebar.sidebar_list}`}>
+            <IoMdNotifications className="me-2  d-inline-block" />
+            <Link to="/agent-wallet" className={`${sidebar.sidebar_link}`}>
+              Wallet
             </Link>
           </li>
 

@@ -10,6 +10,7 @@ import { PropertyReducer } from "./slices/PropertySlice";
 import { OverviewReducer } from "./slices/OverviewSlice";
 import { EditPropertyReducer } from "./slices/EditPropertySlice";
 import { CreatePropertyReducer } from "./slices/CreatePropertySlice";
+import { BanksReducer } from "./slices/BanksSlice";
 import VerifyUser from "./slices/VerifyUserSlice";
 import candidateReducer from "./slices/userStates";
 import { AllNotificationReducer } from "./slices/NotificationSlice";
@@ -30,6 +31,7 @@ const reducers = combineReducers({
   editproperty: EditPropertyReducer,
   newproperty: CreatePropertyReducer,
   overview: OverviewReducer,
+  banks: BanksReducer,
 });
 // const persistedReducers = persistReducer(persistConfig, reducers);
 const Store = configureStore({

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import notificationstyles from "./notifications.module.scss";
 import Sidebar from "../../Common/Sidebar/Sidebar";
 import axios from "axios";
@@ -27,7 +28,7 @@ const Notifications = () => {
       setCount(1);
     }
 
-    await dispatch(Notification(count));
+    await dispatch(Notification({page : count}));
   };
 
   const handleDecrease = async () => {
@@ -37,14 +38,12 @@ const Notifications = () => {
       setCount(notifications.totalPages);
     }
 
-    await dispatch(Notification(count));
+    await dispatch(Notification({page : count}));
   };
 
   const handlePaginate = async (index) => {
     try {
-    
-
-      const response = await dispatch(Notification(index));
+      const response = await dispatch(Notification({page : index}));
       if (response.type === "properties/rejected") {
         throw "please check your internet connection";
       }
@@ -106,7 +105,11 @@ const Notifications = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <Sidebar />
           <div className={`${notificationstyles.notification_container}`}>
             <div className="container">
@@ -125,44 +128,48 @@ const Notifications = () => {
                 </table>
               </div>
             </div>
-            {
-              notifications ?.totalPages === 1 ? "" :    <div className="paginate-btns d-flex align-items-center justify-content-between my-3 flex-wrap ">
-              {
-                notifications ?.page === 1 ? <div> </div> : <button className="paginate-btn" onClick={handleDecrease}>
-                prev
-              </button>
-              }
-              
-              <ul className="d-flex align-items-center">
-                {notifications?.docs?.map((doc, index) => {
-                  return index < notifications?.totalPages ? (
-                    <li
-                      key={index}
-                      className={`${
-                        notifications?.page === index + 1
-                          ? "active_page"
-                          : "inactive_page"
-                      } mx-2`}
-                      onClick={() => handlePaginate(index + 1)}
-                    >
-                      {index + 1}
-                    </li>
-                  ) : (
-                    ""
-                  );
-                })}
-              </ul>
-              {
-                 notifications ?.page ===  notifications ?.totalPages ? <div> </div> : <button className="paginate-btn" onClick={handleIncrease}>
-                next
-              </button>
-              }
-              
-            </div>
-            }
-          
+            {notifications?.totalPages === 1 ? (
+              ""
+            ) : (
+              <div className="paginate-btns d-flex align-items-center justify-content-between my-3 flex-wrap ">
+                {notifications?.page === 1 ? (
+                  <div> </div>
+                ) : (
+                  <button className="paginate-btn" onClick={handleDecrease}>
+                    prev
+                  </button>
+                )}
+
+                <ul className="d-flex align-items-center">
+                  {notifications?.docs?.map((doc, index) => {
+                    return index < notifications?.totalPages ? (
+                      <li
+                        key={index}
+                        className={`${
+                          notifications?.page === index + 1
+                            ? "active_page"
+                            : "inactive_page"
+                        } mx-2`}
+                        onClick={() => handlePaginate(index + 1)}
+                      >
+                        {index + 1}
+                      </li>
+                    ) : (
+                      ""
+                    );
+                  })}
+                </ul>
+                {notifications?.page === notifications?.totalPages ? (
+                  <div> </div>
+                ) : (
+                  <button className="paginate-btn" onClick={handleIncrease}>
+                    next
+                  </button>
+                )}
+              </div>
+            )}
           </div>
-        </div>
+        </motion.div>
       )}
     </>
   );

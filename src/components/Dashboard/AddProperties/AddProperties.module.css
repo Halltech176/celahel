@@ -1,7 +1,7 @@
 .property_container {
   margin: 2rem;
   margin-left: 22rem;
-  font-family: "DM mono";
+  font-family: "DM mono" monospace;
 }
 .search_container {
   display: flex !important;
@@ -88,7 +88,7 @@
     display: flex;
     width: 100%;
   }
-    .search_icon {
+  .search_icon {
     width: 2.3rem !important;
     height: 2.3rem !important;
   }

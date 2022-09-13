@@ -1,0 +1,158 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono&family=DM+Serif+Display&family=Fira+Code:wght@500&family=Inter:wght@500&family=Public+Sans&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,900;1,100;1,300;1,400;1,700&display=swap");
+.wallet_container {
+  margin: 2rem 2rem 2rem 18rem;
+  font-family: "DM mono", monospace !important;
+}
+.wallet_heading {
+  font-family: "DM mono", monospace !important;
+}
+.bank_details {
+  display: flex;
+  justify-content: space-between;
+}
+.bank_account_text {
+  text-align: center;
+}
+.agent_bank {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: conic-gradient(
+    from 172.45deg at 37.82% 32.87%,
+    rgba(74, 58, 255, 0.54) 0deg,
+    #2563eb 166.87deg,
+    rgba(74, 58, 255, 0.54) 360deg
+  );
+  border-radius: 5px;
+  padding: 2rem 4rem;
+  color: #fff;
+}
+.bank_button {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 2rem;
+}
+.fund_btn,
+.withdraw_btn {
+  border: none;
+  border-radius: 5px;
+  padding: 1rem 1.8rem;
+  margin: 0.5rem;
+}
+.fund_btn {
+  background: #2eb66e;
+  color: #fff;
+}
+
+.withdraw_btn {
+  color: #000;
+  background: #fdfdff;
+}
+.connect_bank {
+  margin-left: 2.5rem;
+}
+.connect_bank h2 {
+  color: #2563eb;
+  font-family: "DM mono" monospace !important;
+}
+.bank_form {
+  margin-top: 2rem;
+}
+.transaction-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: #2563eb;
+  font-weight: 400;
+  font-family: "DM mono", monospace;
+}
+.wallet_modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 2rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+.modal_inputs {
+  width: 2rem;
+  height: 2rem;
+  margin: 0.5rem;
+  outline: none;
+  text-align: center;
+  color: white;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+.input_fields,
+.details_title,
+.details_text {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.details_title,
+label {
+  color: #a6a6a6 !important;
+  font-family: "DM mono", monospace !important;
+}
+.details_text > p {
+  color: black !important;
+  font-weight: 500 !important;
+}
+.details_text .details_status {
+  color: #ea3223 !important;
+  background: #fdebe9;
+  border-radius: 4px;
+  padding: 0.3rem 0.8rem;
+}
+.details_text .details_period span {
+  background-color: #ea3223 !important;
+  border-radius: 50%;
+  padding: 0.1rem 0.7rem;
+  margin-right: 0.5rem;
+}
+
+.input_fields input {
+  border-radius: 10px;
+  border: 1px solid #cccccc !important;
+  padding: 0.2rem 0.4rem !important;
+  outline: none;
+}
+.input_fields button {
+  border-radius: 5px;
+  border: 1px solid #cccccc !important;
+  padding: 0.2rem 1.5rem !important;
+  outline: none;
+}
+@media (max-width: 600px) {
+  .wallet_container {
+    margin: 1rem 1rem 1rem 1rem;
+    font-size: 0.5rem;
+  }
+  .bank_details {
+    display: block;
+    /* justify-content: space-between; */
+  }
+  .agent_bank {
+    padding: 0.8rem;
+  }
+  .fund_btn,
+  .withdraw_btn {
+    margin: 0.3;
+  }
+  .connect_bank {
+    margin-left: 0rem;
+    margin-top: 1.2rem;
+  }
+}

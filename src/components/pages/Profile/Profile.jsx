@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import About2 from "../../../Assets/user1.png";
 import { MdFileUpload } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
@@ -120,10 +121,9 @@ const Profile = () => {
           },
         }
       );
-     await dispatch(User());
+      await dispatch(User());
       // window.localStorage.setItem("user", JSON.stringify(response.data.data));
       SuccessNotification(response.data.message);
-      
 
       console.log(response.data.data);
     } catch (err) {
@@ -149,8 +149,8 @@ const Profile = () => {
           },
         }
       );
-      await dispatch(User())
-      console.log(response.data.data)
+      await dispatch(User());
+      console.log(response.data.data);
       SuccessNotification(response.data.message);
       console.log(response.data.message);
     } catch (err) {
@@ -187,7 +187,11 @@ const Profile = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <ToastContainer transition={Zoom} autoClose={800} />
           <Sidebar />
           <div className={`${profile.profile_container}`}>
@@ -291,7 +295,7 @@ const Profile = () => {
               </div>
             </form>
           </div>
-        </div>
+        </motion.div>
       )}
     </>
   );

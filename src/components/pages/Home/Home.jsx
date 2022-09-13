@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { motion, useScroll } from "framer-motion";
+import { motion } from "framer-motion";
 import Navbar from "../../Common/Navbar/Navbar";
 import Footer from "../../Common/Footer/Footer";
 import "./home.styles.scss";
@@ -12,27 +12,15 @@ import displayImage3 from "../../../Assets/img2.png";
 import iPhone from "../../../Assets/iPhone.png";
 
 function Home() {
-  const { scrollYProgress } = useScroll();
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.5,
-      },
-    },
-  };
-
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
+        initial={{ opacity: 0, scale: 0.7 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.5 }}
       >
         <Navbar />
         <div>
-          {/* <motion.div style={{ scaleX: scrollYProgress }} /> */}
           <div className="d-lg-flex justify-content-between align-items-end hero bg-primary">
             <div className="col-12 col-md-6">
               <div className="container p-3 mb-5">
@@ -96,85 +84,87 @@ function Home() {
             </div>
           </div>
 
-    
-            <div className="container text-center">
-              <h2 className="semi_text">How It Works</h2>
-              <p className="lead text_lead">
-                Our Unique process gives you peace of mind for all our services
-              </p>
-              <div className="row g-5 cards">
-                <motion.div initial={{
-              opacity: 0,
-              transform: "scaleX(0.1)",
-         
-            }}
-            whileInView={{
-              opacity: 1,
-              transform: " scaleX(1.0)",
-              
-            }}
-            viewport={{ once: false }}
-            transition={{ duration: 0.5 }} className="col-lg">
-                  <div className="card p-5 my-3 text-light shadow-lg">
-                    <div className="circle bg-white text-center text-dark">
-                      <span>1</span>
-                    </div>
-                    <h3 className="text-center card-title">Search</h3>
-                    <p className="card-text">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Voluptatum, repudiandae.
-                    </p>
+          <div className="container text-center">
+            <h2 className="semi_text">How It Works</h2>
+            <p className="lead text_lead">
+              Our Unique process gives you peace of mind for all our services
+            </p>
+            <div className="row g-5 cards">
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  transform: "scaleX(0.1)",
+                }}
+                whileInView={{
+                  opacity: 1,
+                  transform: " scaleX(1.0)",
+                }}
+                viewport={{ once: false }}
+                transition={{ duration: 0.5 }}
+                className="col-lg"
+              >
+                <div className="card p-5 my-3 text-light shadow-lg">
+                  <div className="circle bg-white text-center text-dark">
+                    <span>1</span>
                   </div>
-                </motion.div>
-                <motion.div        initial={{
-              opacity: 0,
-              transform: "scaleX(0.1)",
-         
-            }}
-            whileInView={{
-              opacity: 1,
-              transform: " scaleX(1.0)",
-              
-            }}
-            viewport={{ once: false }}
-            transition={{ duration: 0.5 }} className="col-lg">
-                  <div className="card p-5 my-3 text-light shadow-lg">
-                    <div className="circle bg-white text-center text-dark">
-                      <span>2</span>
-                    </div>
-                    <h3 className="card-title text-center">Search</h3>
-                    <p className="card-text text-left">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Voluptatum, repudiandae.
-                    </p>
+                  <h3 className="text-center card-title">Search</h3>
+                  <p className="card-text">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Voluptatum, repudiandae.
+                  </p>
+                </div>
+              </motion.div>
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  transform: "scaleX(0.1)",
+                }}
+                whileInView={{
+                  opacity: 1,
+                  transform: " scaleX(1.0)",
+                }}
+                viewport={{ once: false }}
+                transition={{ duration: 0.5 }}
+                className="col-lg"
+              >
+                <div className="card p-5 my-3 text-light shadow-lg">
+                  <div className="circle bg-white text-center text-dark">
+                    <span>2</span>
                   </div>
-                </motion.div>
-                <motion.div       initial={{
-              opacity: 0,
-              transform: "scaleX(0.1)",
-         
-            }}
-            whileInView={{
-              opacity: 1,
-              transform: " scaleX(1.0)",
-              
-            }}
-            viewport={{ once: false }}
-            transition={{ duration: 0.5 }} className="col-lg">
-                  <div className="card fade p-5 my-3 text-light shadow-lg">
-                    <div className="circle bg-white text-center text-dark">
-                      <span>3</span>
-                    </div>
-                    <h3 className="card-title text-center">Search</h3>
-                    <p className="card-text text-left">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Voluptatum, repudiandae.
-                    </p>
+                  <h3 className="card-title text-center">Search</h3>
+                  <p className="card-text text-left">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Voluptatum, repudiandae.
+                  </p>
+                </div>
+              </motion.div>
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  transform: "scaleX(0.1)",
+                }}
+                whileInView={{
+                  opacity: 1,
+                  transform: " scaleX(1.0)",
+                }}
+                viewport={{ once: false }}
+                transition={{ duration: 0.5 }}
+                className="col-lg"
+              >
+                <div className="card fade p-5 my-3 text-light shadow-lg">
+                  <div className="circle bg-white text-center text-dark">
+                    <span>3</span>
                   </div>
-                </motion.div>
-              </div>
+                  <h3 className="card-title text-center">Search</h3>
+                  <p className="card-text text-left">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Voluptatum, repudiandae.
+                  </p>
+                </div>
+              </motion.div>
             </div>
-          
+          </div>
+
           <div className="my-5 p-3">
             <div className="container-fluid text-center">
               <h2>What Our Clients Say</h2>
@@ -184,18 +174,19 @@ function Home() {
               </p>
 
               <div className="row mid_col_container">
-                <motion.div             initial={{
-              opacity: 0,
-              transform: "scaleX(0.8)",
-         
-            }}
-            whileInView={{
-              opacity: 1,
-              transform: " scaleX(1.0)",
-              
-            }}
-            viewport={{ once: false }}
-            transition={{ duration: 0.5 }} className="col mid_col">
+                <motion.div
+                  initial={{
+                    opacity: 0,
+                    transform: "translateX(-20rem)",
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    transform: " translateX(1rem)",
+                  }}
+                  viewport={{ once: false }}
+                  transition={{ duration: 1 }}
+                  className="col mid_col"
+                >
                   <div className="card p-3 marq-card">
                     <div className="d-flex flex-column justify-content-start align-items-start mb-3">
                       <div>
@@ -218,18 +209,19 @@ function Home() {
                     <p className="small text-primary">Web Designer</p>
                   </div>
                 </motion.div>
-                <motion.div  initial={{
-              opacity: 0,
-              transform: "scaleX(0.8)",
-         
-            }}
-            whileInView={{
-              opacity: 1,
-              transform: " scaleX(1.0)",
-              
-            }}
-            viewport={{ once: false }}
-            transition={{ duration: 0.5 }} className="col mid_col">
+                <motion.div
+                  initial={{
+                    opacity: 0,
+                    transform: "translateY(20rem)",
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    transform: " translateY(0rem)",
+                  }}
+                  viewport={{ once: false }}
+                  transition={{ duration: 1 }}
+                  className="col mid_col"
+                >
                   {" "}
                   <div className="card p-3 marq-card">
                     <div className="d-flex flex-column justify-content-start align-items-start mb-3">
@@ -253,18 +245,19 @@ function Home() {
                     <p className="small text-primary">Head of Marketing</p>
                   </div>
                 </motion.div>
-                <motion.div       initial={{
-              opacity: 0,
-              transform: "scaleX(0.8)",
-         
-            }}
-            whileInView={{
-              opacity: 1,
-              transform: " scaleX(1.0)",
-              
-            }}
-            viewport={{ once: false }}
-            transition={{ duration: 0.5 }} className="col mid_col">
+                <motion.div
+                  initial={{
+                    opacity: 0,
+                    transform: "translateY(-20rem)",
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    transform: " translateY(0rem)",
+                  }}
+                  viewport={{ once: false }}
+                  transition={{ duration: 0.5 }}
+                  className="col mid_col"
+                >
                   {" "}
                   <div className="card p-3 marq-card">
                     <div className="d-flex flex-column justify-content-start align-items-start mb-3">
@@ -288,18 +281,19 @@ function Home() {
                     <p className="small text-primary">Lead Developer</p>
                   </div>
                 </motion.div>
-                <motion.div       initial={{
-              opacity: 0,
-              transform: "scaleX(0.8)",
-         
-            }}
-            whileInView={{
-              opacity: 1,
-              transform: " scaleX(1.0)",
-              
-            }}
-            viewport={{ once: false }}
-            transition={{ duration: 0.5 }}  className="col mid_col">
+                <motion.div
+                  initial={{
+                    opacity: 0,
+                    transform: "translateX(20rem)",
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    transform: " translateX(1rem)",
+                  }}
+                  viewport={{ once: false }}
+                  transition={{ duration: 0.5 }}
+                  className="col mid_col"
+                >
                   {" "}
                   <div className="card p-3 marq-card">
                     <div className="d-flex flex-column justify-content-start align-items-start mb-3">
