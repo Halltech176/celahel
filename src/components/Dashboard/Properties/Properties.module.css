@@ -10,7 +10,7 @@
   display: flex !important;
   justify-content: space-between !important;
   margin: 1rem 0rem;
-  align-items : center;
+  align-items: center;
   width: 100%;
 }
 .info_label {
@@ -41,15 +41,12 @@
   border-radius: 5px !important;
   position: relative;
   margin-top: 2rem !important;
-  cursor : pointer;
-  transition : all 0.5s ease-in-out;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   /* width : 17rem !important; */
 }
-.image_container:hover {
-  transform : scale(0.9);
-  /* box-shadow: 0 2px 2px 0 rgba(0,0,0,0.1); */
-}
+
 /* .image_border {
   border : 1px solid #ccc;
   margin : 0.2rem;
@@ -68,14 +65,19 @@
   left: 0;
   right: 0;
   z-index: 4;
-  background-color :lightblue;
-  opacity : 0;
-  
+  background-color: lightblue;
+  opacity: 0;
 }
 .property_image {
   object-fit: cover;
   width: 17rem;
   border-radius: 15px;
+}
+.image_border {
+  z-index: 5;
+  background-color: transparent;
+  width: 17rem;
+  /* opacity: 0; */
 }
 .sell_badge,
 .rent_badge,
@@ -112,7 +114,7 @@
   color: #ff476b;
   font-weight: 900;
   font-size: 1rem;
-  letter-spacing :0.2rem;
+  letter-spacing: 0.2rem;
 }
 .property_location {
   margin: 0 !important;
@@ -121,7 +123,7 @@
   color: #ff476b;
   font-size: 1rem;
   font-weight: 900;
-  letter-spacing :0.1rem;
+  letter-spacing: 0.1rem;
 }
 .property_name {
   margin: 0 !important;
@@ -130,7 +132,7 @@
   font-weight: 900;
   color: #2563eb;
   text-transform: capitalize;
-  letter-spacing :0.2rem;
+  letter-spacing: 0.2rem;
 }
 a {
   text-decoration: none;

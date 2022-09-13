@@ -8,23 +8,24 @@ import { NetworkError } from "../../components/Common/NetworkError";
 export const AgentAuth = ({ children }) => {
   const token = JSON.parse(window.localStorage.getItem("token"));
   const dispatch = useDispatch();
-  const { user, loading, error } = useSelector((state) => state.userprofile);
   useEffect(() => {
     dispatch(User());
   }, []);
+  const { user, loading, error } = useSelector((state) => state.userprofile);
+
   console.log(user, loading, error);
   console.log(token);
   if (token !== null) {
     if (user === null && !error && loading) {
       return <Loader />;
     }
-    if (user.status === "inactive" && !error && !loading) {
+    if (user?.status === "inactive" && !error && !loading) {
       return <Navigate to="/activate-agent" />;
     }
-    if (user.type !== "agent" && !error && !loading) {
+    if (user?.type !== "agent" && !error && !loading) {
       return <Navigate to="/auth-user" />;
     }
-    if (!user.emailVerified && !error && !loading) {
+    if (!user?.emailVerified && !error && !loading) {
       return <Navigate to="/verify" />;
     }
     if (user !== null && error && loading) {

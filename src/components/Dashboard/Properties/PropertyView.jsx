@@ -41,14 +41,14 @@ const PropertyView = (docs) => {
         <div className="d-flex flex-wrap align-center justify-between">
           {data.images.map((img) => {
             return (
-              // <div key={img._id} className={`${properties.image_border}`} >
-              <img
-                src={img.url}
-                alt={img._id}
-                className={`${properties.property_image} mx-auto`}
-                loading="eager"
-              />
-              // </div>
+              <div key={img._id} className={`${properties.image_border}`}>
+                <img
+                  src={img.url}
+                  alt={img._id}
+                  className={`${properties.property_image} mx-auto`}
+                  loading="eager"
+                />
+              </div>
             );
           })}
         </div>
