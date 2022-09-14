@@ -49,7 +49,7 @@ const Visuals = (properties) => {
     {
       properties?.sums?.length !== 0 ? <div className="row">
      <div className="mixed-chart">
-       <Chart style={{overflow : 'scroll'}} options={options} series={series} type="bar" width={400} height={420} />
+       <Chart className='chart-container' options={options} series={series} type="bar" width={700} height={420} />
       </div>    </div> : ''
     }
     </>
