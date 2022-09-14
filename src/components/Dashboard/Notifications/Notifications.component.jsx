@@ -28,7 +28,7 @@ const Notifications = () => {
       setCount(1);
     }
 
-    await dispatch(Notification({page : count}));
+    await dispatch(Notification(count))
   };
 
   const handleDecrease = async () => {
@@ -38,12 +38,12 @@ const Notifications = () => {
       setCount(notifications.totalPages);
     }
 
-    await dispatch(Notification({page : count}));
+    await dispatch(Notification(count))
   };
 
   const handlePaginate = async (index) => {
     try {
-      const response = await dispatch(Notification({page : index}));
+      const response = await dispatch(Notification(index));
       if (response.type === "properties/rejected") {
         throw "please check your internet connection";
       }

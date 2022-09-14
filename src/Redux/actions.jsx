@@ -36,7 +36,7 @@ export const User = createAsyncThunk("allusers", async () => {
   try {
     const token = window.JSON.parse(localStorage.getItem("token"));
     const response = await axios.get(
-      "https://celahl.herokuapp.com/api//users/profile?orderBy=wallet.histories.updatedAt&populate=avatar&populate=wallet.histories&populate=bankAccounts",
+      "https://celahl.herokuapp.com/api//users/profile?populate=avatar&populate=wallet.histories&populate=bankAccounts&orderBy=wallet.histories.updatedAt",
       {
         headers: {
           Authorization: `Bearer ${token} `,
@@ -171,11 +171,11 @@ export const EditProperty = createAsyncThunk(
 );
 export const Notification = createAsyncThunk(
   "notifications",
-  async ({ page = 1, limit = 10 }) => {
+  async (page = 1) => {
     try {
       const token = window.JSON.parse(localStorage.getItem("token"));
       const response = await axios.get(
-        `https://celahl.herokuapp.com/api//notification?page=${page}&limit=${limit}`,
+        `https://celahl.herokuapp.com/api//notification?page=${page}`,
         {
           headers: {
             Authorization: `Bearer ${token} `,

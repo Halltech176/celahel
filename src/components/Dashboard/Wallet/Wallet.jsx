@@ -13,13 +13,12 @@ import {
   ErrorNotification,
   SuccessNotification,
 } from "../../Common/ErrorToast";
-import { BankAccounts } from "../../../Redux/actions";
+import { BankAccounts,  User} from "../../../Redux/actions";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../Common/Loader";
 
 const Wallet = () => {
   Modal.setAppElement("#root");
-
   const navigate = useNavigate();
   const { loading, error, bankaccounts } = useSelector((state) => state.banks);
   const {
@@ -28,19 +27,21 @@ const Wallet = () => {
     user,
   } = useSelector((state) => state.userprofile);
   const el = useSelector((state) => state);
-  console.log(el);
+  console.log(user);
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [accountNumber, setAccountNumber] = useState("");
   const [bankCode, setBankCode] = useState("");
   const [activeBank, setActiveBank] = useState(
-    user?.bankAccounts[0].accountNumber
+    user?.bankAccounts[0]?.accountNumber
   );
   const [bank, setBank] = useState("Abbey Mortgage Bank");
+  // const [bank, setBank] = useState("Abbey Mortgage Bank");
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(BankAccounts());
+    dispatch(User());
   }, []);
 
   const ToggleModal = () => {
@@ -52,7 +53,7 @@ const Wallet = () => {
   };
   const renderBanks = bankaccounts?.map((bank, index) => {
     return (
-      <option key={index} value={bank?.name}>
+      <option key={index} defaultValue={bank?.name}>
         {bank?.name}
       </option>
     );
@@ -67,37 +68,36 @@ const Wallet = () => {
   });
 
   let amountFormat = Intl.NumberFormat("en-US");
-
-  const userTransactions = [...user?.wallet?.histories];
-  const renderTransaction = userTransactions
-    ?.sort((a, b) => {
-      return new Date(b.updatedAt) - new Date(a.updatedAt);
-    })
-    .map((data) => {
+  //  ?.sort((a, b) => {
+  //     return new Date(b?.updatedAt) - new Date(a?.updatedAt);
+  //   })
+  // const userTransactions = [...user?.wallet?.histories]
+  // console.log(userTransactions)
+  const renderTransaction = user?.wallet?.histories?.map((data) => {
       return (
         <div className={`${wallet.details_text}`}>
-          <p>&#8358;{amountFormat.format(data.amount)}.00</p>
-          <p>{data._id}</p>
-          <p>{data.type}</p>
+          <p>&#8358;{amountFormat.format(data?.amount)}.00</p>
+          <p>{data?._id}</p>
+          <p>{data?.type}</p>
           <p className={`${wallet.details_period}`}>
             {/* <span></span> */}
-            {new Date(data.updatedAt).toLocaleDateString()}
+            {new Date(data?.updatedAt).toLocaleDateString()}
           </p>
           <p className={`${wallet.details_status}`}>
-            {amountFormat.format(data.previousBalance)}.00
+            {amountFormat.format(data?.previousBalance)}.00
           </p>
         </div>
       );
     });
   // console.log(user?.bankAccounts);
-
+ const getActive = user?.bankAccounts?.find((value) => {
+    return value?.accountNumber === activeBank;
+  });
   const getCode = bankaccounts?.find((value) => {
     return value?.name === bank;
   });
 
-  const getActive = user?.bankAccounts?.find((value) => {
-    return value?.accountNumber === activeBank;
-  });
+ 
   console.log(activeBank);
   console.log(getActive);
   console.log(bank);
@@ -132,7 +132,7 @@ const Wallet = () => {
   };
   return (
     <>
-      {loading && !error && userLoading && !userError ? (
+      {userLoading && !error && loading && !userError ? (
         <Loader />
       ) : (
         <motion.div
@@ -227,7 +227,7 @@ const Wallet = () => {
                     </label>
                     <input
                       disabled
-                      value={getCode?.code}
+                      defaultValue={getCode?.code}
                       onChange={(e) => setBankCode(e.target.value)}
                       type="email"
                       className="form-control"
@@ -267,10 +267,10 @@ const Wallet = () => {
             <div>
               <div className={`${wallet.details_title}`}>
                 <label>AMOUNT</label>
-                <label>TRANSACTION ID</label>
-                <label>PAYMENT TYPE</label>
+                <label>TRANSACTION-ID</label>
+                <label>PAYMENT-TYPE</label>
                 <label>DATE/TIME</label>
-                <label>PREV BALANCE</label>
+                <label>PREV-BALANCE</label>
               </div>
 
               {renderTransaction}

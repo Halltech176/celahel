@@ -202,3 +202,30 @@
 .property-spec {
   display: block;
 }
+.logout_modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 4rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  z-index: 30;
+}
+/* .logout_btns {
+  width: 20rem;
+  margin: 0 auto;
+} */
+.logout_btns > button {
+  width: 8rem;
+  margin: 1rem;
+}
+.Modal_Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  /* background-color: rebeccapurple; */
+}

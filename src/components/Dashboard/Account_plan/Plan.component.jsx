@@ -234,7 +234,7 @@ function Plan() {
             </p>
 
             <button
-              onClick={() => planSubscribe(10000)}
+              onClick={() => planSubscribe(700)}
               className="btn btn-block btn-light rounded-pill my-3 py-3"
             >
               Get started
@@ -315,7 +315,7 @@ function Plan() {
             </p>
 
             <button
-              onClick={() => planSubscribe(100000)}
+              onClick={() => planSubscribe(2000)}
               className="btn btn-block bg-primary btn-primary rounded-pill my-3 py-3"
             >
               Get started

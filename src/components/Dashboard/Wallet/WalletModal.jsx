@@ -38,12 +38,13 @@ export const RequestOTP = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
       console.log(response.data.data);
       if (response.status === 200) {
         const data = {
-          amount: response.data.data.amount,
+          callback_url: null,
+          // amount: response.data.data.amount,
           reference: response.data.data.reference,
         };
         console.log(data);
         const addmoney = await axios.post(
-          "https://celahl.herokuapp.com/api//wallet/money",
+          "https://celahl.herokuapp.com/api//transaction/initiate",
           data,
           {
             headers: {
@@ -51,6 +52,14 @@ export const RequestOTP = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
             },
           }
         );
+        if (addmoney.status === 200) {
+          const url = window.open(
+            addmoney.data.data.authorization_url,
+            "_blank"
+          );
+          console.log(url);
+          // return <iframe src={web_url.data.data.authorization_url}></iframe>
+        }
         console.log(addmoney);
       }
     } catch (err) {
@@ -75,7 +84,7 @@ export const RequestOTP = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <div className=" d-flex align-items-center">
+            <div className=" d-flex justify-content-between align-items-center">
               <CgArrowLongLeft size="1.8rem" onClick={() => setOpen(false)} />
               <h2 className={`${wallet.wallet_heading} ms-4  `}>
                 Make Payment
@@ -106,9 +115,9 @@ export const RequestOTP = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
                 <button
                   onClick={generateTransaction}
                   //   onClick={ToggleModal2}
-                  className="btn px-5 btn-primary text-center"
+                  className="btn btn-modal px-3 btn-primary text-center"
                 >
-                  Send OTP
+                  Fund Wallet
                 </button>
               </div>
             </div>
@@ -125,6 +134,7 @@ export const SendOTP = ({ open, setOpen, ToggleModal, bankID }) => {
   const [withdrawValue, setWithdrawValue] = useState("");
   const dispatch = useDispatch();
   const { loading, error, user } = useSelector((state) => state.userprofile);
+  console.log(user)
 
   const handleWithdraw = async (e) => {
     e.preventDefault();
@@ -143,22 +153,22 @@ export const SendOTP = ({ open, setOpen, ToggleModal, bankID }) => {
           },
         }
       );
-      //   if (response.status) {
-      //     const response2 = await axios.put(
-      //       // wallet/withdrawal/:id
-      //       `https://celahl.herokuapp.com/api//wallet/withdrawal/${response?.data?.data?._id}`,
-      //       {},
-      //       {
-      //         headers: {
-      //           Authorization: `Bearer ${token} `,
-      //         },
-      //       }
-      //     );
-      //     await dispatch(User());
-      //     SuccessNotification(response2.data.message);
+      if (response.status === 200) {
+        const response2 = await axios.put(
+          // wallet/withdrawal/:id
+          `https://celahl.herokuapp.com/api//wallet/withdrawal/${response?.data?.data?._id}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token} `,
+            },
+          }
+        );
+        await dispatch(User());
+        SuccessNotification(response2.data.message);
 
-      //     console.log(response2);
-      //   }
+        console.log(response2);
+      }
 
       console.log(response?.data?.data?._id);
 

@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import Modal from "react-modal";
+import { motion } from "framer-motion";
 import sidebar from "./Sidebar.module.css";
 import { Link } from "react-router-dom";
 import { MdMenu, MdClose } from "react-icons/md";
@@ -11,13 +13,26 @@ import Vector from "../../../Assets/Vector.png";
 import { Notification } from "../../../Redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import About2 from "../../../Assets/user1.png";
+import { LogoutModal } from "./LogoutModal";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    }
+  }, []);
+  const ToggleModal = () => {
+    setIsOpen(!isOpen);
+    setOpen(true);
+  };
   const { user, loading, error } = useSelector((state) => state.userprofile);
   const { nLoading, nError, notifications } = useSelector(
     (state) => state.notification
   );
+
   const dispatch = useDispatch();
   // useEffect(() => {
   //   dispatch(Notification());
@@ -27,15 +42,16 @@ const Sidebar = () => {
     setOpen(!open);
   };
 
-  const logout = () => {
-    localStorage.clear();
-  };
-
   const avatar = user?.avatar;
   console.log(notifications);
 
   return (
     <>
+      <LogoutModal
+        open={isOpen}
+        setIsOpen={setIsOpen}
+        ToggleModal={ToggleModal}
+      />
       <div
         className={`${sidebar.sidebar_nav} my-3 container  align-items-center`}
       >
@@ -114,18 +130,28 @@ const Sidebar = () => {
               Wallet
             </Link>
           </li>
-
-          <li className={`${sidebar.sidebar_list}`}>
+          <li className={`${sidebar.sidebar_list}  d-flex align-items-center`}>
             {/* <img src={Vector} className="me-2 d-inline-block" /> */}
             <BiLogOut className="me-2  d-inline-block" />
-            <Link
+            <p
+              to="/login"
+              onClick={ToggleModal}
+              className={`${sidebar.sidebar_link} mt-3`}
+            >
+              Log Out
+            </p>
+          </li>
+          {/* <li className={`${sidebar.sidebar_list}  d-flex align-items-center`}>
+          
+            <BiLogOut className="me-2  d-inline-block" />
+            <p
               to="/login"
               onClick={logout}
               className={`${sidebar.sidebar_link}`}
             >
               Log Out
-            </Link>
-          </li>
+            </p>
+          </li> */}
         </ul>
         {/* <ul className={`${sidebar.list_container}`}>
           <li className={`${sidebar.sidebar_list}`}> overview</li>
