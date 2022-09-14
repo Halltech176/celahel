@@ -1,4 +1,5 @@
-import React from "react";
+import React , {useEffect}from "react";
+import {useDispatch, useSelector} from "react-redux";
 import { motion } from "framer-motion";
 import planstyle from "./planstyle.module.css";
 import axios from "axios";
@@ -10,12 +11,23 @@ import { ToastContainer, Zoom } from "react-toastify";
 import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../Common/Loader";
+import { GetSettings } from "../../../Redux/actions";
 
 function Plan() {
+  useEffect(() => {
+    dispatch(GetSettings())
+  },[])
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {settings,loading} = useSelector((state) => state).settings;
+
+  console.log(settings)
+  
   const [modalState, setModalState] = React.useState(false);
   const handleOpen = () => setModalState(true);
   const handleClose = () => setModalState(false);
+  console.log(settings?.basicPlan)
 
   const planSubscribe = async (amount) => {
     try {
@@ -50,19 +62,23 @@ function Plan() {
       if (web_url.status === 200) {
         const url = window.open(web_url.data.data.authorization_url, "_blank");
         console.log(url);
-        // return <iframe src={web_url.data.data.authorization_url}></iframe>
+        // frame= <iframe src={web_url.data.data.authorization_url} height="400" width="500"></iframe>
       }
+      await axios.get('https://celahl.herokuapp.com/api//transaction/verify')
+
       console.log(web_url);
     } catch (err) {
       if (err.message === "Network Error") {
         ErrorNotification("Please check your internet connection");
-      }
+      } 
       // ErrorNotification(err.message);
       console.log(err);
     }
   };
 
   return (
+    <>
+    { loading && settings !== null ? <Loader/> : 
     <motion.div
       initial={{ opacity: 0, scale: 0.7 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -82,6 +98,7 @@ function Plan() {
             quisquam velit.
           </p>
         </div>
+        {/* <div>{frame} </div> */}
 
         <div className="row g-4 my-4 mx-0 p-3 justify-content-between">
           <div className="col-12 col-md card shadow-lg borderless px-3 py-5 regular">
@@ -229,12 +246,12 @@ function Plan() {
               </label>
             </div>
             <p>
-              <span className="display-4 text-light">&#8358;10000</span> /
+              <span className="display-4 text-light">&#8358;{settings?.growthPlan}</span> /
               3month
             </p>
 
             <button
-              onClick={() => planSubscribe(700)}
+              onClick={() => planSubscribe(settings?.growthPlan)}
               className="btn btn-block btn-light rounded-pill my-3 py-3"
             >
               Get started
@@ -310,12 +327,12 @@ function Plan() {
               </label>
             </div>
             <p>
-              <span className=" display-4 text-primary">&#8358;100000</span>{" "}
+              <span className=" display-4 text-primary">&#8358;{settings?.enterprisePlan}</span>{" "}
               /5years
             </p>
 
             <button
-              onClick={() => planSubscribe(2000)}
+              onClick={() => planSubscribe(settings?.enterprisePlan)}
               className="btn btn-block bg-primary btn-primary rounded-pill my-3 py-3"
             >
               Get started
@@ -324,6 +341,8 @@ function Plan() {
         </div>
       </div>
     </motion.div>
+    }
+    </>
   );
 }
 

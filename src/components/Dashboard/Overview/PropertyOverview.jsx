@@ -1,7 +1,12 @@
 import properties from "../Properties/Properties.module.css";
-
+import NoValues from '../NoValues'
 const PropertyView = (property) => {
-  const agent_properties = property?.property_summary?.map((data) => {
+  let agent_properties;
+  console.log(property?.property_summary)
+  if(property?.property_summary?.length !== 0) {
+
+  
+   agent_properties = property?.property_summary?.map((data) => {
     return (
       <div key={data._id} className={`${properties.image_container}`}>
         <span
@@ -33,7 +38,9 @@ const PropertyView = (property) => {
         </div>
       </div>
     );
-  });
+  })} else {
+    agent_properties = <NoValues value="Properties"/>
+  }
   console.log(property.property_summary);
   return <>{agent_properties}</>;
 };

@@ -7,7 +7,7 @@ import Sidebar from "../../Common/Sidebar/Sidebar";
 import Loader from "../../Common/Loader";
 import { Link } from "react-router-dom";
 import searchBtn from "../../../Assets/SearchVector.png";
-
+import NoValues from '../NoValues'
 const PropertyView = (docs) => {
   const [search, setSearch] = useState("");
 
@@ -15,8 +15,13 @@ const PropertyView = (docs) => {
     docs?.handleSearch(search);
   };
   console.log(search);
+    console.log(docs?.property);
 
-  const agent_properties = docs?.property?.map((data) => {
+    let agent_properties ;
+  if(docs?.property?.length !== 0) {
+
+ 
+   agent_properties = docs?.property?.map((data) => {
     return (
       <div
         key={data._id}
@@ -40,11 +45,12 @@ const PropertyView = (docs) => {
 
         <div className="d-flex flex-wrap align-center justify-between">
           {data.images.map((img) => {
+       
             return (
-              <div key={img._id} className={`${properties.image_border}`}>
+              <div key={img._id} className={`${properties.image_border} mx-auto`}>
                 <img
                   src={img.url}
-                  alt={img._id}
+                  alt={img.name}
                   className={`${properties.property_image} mx-auto`}
                   loading="eager"
                 />
@@ -55,6 +61,10 @@ const PropertyView = (docs) => {
       </div>
     );
   });
+   }
+   else {
+     agent_properties = <NoValues value='property'/>
+   }
   return (
     <>
       <Sidebar />

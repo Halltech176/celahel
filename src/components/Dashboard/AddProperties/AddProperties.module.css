@@ -63,6 +63,7 @@
     margin-left: 0rem;
     margin-right: 0rem;
   }
+
   .main_img {
     width: auto;
   }
@@ -70,8 +71,11 @@
     display: block;
   }
   .main_img_container {
-    display: flex;
+    display: none;
     justify-content: center;
+  }
+  .main_img_container > h1 {
+    font-family: "DM mono" monospace !important;
   }
   .property_image {
     margin: 1rem;

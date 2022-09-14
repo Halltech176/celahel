@@ -32,7 +32,7 @@ const Verify = () => {
         // window.localStorage.setItem("user", JSON.stringify(response.data.data));
 
         await dispatch(User());
-        navigate("/properties");
+        navigate("/activate-agent");
 
         console.log(response.data);
       }

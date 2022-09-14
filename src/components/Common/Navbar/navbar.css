@@ -67,17 +67,13 @@
   border: 2px solid #fff;
 }
 .nav-container .nav-btns.btn-route button:hover {
-  background: #fff;
-  color: rgb(13, 110, 253);
+  transform : scale(0.9)
 }
 .nav-container .nav-btns button:hover {
-  color: #fff;
-  transform: scale(0.93);
-  background: rgb(13, 110, 253);
-  color: #fff;
+ transform : scale(0.9)
 }
 .nav-container .nav-btns a:hover {
-  color: #fff !important;
+  transform : scale(0.9)
 }
 .nav-container .nav-btns button a {
   text-decoration: none;

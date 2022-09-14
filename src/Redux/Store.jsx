@@ -14,6 +14,7 @@ import { BanksReducer } from "./slices/BanksSlice";
 import VerifyUser from "./slices/VerifyUserSlice";
 import candidateReducer from "./slices/userStates";
 import { AllNotificationReducer } from "./slices/NotificationSlice";
+import { SettingsReducer } from "./slices/SettingsSlice";
 
 const persistConfig = {
   key: "root",
@@ -32,6 +33,7 @@ const reducers = combineReducers({
   newproperty: CreatePropertyReducer,
   overview: OverviewReducer,
   banks: BanksReducer,
+  settings: SettingsReducer,
 });
 // const persistedReducers = persistReducer(persistConfig, reducers);
 const Store = configureStore({

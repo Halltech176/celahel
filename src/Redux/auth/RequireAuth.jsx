@@ -14,15 +14,26 @@ export const AgentAuth = ({ children }) => {
   const { user, loading, error } = useSelector((state) => state.userprofile);
 
   console.log(user, loading, error);
-  console.log(token);
+  
   if (token === null) {
     return <Navigate to='/login'/>
   }
-  else if(token !== null && !error && user?.status === 'active' && user?.emailVerified ) {
+
+    else if(token !== null && !error && user?.status === 'inactive' && user?.emailVerified ) {
+    return <Navigate to='/activate-agent'/>
+  }
+    else if(token !== null && !error && user?.type !== 'agent' && user?.emailVerified ) {
+    return <Navigate to='/auth-user'/>
+  }
+      else if(token !== null && !error && user?.status === 'active' && !user?.emailVerified ) {
+    return <Navigate to='/verify'/>
+  }
+     else if(token !== null && error && user === null && !loading ) {
+    return <NetworkError/>
+  }
+  else {
     return children
   }
-
-
   console.log(token);
 };
 

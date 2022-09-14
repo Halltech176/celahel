@@ -9,6 +9,7 @@ import Loader from "../../Common/Loader";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { MdOutlineMarkunread } from "react-icons/md";
 import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
+import NoValues from'../NoValues'
 
 const Notifications = () => {
   const dispatch = useDispatch();
@@ -76,8 +77,10 @@ const Notifications = () => {
       console.log(err);
     }
   };
+let renderNotes;
+if(notifications?.docs?.length !== 0) {
 
-  const renderNotes = notifications?.docs.map((doc, index) => {
+   renderNotes = notifications?.docs.map((doc, index) => {
     return (
       <tr key={index} className="mb-3" scope="row">
         <td scope="col-3">{new Date(doc.createdAt).toLocaleDateString()}</td>
@@ -98,7 +101,9 @@ const Notifications = () => {
         </td>
       </tr>
     );
-  });
+  })}else {
+    renderNotes = <NoValues value="Notifications"/>
+  }
 
   return (
     <>

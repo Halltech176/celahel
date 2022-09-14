@@ -75,16 +75,20 @@ const Signin = () => {
       if (userData.password !== confirmPassword) {
         throw "Password confirmation went wrong!!!";
       }
-      const response = await dispatch(signup(userData)).unwrap();
-      console.log(response);
-      const user = await dispatch(User());
-      console.log(user);
-      InfoNotification(response.message);
-      console.log(response);
-
-      setTimeout(() => {
-        // navigate("/verify");
+      const response = await dispatch(signup(userData))
+      if(response.type === 'signup/rejected') {
+        throw response.error
+      }
+       if(response.type === 'signup/fulfilled') {
+        InfoNotification("Account successfully created");
+         setTimeout(() => {
+        navigate("/verify");
       }, 2000);
+      }
+      console.log(response);
+      
+
+   
     } catch (err) {
       console.log(err);
       if (err) {

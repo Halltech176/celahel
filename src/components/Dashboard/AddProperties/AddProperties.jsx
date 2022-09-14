@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import searchBtn from "../../../Assets/SearchVector.png";
 import { ToastContainer, Zoom } from "react-toastify";
 import { CreateProperty } from "../../../Redux/actions";
-import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
+import { ErrorNotification, InfoNotification, SuccessNotification } from "../../Common/ErrorToast";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../Common/Loader";
 const AddProperties = () => {
@@ -136,7 +136,14 @@ const AddProperties = () => {
       console.log(Array.from(formData));
 
       console.log(formData);
-      const response = await dispatch(CreateProperty(formData)).unwrap();
+      const response = await dispatch(CreateProperty(formData)).unwrap()
+      if(response?.createdAt) {
+        SuccessNotification('Property Successfully created')
+        setTimeout(() => {
+          navigate('/properties')
+        }, 2000);
+        
+      }
       console.log(response);
     } catch (err) {
       // if(err.)

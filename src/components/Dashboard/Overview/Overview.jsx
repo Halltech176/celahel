@@ -65,7 +65,7 @@ const Overview = () => {
         >
           <Sidebar />
           <div className={`${overview_style.line_graph_container}`}>
-            <h1 className="text-primary">Properties overviews</h1>
+            <h1 className="text-primary property_overview_text">Properties overviews</h1>
             <Visuals
               property_month={[...new Set(property_month)]}
               sums={sums}
@@ -76,6 +76,9 @@ const Overview = () => {
                 Math.ceil((1 * property_slice?.length) / 4)
               )}
             />
+            {
+              properties?.docs.length !== 0 ? 
+           
             <div className="d-flex justify-content-end">
               <button
                 onClick={() => navigate("/properties")}
@@ -83,7 +86,8 @@ const Overview = () => {
               >
                 See More
               </button>
-            </div>
+            </div> : ''
+             }
           </div>
         </motion.div>
       )}

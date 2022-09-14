@@ -38,7 +38,7 @@ export const RequestOTP = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
       console.log(response.data.data);
       if (response.status === 200) {
         const data = {
-          callback_url: null,
+          callback_url: 'http://localhost:3000/agent-wallet',
           // amount: response.data.data.amount,
           reference: response.data.data.reference,
         };
@@ -53,15 +53,17 @@ export const RequestOTP = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
           }
         );
         if (addmoney.status === 200) {
+       
           const url = window.open(
             addmoney.data.data.authorization_url,
             "_blank"
           );
           console.log(url);
-          // return <iframe src={web_url.data.data.authorization_url}></iframe>
+          
         }
         console.log(addmoney);
       }
+         await axios.get('https://celahl.herokuapp.com/api//transaction/verify')
     } catch (err) {
       ErrorNotification(err?.response?.data?.message);
       console.log(err);
@@ -134,7 +136,7 @@ export const SendOTP = ({ open, setOpen, ToggleModal, bankID }) => {
   const [withdrawValue, setWithdrawValue] = useState("");
   const dispatch = useDispatch();
   const { loading, error, user } = useSelector((state) => state.userprofile);
-  console.log(user)
+
 
   const handleWithdraw = async (e) => {
     e.preventDefault();
@@ -153,21 +155,13 @@ export const SendOTP = ({ open, setOpen, ToggleModal, bankID }) => {
           },
         }
       );
-      if (response.status === 200) {
-        const response2 = await axios.put(
-          // wallet/withdrawal/:id
-          `https://celahl.herokuapp.com/api//wallet/withdrawal/${response?.data?.data?._id}`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token} `,
-            },
-          }
-        );
-        await dispatch(User());
-        SuccessNotification(response2.data.message);
+      
 
-        console.log(response2);
+      if (response.status === 200) {
+      SuccessNotification("Money successfully withdrew");
+      dispatch(User())
+
+       
       }
 
       console.log(response?.data?.data?._id);

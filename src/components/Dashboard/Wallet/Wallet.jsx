@@ -1,7 +1,7 @@
 import wallet from "./Wallet.module.css";
 import axios from "axios";
 import Modal from "react-modal";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { RequestOTP, SendOTP } from "./WalletModal";
 import Sidebar from "../../Common/Sidebar/Sidebar";
@@ -9,6 +9,7 @@ import { CgArrowLongLeft } from "react-icons/cg";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, Zoom } from "react-toastify";
+import ReactToPdf from 'react-to-pdf'
 import {
   ErrorNotification,
   SuccessNotification,
@@ -16,9 +17,14 @@ import {
 import { BankAccounts,  User} from "../../../Redux/actions";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../Common/Loader";
+import NoValues from'../NoValues'
 
 const Wallet = () => {
+  const ref = useRef()
   Modal.setAppElement("#root");
+  const handleDownload = () => {
+
+  }
   const navigate = useNavigate();
   const { loading, error, bankaccounts } = useSelector((state) => state.banks);
   const {
@@ -59,6 +65,8 @@ const Wallet = () => {
     );
   });
 
+
+//Available users accounts
   const userAccounts = user?.bankAccounts?.map((bank, index) => {
     return (
       <option key={index} value={bank?.accountNumber}>
@@ -67,15 +75,25 @@ const Wallet = () => {
     );
   });
 
+  // Account details
+
+ 
+    
+  
+
   let amountFormat = Intl.NumberFormat("en-US");
   //  ?.sort((a, b) => {
   //     return new Date(b?.updatedAt) - new Date(a?.updatedAt);
   //   })
   // const userTransactions = [...user?.wallet?.histories]
   // console.log(userTransactions)
-  const renderTransaction = user?.wallet?.histories?.map((data) => {
+  let renderTransaction ;
+  if(user?.wallet?.histories?.length !== 0) {
+
+ 
+   renderTransaction = user?.wallet?.histories?.map((data) => {
       return (
-        <div className={`${wallet.details_text}`}>
+        <div  className={`${wallet.details_text}`}>
           <p>&#8358;{amountFormat.format(data?.amount)}.00</p>
           <p>{data?._id}</p>
           <p>{data?.type}</p>
@@ -89,17 +107,33 @@ const Wallet = () => {
         </div>
       );
     });
-  // console.log(user?.bankAccounts);
+  }else {
+    renderTransaction = <NoValues value='Transaction'/>
+  }
  const getActive = user?.bankAccounts?.find((value) => {
     return value?.accountNumber === activeBank;
   });
   const getCode = bankaccounts?.find((value) => {
     return value?.name === bank;
   });
+  console.log(getActive)
+  let accountDetails;
+  if(user?.bankAccounts?.length !== 0) {
 
+  
+  accountDetails =
+    <div className={`${wallet.bank_account_text}`}>
+                  <p>Account Name : {getActive?.accountName}</p>
+
+                  <p>Account Number : {getActive?.accountNumber}</p>
+                  <p>Account Number : {getActive?.bankName}</p>
+                </div>}
+                else {
+                  accountDetails = <h1 className='text-center'>No  Account Added yet</h1>
+                }
  
   console.log(activeBank);
-  console.log(getActive);
+  console.log(user?.bankAccounts);
   console.log(bank);
 
   const AddAccount = async () => {
@@ -120,6 +154,7 @@ const Wallet = () => {
       );
       if (response.status === 200) {
         SuccessNotification(response.data.message);
+        dispatch(User())
       }
       console.log(response);
     } catch (err) {
@@ -164,12 +199,8 @@ const Wallet = () => {
             </div>
             <div className={`${wallet.bank_details}`}>
               <div className={`${wallet.agent_bank}`}>
-                <div className={`${wallet.bank_account_text}`}>
-                  <p>Account Name : {getActive?.accountName}</p>
-
-                  <p>Account Number : {getActive?.accountNumber}</p>
-                  <p>Account Number : {getActive?.bankName}</p>
-                </div>
+        
+                {accountDetails}
                 <div className={`${wallet.bank_amount}`}>
                   <h1>
                     &#8358;{amountFormat.format(user?.wallet?.balance)}.00
@@ -259,12 +290,16 @@ const Wallet = () => {
             <div>
               <div className={`${wallet.input_fields}`}>
                 <label>Transactions</label>
-                <input type="text" placeholder="Search" />
-                <input type="text" placeholder="Filter" />
-                <button>Export</button>
+              
+                  <ReactToPdf targetRef={ref} filename="transactions.pdf">
+        {({toPdf}) => (
+            <button onClick={toPdf}>Export</button>
+        )}
+    </ReactToPdf>
+                {/* <button onClick={handleDownload}>Export</button> */}
               </div>
             </div>
-            <div>
+            <div ref={ref}>
               <div className={`${wallet.details_title}`}>
                 <label>AMOUNT</label>
                 <label>TRANSACTION-ID</label>

@@ -5,6 +5,7 @@ import sidebar from "./Sidebar.module.css";
 import { Link } from "react-router-dom";
 import { MdMenu, MdClose } from "react-icons/md";
 import { BiLogOut } from "react-icons/bi";
+import { BsWalletFill } from "react-icons/bs";
 import { IoMdNotifications } from "react-icons/io";
 import LogoDark from "../../../Assets/DarkLogo.png";
 import Vector1 from "../../../Assets/Vector-1.png";
@@ -71,6 +72,7 @@ const Sidebar = () => {
             size="2rem"
             className={`${sidebar.toggle_btn}`}
             onClick={handleToggle}
+            color ="text-primary"
           />
         )}
       </div>
@@ -125,7 +127,7 @@ const Sidebar = () => {
           </li>
 
           <li className={`${sidebar.sidebar_list}`}>
-            <IoMdNotifications className="me-2  d-inline-block" />
+            <BsWalletFill className="me-2  d-inline-block" />
             <Link to="/agent-wallet" className={`${sidebar.sidebar_link}`}>
               Wallet
             </Link>
@@ -141,21 +143,9 @@ const Sidebar = () => {
               Log Out
             </p>
           </li>
-          {/* <li className={`${sidebar.sidebar_list}  d-flex align-items-center`}>
-          
-            <BiLogOut className="me-2  d-inline-block" />
-            <p
-              to="/login"
-              onClick={logout}
-              className={`${sidebar.sidebar_link}`}
-            >
-              Log Out
-            </p>
-          </li> */}
+   
         </ul>
-        {/* <ul className={`${sidebar.list_container}`}>
-          <li className={`${sidebar.sidebar_list}`}> overview</li>
-        </ul> */}
+      
 
         <div
           className={`${sidebar.upgrade_container} text-center d-flex flex-column justify-content-center align-items-center my-5 `}

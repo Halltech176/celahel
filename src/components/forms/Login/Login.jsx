@@ -51,6 +51,7 @@ const Login = () => {
         throw "Please enter valid email and password";
       }
     } catch (err) {
+      console.log(err)
       if (err.message === "Network Error") {
         ErrorNotification("please check your internet connections");
       }

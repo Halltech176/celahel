@@ -11,6 +11,7 @@ import searchBtn from "../../../Assets/SearchVector.png";
 import { ToastContainer, Zoom } from "react-toastify";
 import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
 import "react-toastify/dist/ReactToastify.css";
+import NoValues from '../NoValues'
 
 const Properties = () => {
   const dispatch = useDispatch();
@@ -104,7 +105,7 @@ const Properties = () => {
     dispatch(AllProperties());
   }, []);
 
-  console.log(properties);
+  console.log(properties?.docs);
 
   return (
     <>

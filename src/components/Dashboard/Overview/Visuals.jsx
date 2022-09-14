@@ -1,31 +1,10 @@
-import { Line } from "react-chartjs-2";
+
+import Chart from 'react-apexcharts'
 import axios from "axios";
 import { useSelector } from "react-redux";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import { useEffect } from "react";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-const Visuals = (properties) => {
+import NoValues from '../NoValues'
   const data = {
-    labels: properties.property_month,
+    // labels: properties.property_month,
     datasets: [
       {
         label: "Properties  Overview",
@@ -36,47 +15,43 @@ const Visuals = (properties) => {
         pointRadius: 1,
         pointHoverRadius: 10,
         hoverBackgroundColor: "#2563eb",
-        data: properties.sums,
+        // data: properties.sums,
       },
     ],
   };
-  const config = {
-    scales: {
-      x: {
-        grid: {
-          display: false,
+
+const Visuals = (properties) => {
+ const options =   {
+        chart: {
+          id: 'apexchart-example'
         },
-      },
-      y: {
-        grid: {
-          display: false,
+           stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent']
+              },
+        xaxis: {
+          categories:properties?.property_month,
         },
-      },
-    },
-    type: "line",
-    data: data,
-    options: {
-      reponsive: true,
-      elements: {
-        point: {
-          radius: 0,
-        },
-      },
-      plugins: {
-        legend: {
-          display: false,
-        },
-        title: {
-          display: true,
-          text: "property overview",
-        },
-      },
-    },
-  };
+         fill: {
+                opacity: 1
+              },
+      }
+
+      const      series= [{
+        name: 'properties',
+        data: properties?.sums,
+      }]
   console.log(properties.sums);
   return (
     <>
-      <Line data={data} options={config} />
+      
+    {
+      properties?.sums?.length !== 0 ? <div className="row">
+     <div className="mixed-chart">
+       <Chart style={{overflow : 'scroll'}} options={options} series={series} type="bar" width={400} height={420} />
+      </div>    </div> : ''
+    }
     </>
   );
 };
