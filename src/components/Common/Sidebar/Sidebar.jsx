@@ -3,7 +3,8 @@ import Modal from "react-modal";
 import { motion } from "framer-motion";
 import sidebar from "./Sidebar.module.css";
 import { Link } from "react-router-dom";
-import { MdMenu, MdClose } from "react-icons/md";
+import { MdClose } from "react-icons/md";
+import { AiOutlineMenuFold } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
 import { BsWalletFill } from "react-icons/bs";
 import { IoMdNotifications } from "react-icons/io";
@@ -62,7 +63,7 @@ const Sidebar = () => {
           </Link>
         </div>
         {open ? (
-          <MdMenu
+          <AiOutlineMenuFold
             className={`${sidebar.toggle_btn} `}
             size="2rem"
             onClick={handleToggle}
@@ -72,7 +73,7 @@ const Sidebar = () => {
             size="2rem"
             className={`${sidebar.toggle_btn}`}
             onClick={handleToggle}
-            color ="text-primary"
+            // color ="text-primary"
           />
         )}
       </div>
@@ -143,9 +144,7 @@ const Sidebar = () => {
               Log Out
             </p>
           </li>
-   
         </ul>
-      
 
         <div
           className={`${sidebar.upgrade_container} text-center d-flex flex-column justify-content-center align-items-center my-5 `}

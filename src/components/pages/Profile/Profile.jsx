@@ -245,7 +245,6 @@ const Profile = () => {
                   id=""
                 >
                   <option value="agent">agent</option>
-                  <option value="user">user</option>
                 </select>
               </div>
               <div className="col-md-20">

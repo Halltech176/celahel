@@ -81,6 +81,7 @@
   transform: translate(-50%, -50%);
   background-color: white;
   padding: 2rem;
+
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 .modal_inputs {
@@ -102,7 +103,7 @@ input::-webkit-inner-spin-button {
   display: flex;
   justify-content: space-between;
   margin: 1rem 0rem;
- 
+
   align-items: center;
 }
 .input_fields label,
@@ -166,11 +167,12 @@ input::-webkit-inner-spin-button {
     margin-left: 0rem;
     margin-top: 1.2rem;
   }
+  .wallet_modal {
+    width: 80%;
+  }
   .input_fields,
-.details_title,
-.details_text {
-
-  overflow: scroll;
-
-}
+  .details_title,
+  .details_text {
+    overflow: scroll;
+  }
 }

@@ -130,9 +130,9 @@
     margin: 0rem;
     transition: all 0.5s ease-in-out;
   }
-  .hide {
-    opacity: 0;
-    max-height: 0rem !important;
+  ul.hide, .hide {
+    display : none !important;
+    /* max-height: 0rem !important; */
   }
 
   .toggle-show {

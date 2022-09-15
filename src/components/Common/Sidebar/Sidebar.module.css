@@ -7,13 +7,12 @@
   bottom: 0;
   padding: 0.5rem 2rem 1rem 0rem !important;
   background-color: #2563eb;
-
 }
 .sidebar_nav {
   display: none;
 }
 .toggle_btn {
-  color : #2563eb;
+  color: #2563eb;
   animation-name: toggle;
   animation-duration: 2s;
   animation-timing-function: ease-in-out;

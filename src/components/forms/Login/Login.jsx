@@ -17,7 +17,7 @@ import { userCredential } from "../../../Redux/slices/userStates";
 
 const Login = () => {
   const [email, setEmail] = useState("kunleolaakande@gmail.com");
-  const [password, setPassword] = useState("akande");
+  const [password, setPassword] = useState("12345678");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -51,7 +51,7 @@ const Login = () => {
         throw "Please enter valid email and password";
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
       if (err.message === "Network Error") {
         ErrorNotification("please check your internet connections");
       }
@@ -104,7 +104,7 @@ const Login = () => {
                     Password
                   </label>
                   <input
-                    type="text"
+                    type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="form-control"

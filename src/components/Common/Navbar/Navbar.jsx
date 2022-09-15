@@ -3,7 +3,8 @@ import navbar from "./navbar.css";
 import DarkLogo from "../../../Assets/DarkLogo.png";
 import Logo from "../../Logo/Logo.component";
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import { MdMenu, MdClose } from "react-icons/md";
+import { MdClose } from "react-icons/md";
+import { AiOutlineMenuFold } from "react-icons/ai";
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ const Navbar = () => {
                 onClick={handleToggle}
               />
             ) : (
-              <MdMenu
+              <AiOutlineMenuFold
                 className={`${
                   path === "/" ? "text-light" : "text-primary"
                 } toggle-btn  open-btn`}

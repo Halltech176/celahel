@@ -38,7 +38,7 @@ export const RequestOTP = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
       console.log(response.data.data);
       if (response.status === 200) {
         const data = {
-          callback_url: 'http://localhost:3000/agent-wallet',
+          callback_url: "http://localhost:3000/agent-wallet",
           // amount: response.data.data.amount,
           reference: response.data.data.reference,
         };
@@ -53,17 +53,15 @@ export const RequestOTP = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
           }
         );
         if (addmoney.status === 200) {
-       
           const url = window.open(
             addmoney.data.data.authorization_url,
             "_blank"
           );
           console.log(url);
-          
         }
         console.log(addmoney);
       }
-         await axios.get('https://celahl.herokuapp.com/api//transaction/verify')
+      await axios.get("https://celahl.herokuapp.com/api//transaction/verify");
     } catch (err) {
       ErrorNotification(err?.response?.data?.message);
       console.log(err);
@@ -137,7 +135,6 @@ export const SendOTP = ({ open, setOpen, ToggleModal, bankID }) => {
   const dispatch = useDispatch();
   const { loading, error, user } = useSelector((state) => state.userprofile);
 
-
   const handleWithdraw = async (e) => {
     e.preventDefault();
     const data = {
@@ -155,13 +152,10 @@ export const SendOTP = ({ open, setOpen, ToggleModal, bankID }) => {
           },
         }
       );
-      
 
       if (response.status === 200) {
-      SuccessNotification("Money successfully withdrew");
-      dispatch(User())
-
-       
+        SuccessNotification("Money successfully withdrew");
+        dispatch(User());
       }
 
       console.log(response?.data?.data?._id);
