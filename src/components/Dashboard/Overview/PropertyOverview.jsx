@@ -12,7 +12,9 @@ const PropertyView = (property) => {
   console.log(property.property_summary);
   return (
     <>
-      <div className={` d-flex flex-wrap justify-content-between`}>
+      <div
+        className={` d-flex flex-wrap align-items-center justify-content-center`}
+      >
         {agent_properties}
       </div>
     </>

@@ -45,7 +45,10 @@ const PropertyCard = ({ property }) => {
   let amountFormat = Intl.NumberFormat("en-US");
   const agent_properties = property?.map((data) => {
     return (
-      <div key={data?._id} className={`${style.image_container} card my-3`}>
+      <div
+        key={data?._id}
+        className={`${style.image_container} card my-3 mx-2`}
+      >
         <div className="card-header  d-flex align-items-center justify-content-between">
           {" "}
           <span>{data?.name} </span>{" "}

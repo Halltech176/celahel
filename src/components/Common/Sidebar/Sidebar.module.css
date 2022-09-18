@@ -112,7 +112,7 @@
     transition: all 2s ease transform 3.5s;
     animation: Sidebar 0.7s ease forwards;
     animation-duration: 1s;
-    padding: 0.5rem 3rem 3rem 0rem !important;
+    padding: 0.5rem 0rem 0rem 0rem !important;
   }
   .show {
     display: none;
@@ -124,13 +124,7 @@
   .sidebar_link {
     font-size: 1.1rem;
   }
-  .sidebar_list > img {
-    /* display: none !important; */
-    width: 1.1rem;
-  }
-  .sidebar_list > img {
-    width: 1.1rem;
-  }
+
   /* upgrade_btn */
 
   .close_menu_btn {
@@ -148,7 +142,7 @@
     }
     100% {
       bottom: 0;
-      width: 75%;
+      width: 60%;
     }
   }
 }

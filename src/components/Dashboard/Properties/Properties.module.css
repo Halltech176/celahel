@@ -1,9 +1,9 @@
 .property_container {
-  margin-left: 20rem !important;
+  margin-left: 14rem !important;
   margin-right: 2rem !important;
   margin-bottom: 2rem !important;
   margin-top: 1rem !important;
-  max-width: 75%;
+  /* max-width: 75%; */
   position: relative;
 }
 .search_container {

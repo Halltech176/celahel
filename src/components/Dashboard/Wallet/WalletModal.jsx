@@ -41,69 +41,89 @@ export const FundWallet = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
       console.log(response.data.data.reference);
       setReference(response.data.data.reference);
       // console.log(process.env.NODE_ENV);
-      // if (response.status === 200) {
-      //   const data = {
-      //     callback_url: `${
-      //       process.env.NODE_ENV === "development"
-      //         ? "http://localhost:3000/properties"
-      //         : "celahel.vercel.app/properties"
-      //     }`,
+      if (response.status === 200) {
+        const data = {
+          callback_url: `${
+            process.env.NODE_ENV === "development"
+              ? "http://localhost:3000/properties"
+              : "celahel.vercel.app/properties"
+          }`,
 
-      //     reference: response.data.data.reference,
-      //   };
-      //   console.log(data);
-      //   const addmoney = await axios.post(
-      //     "https://celahl.herokuapp.com/api//transaction/initiate",
-      //     data,
-      //     {
-      //       headers: {
-      //         Authorization: `Bearer ${token} `,
-      //       },
-      //     }
-      //   );
-      //   if (addmoney.status === 200) {
-      //     const url = window.open(
-      //       addmoney.data.data.authorization_url,
-      //       "_blank"
-      //     );
-      //   }
-      //   console.log(addmoney);
-      // }
-      // await axios.get("https://celahl.herokuapp.com/api//transaction/verify");
+          reference: response.data.data.reference,
+        };
+        console.log(data);
+        const addmoney = await axios.post(
+          "https://celahl.herokuapp.com/api//transaction/initiate",
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${token} `,
+            },
+          }
+        );
+        if (addmoney.status === 200) {
+          const url = window.open(
+            addmoney.data.data.authorization_url,
+            "_blank"
+          );
+        }
+        console.log(addmoney);
+      }
+      await axios.get("https://celahl.herokuapp.com/api//transaction/verify");
     } catch (err) {
       ErrorNotification(err?.response?.data?.message);
       console.log(err);
     }
   };
-  const config = {
-    reference,
-    email: "devhalltech@gmail.com",
-    amount: 20000,
-    publicKey: "pk_test_834af034d162826c6ec4afc5396c60e62b28836b",
-  };
-  console.log(config);
+  // const config = {
+  //   reference,
+  //   email: "devhalltech@gmail.com",
+  //   amount: 20000,
+  //   publicKey: "pk_test_834af034d162826c6ec4afc5396c60e62b28836b",
+  // };
+  // console.log(config);
 
   // you can call this function anything
-  const handlePaystackSuccessAction = async (reference) => {
-    // Implementation for whatever you want to do with reference and after success call.
-    console.log(reference);
-    if (reference.status === "success") {
-      console.log(reference);
-    }
-  };
+  // const handlePaystackSuccessAction = async (reference) => {
+  // Implementation for whatever you want to do with reference and after success call.
+  // console.log(reference);
+  // if (reference.status === "success") {
+  //   const response = await axios.get(
+  //     "https://celahl.herokuapp.com/api//transaction/verify",
+  //     {
+  //       mode: "CORS",
+  //     },
+  //     {
+  //       headers: {
+  //         " Access-Control-Allow-Origin": "*",
+  //       },
+  //     }
+  //   );
+  //   console.log(response);
+  // }
+  // };
 
   // you can call this function anything
-  const handlePaystackCloseAction = () => {
-    // implementation for  whatever you want to do when the Paystack dialog closed.
-    console.log("closed");
-  };
+  // const handlePaystackCloseAction = () => {
+  //   // implementation for  whatever you want to do when the Paystack dialog closed.
+  //   console.log("closed");
+  // };
 
-  const componentProps = {
-    ...config,
-    text: "Paystack Button Implementation",
-    onSuccess: (reference) => handlePaystackSuccessAction(reference),
-    onClose: handlePaystackCloseAction,
-  };
+  // const componentProps = {
+  //   ...config,
+  //   text: "Paystack Button Implementation",
+  //   onSuccess: (reference) => handlePaystackSuccessAction(reference),
+  //   onClose: handlePaystackCloseAction,
+  // };
+
+  // axios
+  //   .get("https://celahl.herokuapp.com/api//transaction/verify")
+  //   .then((response) => {
+  //     return response;
+  //   })
+  //   .then((data) => {
+  //     console.log(data);
+  //   });
 
   console.log(amount);
   Modal.setAppElement("#root");
@@ -157,10 +177,10 @@ export const FundWallet = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
                 >
                   Fund Wallet
                 </button>
-                <PaystackButton
+                {/* <PaystackButton
                   className="btn px-4 my-2 btn-outline-primary text-center"
                   {...componentProps}
-                />
+                /> */}
               </div>
             </div>
           </motion.div>

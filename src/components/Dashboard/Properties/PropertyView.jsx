@@ -30,7 +30,7 @@ const PropertyView = (docs) => {
   return (
     <>
       <Sidebar />
-      <div className={`${properties.property_container} row`}>
+      <div className={`${properties.property_container} `}>
         <div className={`${properties.search_container}`}>
           <p className={`${properties.info_label}`}>
             note : <br /> click on a property to edit{" "}
@@ -64,7 +64,9 @@ const PropertyView = (docs) => {
           </Link>
         </div>
 
-        <div className={` d-flex flex-wrap justify-content-between`}>
+        <div
+          className={` d-flex flex-wrap align-items-center justify-content-center`}
+        >
           {agent_properties}
         </div>
 

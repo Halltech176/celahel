@@ -1,5 +1,5 @@
 .line_graph_container {
-  margin: 3rem 3rem 3rem 16rem;
+  margin: 3rem 1rem 3rem 16rem;
 }
 .mixedChart {
   display: flex;
@@ -9,7 +9,9 @@
     margin-left: 0;
     margin-right: 0;
   }
-  /* .chart-container {
+  .mixedChart {
+    display: flex;
+    flex-wrap: wrap;
     overflow: scroll;
-  }*/
+  }
 }

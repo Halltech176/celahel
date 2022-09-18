@@ -73,7 +73,7 @@ const Sidebar = () => {
         {open ? (
           <AiOutlineMenuFold
             className={`${sidebar.toggle_btn} `}
-            size="2rem"
+            size="1.5rem"
             onClick={handleToggle}
           />
         ) : (
