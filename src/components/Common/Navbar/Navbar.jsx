@@ -119,30 +119,17 @@ const Navbar = () => {
               path === "/" ? "btn-route" : ""
             }`}
           >
-            <li>
-              <button className="text-link">
-                <Link
-                  className={`${
-                    path === "/" ? "text-light" : "text-primary"
-                  } text-link`}
-                  to="signin"
-                >
-                  Signin
-                </Link>
-              </button>
-            </li>
-            <li>
-              <button className="text-link">
-                <Link
-                  className={`${
-                    path === "/" ? "text-light" : "text-primary"
-                  } text-link`}
-                  to="login"
-                >
-                  Login
-                </Link>
-              </button>
-            </li>
+            {" "}
+            <Link
+              className={`${
+                path === "/" ? "text-light" : "text-primary"
+              } text-link`}
+              to="login"
+            >
+              <li>
+                <button className="text-link">Agent</button>
+              </li>
+            </Link>
           </div>
         </nav>
       </header>

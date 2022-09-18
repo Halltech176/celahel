@@ -133,9 +133,11 @@
 .profile-image-container-sb {
   display: flex;
   flex-direction: column;
-  margin: 3rem 0rem 3rem 0rem;
-  width: 5rem;
-  height: 5rem;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 0rem 0rem 0rem;
+  /* width: 5rem;
+  height: 5rem; */
   border-radius: 50%;
 }
 .profile-image-container-sb .profile-image {
@@ -234,18 +236,18 @@
   font-size: 2rem;
 }
 .no-values {
-  border : 1px dashed  #2562e9;
-  display : flex;
-  align-items : center;
-  justify-content : center;
+  border: 1px dashed #2562e9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: "Public Sans", sans-serif !important;
-  padding :2rem;
-  width : 30rem;
-  margin :2rem auto;
-  text-align : center;
+  padding: 2rem;
+  width: 30rem;
+  margin: 2rem auto;
+  text-align: center;
 }
-@media (max-width : 600px) {
+@media (max-width: 600px) {
   .no-values {
-    width : 20rem;
+    width: 20rem;
   }
 }

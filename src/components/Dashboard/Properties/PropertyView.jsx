@@ -1,5 +1,7 @@
 import { ToastContainer, Zoom } from "react-toastify";
 import { useState } from "react";
+import { FiEdit } from "react-icons/fi";
+import { MdOutlineDetails } from "react-icons/md";
 import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
 import properties from "./Properties.module.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,7 +9,9 @@ import Sidebar from "../../Common/Sidebar/Sidebar";
 import Loader from "../../Common/Loader";
 import { Link } from "react-router-dom";
 import searchBtn from "../../../Assets/SearchVector.png";
-import NoValues from '../NoValues'
+import NoValues from "../NoValues";
+import PropertyCard from "./PropertyCard";
+import { HandleIt } from "./PropertyUtils";
 const PropertyView = (docs) => {
   const [search, setSearch] = useState("");
 
@@ -15,56 +19,14 @@ const PropertyView = (docs) => {
     docs?.handleSearch(search);
   };
   console.log(search);
-    console.log(docs?.property);
+  console.log(docs?.property);
 
-    let agent_properties ;
-  if(docs?.property?.length !== 0) {
-
- 
-   agent_properties = docs?.property?.map((data) => {
-    return (
-      <div
-        key={data._id}
-        onClick={() => docs?.GetProperty(data._id)}
-        className={`${properties.image_container}`}
-      >
-        <span
-          className={`${
-            data.purpose === "sale"
-              ? properties.sell_badge
-              : properties.rent_badge
-          } badge  px-2 py-1 text-center`}
-        >
-          {data.purpose}
-        </span>
-        <div className={`${properties.property_text}`}>
-          <p className={`${properties.property_name}`}>{data.name}</p>
-          <p className={`${properties.property_location}`}>{data.address}</p>
-          <p className={`${properties.property_price}`}>${data.price}</p>
-        </div>
-
-        <div className="d-flex flex-wrap align-center justify-between">
-          {data.images.map((img) => {
-       
-            return (
-              <div key={img._id} className={`${properties.image_border} mx-auto`}>
-                <img
-                  src={img.url}
-                  alt={img.name}
-                  className={`${properties.property_image} mx-auto`}
-                  loading="eager"
-                />
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    );
-  });
-   }
-   else {
-     agent_properties = <NoValues value='property'/>
-   }
+  let agent_properties;
+  if (docs?.property?.length !== 0) {
+    agent_properties = <PropertyCard property={docs?.property} />;
+  } else {
+    agent_properties = <NoValues value="property" />;
+  }
   return (
     <>
       <Sidebar />
@@ -102,11 +64,10 @@ const PropertyView = (docs) => {
           </Link>
         </div>
 
-        <div
-          className={`${properties.properties_image} col-md-12 d-flex flex-wrap justify-content-between`}
-        >
+        <div className={` d-flex flex-wrap justify-content-between`}>
           {agent_properties}
         </div>
+
         <div>
           {docs.properties?.totalPages === 1 ? (
             ""
@@ -143,6 +104,13 @@ const PropertyView = (docs) => {
               {docs?.properties?.page === docs.properties?.totalPages ? (
                 <div> </div>
               ) : (
+                // <button
+                //   onClick={() =>
+                //     HandleIt(docs.properties?.totalPages, docs.count)
+                //   }
+                // >
+                //   click me
+                // </button>
                 <button className="paginate-btn" onClick={docs.handleIncrease}>
                   next
                 </button>

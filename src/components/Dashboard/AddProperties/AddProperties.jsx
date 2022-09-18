@@ -10,7 +10,11 @@ import { useDispatch, useSelector } from "react-redux";
 import searchBtn from "../../../Assets/SearchVector.png";
 import { ToastContainer, Zoom } from "react-toastify";
 import { CreateProperty } from "../../../Redux/actions";
-import { ErrorNotification, InfoNotification, SuccessNotification } from "../../Common/ErrorToast";
+import {
+  ErrorNotification,
+  InfoNotification,
+  SuccessNotification,
+} from "../../Common/ErrorToast";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../Common/Loader";
 const AddProperties = () => {
@@ -136,13 +140,12 @@ const AddProperties = () => {
       console.log(Array.from(formData));
 
       console.log(formData);
-      const response = await dispatch(CreateProperty(formData)).unwrap()
-      if(response?.createdAt) {
-        SuccessNotification('Property Successfully created')
+      const response = await dispatch(CreateProperty(formData)).unwrap();
+      if (response?.createdAt) {
+        SuccessNotification("Property Successfully created");
         setTimeout(() => {
-          navigate('/properties')
+          navigate("/properties");
         }, 2000);
-        
       }
       console.log(response);
     } catch (err) {
@@ -180,22 +183,6 @@ const AddProperties = () => {
           <Sidebar />
           <div className={`${properties.property_container}`}>
             <div className="row">
-              {/* <div className={`${properties.search_container}`}>
-            <div>
-              <input
-                className={`${properties.search_input} form-control`}
-                placeholder="search"
-              />
-              <span>
-                <img
-                  className={`${properties.search_icon}`}
-                  src={searchBtn}
-                  alt="search icon"
-                />
-              </span>
-            </div>
-          </div> */}
-              {/* <div></div> */}
               <div className="col-md-8 d-flex align-items-center">
                 <CgArrowLongLeft size="1.8rem" onClick={Back} />
                 <h2 className={`${properties.profile_text} ms-4  text-primary`}>
@@ -205,7 +192,9 @@ const AddProperties = () => {
               </div>
               <h4 className="text-primary my-4">Upload Property Picture</h4>
               <div className={`${properties.properties_image} m3-4`}>
-                <div className={`${properties.main_img_container}`}>
+                <div
+                  className={`${properties.main_img_container} mx-3 no-values`}
+                >
                   {mainImg ? (
                     <img
                       src={mainImg}
@@ -213,10 +202,10 @@ const AddProperties = () => {
                       alt="img"
                     />
                   ) : (
-                    <h1>click on the image to preview</h1>
+                    <h4>click on the image to preview</h4>
                   )}
                 </div>
-                <div className={`${properties.image_container}`}>
+                <div className={`${properties.image_container} mx-3 no-values`}>
                   {images ? (
                     Array.from(images).map((item, index) => {
                       return (

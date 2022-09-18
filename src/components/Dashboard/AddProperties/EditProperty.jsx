@@ -193,22 +193,6 @@ const EditProperty = () => {
           <Sidebar />
           <div className={`${properties.property_container}`}>
             <div className="row">
-              {/* <div className={`${properties.search_container}`}>
-                <div>
-                  <input
-                    className={`${properties.search_input} form-control`}
-                    placeholder="search"
-                  />
-                  <span>
-                    <img
-                      className={`${properties.search_icon}`}
-                      src={searchBtn}
-                      alt="search icon"
-                    />
-                  </span>
-                </div>
-              </div> */}
-              {/* <div></div> */}
               <div className="col-md-8 d-flex align-items-center">
                 <CgArrowLongLeft size="1.8rem" onClick={Back} />
                 <h2 className={`${properties.profile_text} ms-4  text-primary`}>
@@ -220,7 +204,9 @@ const EditProperty = () => {
                 note:- Edit only features you need to update
               </h4>
               <div className={`${properties.properties_image} m3-4`}>
-                <div className={`${properties.main_img_container}`}>
+                <div
+                  className={`${properties.main_img_container} mx-3 no-values`}
+                >
                   {mainImg ? (
                     <img
                       src={mainImg}
@@ -228,10 +214,10 @@ const EditProperty = () => {
                       alt="img"
                     />
                   ) : (
-                    <h1>click on the image to preview</h1>
+                    <h4>click on the image to preview</h4>
                   )}
                 </div>
-                <div className={`${properties.image_container}`}>
+                <div className={`${properties.image_container} mx-3 no-values`}>
                   {images ? (
                     Array.from(images).map((item, index) => {
                       return (

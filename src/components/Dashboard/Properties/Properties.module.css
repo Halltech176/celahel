@@ -37,15 +37,6 @@
   border-radius: 5px;
   font-family: "DM mono", monospace;
 }
-.image_container {
-  border-radius: 5px !important;
-  position: relative;
-  margin-top: 2rem !important;
-  cursor: pointer;
-  transition: all 0.5s ease-in-out;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  /* width : 17rem !important; */
-}
 
 /* .image_border {
   border : 1px solid #ccc;
@@ -57,56 +48,34 @@
   margin-right: -0.5rem;
   /* height: 2.3rem !important; */
 }
-.image_container::before {
-  content: "";
-  position: absolute;
-  top: 0rem;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 4;
-  background-color: lightblue;
-  opacity: 0;
+.image_container {
+  width: 20rem !important;
+  font-family: "General Sans", sans-serif;
+  text-transform: capitalize;
+  font-weight: 600 !important;
 }
 .property_image {
   object-fit: cover;
   width: 17rem;
-  border-radius: 15px;
+
+  /* border-radius: 15px; */
 }
-.image_border {
+/* .image_border {
   z-index: -2;
-  /* background-color: transparent; */
+
   width: 17rem;
   height: 19rem;
-}
-.sell_badge,
-.rent_badge,
-.property_text {
-  position: absolute;
-}
-.sell_badge,
-.rent_badge {
-  top: 1rem;
-  left: 0.8rem;
-  /* z-index: 2; */
-}
+} */
+
 .sell_badge {
   background-color: #ff476b;
+  font-family: "General Sans", sans-serif;
 }
 .rent_badge {
   background-color: #15803d;
 }
 .property_text {
-  margin: 0 !important;
-  padding: 0 !important;
-  /* line-height: 1rem; */
   font-family: "General Sans", sans-serif;
-  bottom: 0.3rem;
-  left: 0.8rem;
-  color: white;
-  /* background-color: red; */
-  max-width: 80%;
-  /* z-index: 2; */
 }
 .property_price {
   margin: 0 !important;

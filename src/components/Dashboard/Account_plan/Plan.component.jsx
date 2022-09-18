@@ -1,5 +1,5 @@
-import React , {useEffect}from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import planstyle from "./planstyle.module.css";
 import axios from "axios";
@@ -13,21 +13,24 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../Common/Loader";
 import { GetSettings } from "../../../Redux/actions";
+import PlanData from "./Plan";
 
 function Plan() {
   useEffect(() => {
-    dispatch(GetSettings())
-  },[])
+    dispatch(GetSettings());
+  }, []);
+  console.log(PlanData);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {settings,loading} = useSelector((state) => state).settings;
+  const { settings, loading } = useSelector((state) => state).settings;
 
-  console.log(settings)
-  
+  console.log(settings);
+
   const [modalState, setModalState] = React.useState(false);
   const handleOpen = () => setModalState(true);
   const handleClose = () => setModalState(false);
-  console.log(settings?.basicPlan)
+  console.log(settings?.basicPlan);
 
   const planSubscribe = async (amount) => {
     try {
@@ -50,7 +53,11 @@ function Plan() {
         "https://celahl.herokuapp.com/api//transaction/initiate",
         {
           reference: generate_transaction.data.data.reference,
-          callback_url: "http://localhost:3000/addproperty",
+          callback_url: `${
+            process.env.NODE_ENV === "development"
+              ? "http://localhost:3000/addproperty"
+              : "celahel.vercel.app/addproperty"
+          }`,
         },
         {
           headers: {
@@ -64,284 +71,204 @@ function Plan() {
         console.log(url);
         // frame= <iframe src={web_url.data.data.authorization_url} height="400" width="500"></iframe>
       }
-      await axios.get('https://celahl.herokuapp.com/api//transaction/verify')
+      await axios.get("https://celahl.herokuapp.com/api//transaction/verify");
 
       console.log(web_url);
     } catch (err) {
       if (err.message === "Network Error") {
         ErrorNotification("Please check your internet connection");
-      } 
+      }
       // ErrorNotification(err.message);
       console.log(err);
     }
   };
 
+  const renderPlan = PlanData.map((data) => {
+    return (
+      <div
+        className={`${data.plan === "Growth" ? "bg-primary" : "bg-light"} ${
+          data.plan === "Growth" ? "text-light" : "text-dark"
+        } col-12 col-md card shadow-lg borderless px-3 mx-2 py-5 regular`}
+      >
+        <div className="d-flex">
+          <div className={` bg-light p-2 m-3 rounded-lg`}>
+            {data.plan === "Basic" ? (
+              <img src={BasicIcon} alt="" className="w-100" />
+            ) : data.plan === "Growth" ? (
+              <img src={PremiumIcon} alt="" className="w-100" />
+            ) : (
+              <img src={EnterpriseIcon} alt="" className="w-100" />
+            )}
+          </div>
+
+          <div className="plantext d-flex flex-column">
+            <p className="lead text-secondary">{data.size}</p>
+            <p className="h2 text-primary">{data.plan}</p>
+          </div>
+        </div>
+        <p className=" plan_tex">{data.text}</p>
+        <hr />
+
+        <p className={` h3`}>What's included</p>
+        <div>
+          <div
+            className={`${
+              data.plan === "Growth" ? "text-light" : "text-primary"
+            } form-check`}
+          >
+            <input
+              type="checkbox"
+              className={`${
+                data.plan === "Growth" ? "bg-light" : "bg-primary"
+              } rounded-circle  form-check-input`}
+              name="feature1"
+              checked
+              readOnly
+            ></input>
+            <label
+              htmlFor="feature1"
+              className={`${
+                data.plan === "Growth" ? "text-light" : "text-primary"
+              } form-check`}
+            >
+              {data.feature1}
+            </label>
+          </div>
+          <div className="form-check">
+            <input
+              type="checkbox"
+              className={`${
+                data.plan === "Growth" ? "bg-light" : "bg-primary"
+              } rounded-circle  form-check-input`}
+              checked
+              readOnly
+              name="feature2"
+            ></input>
+            <label
+              htmlFor="feature2"
+              className={`${
+                data.plan === "Growth" ? "text-light" : "text-primary"
+              } form-check`}
+            >
+              {data.feature2}
+            </label>
+          </div>
+          <div className="form-check">
+            <input
+              type="checkbox"
+              className={`${
+                data.plan === "Growth" ? "bg-light" : "bg-primary"
+              } rounded-circle  form-check-input`}
+              // className="form-check-input bg-primary"
+              checked
+              readOnly
+              name="feature3"
+            ></input>
+            <label
+              htmlFor="feature3"
+              className={`${
+                data.plan === "Growth" ? "text-light" : "text-primary"
+              } form-check`}
+            >
+              {data.feature3}
+            </label>
+          </div>
+          <div className="form-check">
+            <input
+              type="checkbox"
+              className={`${
+                data.plan === "Growth" ? "bg-light" : "bg-primary"
+              } rounded-circle  form-check-input`}
+              checked
+              readOnly
+              name="feature4"
+            ></input>
+            <label
+              htmlFor="feature4"
+              className={`${
+                data.plan === "Growth" ? "text-light" : "text-primary"
+              } form-check`}
+            >
+              {data.feature4}
+            </label>
+          </div>
+        </div>
+        {data.plan === "Basic" ? (
+          <p>
+            <span className="display-6 text-primary">Free Trial</span>{" "}
+          </p>
+        ) : data.plan === "Growth" ? (
+          <p>
+            <span
+              className={`${
+                data.plan === "Growth" ? "text-light" : "text-primary"
+              }   display-6`}
+            >
+              &#8358;{settings?.growthPlan}
+            </span>{" "}
+            / 3month
+          </p>
+        ) : (
+          <p>
+            <span className="display-6 text-primary">
+              &#8358;{settings?.enterprisePlan}
+            </span>{" "}
+            / 5years
+          </p>
+        )}
+        {/* btn-primary bg-primary */}
+        <button
+          className={`${
+            data.plan === "Growth"
+              ? "text-primary" && "bg-light"
+              : "btn-primary" && "bg-primary"
+          }  btn btn-block  rounded-pill my-3 py-3`}
+          // className="btn btn-block btn-primary bg-primary rounded-pill my-3 py-3"
+          onClick={
+            data.plan === "Basic"
+              ? () => navigate("/addproperty")
+              : data.plan === "Growth"
+              ? () => planSubscribe(settings?.growthPlan)
+              : () => planSubscribe(settings?.enterprisePlan)
+          }
+        >
+          Get started
+        </button>
+      </div>
+    );
+  });
+
   return (
     <>
-    { loading && settings !== null ? <Loader/> : 
-    <motion.div
-      initial={{ opacity: 0, scale: 0.7 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <ToastContainer transition={Zoom} autoClose={800} />
-      <Sidebar />
-      <div className={`${planstyle.planstyleContainer}`}>
-        <div>
-          <h2 className="text-primary  small text-center h4">PRICING</h2>
-          <h1 className="h1 text-primary text-center">
-            Affordable pricing plans!!!
-          </h1>
-          <p className="m-3 lead plan_text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel tenetur
-            quibusdam quas. Accusamus veniam magnam repudiandae ipsum, soluta
-            quisquam velit.
-          </p>
-        </div>
-        {/* <div>{frame} </div> */}
+      {loading && settings !== null ? (
+        <Loader />
+      ) : (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <ToastContainer transition={Zoom} autoClose={800} />
+          <Sidebar />
+          <div className={`${planstyle.planstyleContainer}`}>
+            <div>
+              <h2 className="text-primary  small text-center h4">PRICING</h2>
+              <h1 className="h1 text-primary text-center">
+                Affordable pricing plans!!!
+              </h1>
+              <p className="m-3 lead plan_text">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel
+                tenetur quibusdam quas. Accusamus veniam magnam repudiandae
+                ipsum, soluta quisquam velit.
+              </p>
+            </div>
 
-        <div className="row g-4 my-4 mx-0 p-3 justify-content-between">
-          <div className="col-12 col-md card shadow-lg borderless px-3 py-5 regular">
-            <div className="d-flex">
-              <div className="bg-light p-2 m-3 rounded-lg">
-                <img src={BasicIcon} alt="" className="w-100" />
-              </div>
-
-              <div className="plantext d-flex flex-column">
-                <p className="lead text-secondary">For small</p>
-                <p className="h2 text-primary">Basic</p>
-              </div>
+            <div className="row g-4 my-4 mx-0 p-3 justify-content-between">
+              {renderPlan}
             </div>
-            <p className=" plan_tex">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non,
-              distinctio?
-            </p>
-            <hr />
-
-            <p className="h3">What's included</p>
-            <div className="form-check">
-              <input
-                type="checkbox"
-                className="rounded-circle form-check-input bg-primary"
-                name="feature1"
-                checked
-                readOnly
-              ></input>
-              <label htmlFor="feature1" className="text-primary">
-                All analytics features
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                type="checkbox"
-                className="rounded-circle form-check-input bg-primary"
-                checked
-                readOnly
-                name="feature2"
-              ></input>
-              <label htmlFor="feature2" className="text-primary">
-                Up to 250,000 tracked visits
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                type="checkbox"
-                className="rounded-circle form-check-input bg-primary"
-                checked
-                readOnly
-                name="feature3"
-              ></input>
-              <label htmlFor="feature3" className="text-primary">
-                Normal support
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                type="checkbox"
-                className="rounded-circle form-check-input bg-primary"
-                checked
-                readOnly
-                name="feature4"
-              ></input>
-              <label htmlFor="feature4" className="text-primary">
-                Up to 3 team members
-              </label>
-            </div>
-            <p>
-              <span className=" display-4 text-primary">Free trial</span>
-            </p>
-
-            <button
-              className="btn btn-block btn-primary bg-primary rounded-pill my-3 py-3"
-              onClick={() => navigate("/addproperties")}
-            >
-              Get started
-            </button>
           </div>
-
-          <div className="col-12 col-md card shadow-lg bg-purple px-3 mx-lg-3 py-5 inverted bg-primary text-white">
-            <div className="d-flex">
-              <div className="bg-light p-2 m-3 rounded-lg">
-                <img src={PremiumIcon} alt="" className="w-100" />
-              </div>
-
-              <div className="plantext d-flex flex-column">
-                <p className="lead text-secondary">For Startups</p>
-                <p className="h2">Growth</p>
-              </div>
-            </div>
-            <p className=" plan_tex">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non,
-              distinctio?
-            </p>
-            <hr />
-
-            <p className="h3">What's included</p>
-            <div className="form-check">
-              <input
-                type="checkbox"
-                className="rounded-circle form-check-input bg-light text-primary"
-                name="feature1"
-                checked
-                readOnly
-              ></input>
-              <label htmlFor="feature1" className="form-check-label text-light">
-                Everything on basic plan
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                type="checkbox"
-                className="rounded-circle form-check-input bg-light"
-                checked
-                readOnly
-                name="faeature2"
-              ></input>
-              <label htmlFor="feature2" className="form-check-label text-light">
-                Up to 1,000,000 tracked visits
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                type="checkbox"
-                className="rounded-circle form-check-input bg-light"
-                checked
-                readOnly
-                name="feature3"
-              ></input>
-              <label htmlFor="feature3" className="form-check-label text-light">
-                Premium support
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                type="checkbox"
-                className="rounded-circle form-check-input bg-light"
-                checked
-                readOnly
-                name="feature4"
-              ></input>
-              <label htmlFor="feature4" className="form-check-label text-light">
-                Up to 10 team members
-              </label>
-            </div>
-            <p>
-              <span className="display-4 text-light">&#8358;{settings?.growthPlan}</span> /
-              3month
-            </p>
-
-            <button
-              onClick={() => planSubscribe(settings?.growthPlan)}
-              className="btn btn-block btn-light rounded-pill my-3 py-3"
-            >
-              Get started
-            </button>
-          </div>
-
-          {/* *********************** REGULAR 3***************************** */}
-          {/* <PlanCard/> */}
-          <div className="col-12 col-md card shadow-lg borderless px-3 py-5 regular">
-            <div className="d-flex">
-              <div className="bg-light p-2 m-3 rounded-lg">
-                <img src={EnterpriseIcon} alt="" className="w-100" />
-              </div>
-
-              <div className="plantext d-flex flex-column">
-                <p className="lead text-secaondary">For business</p>
-                <p className="h2 text-primary">Enterprise</p>
-              </div>
-            </div>
-            <p className=" plan_tex">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non,
-              distinctio?
-            </p>
-            <hr />
-
-            <p className="h3">What's included</p>
-            <div className="form-check">
-              <input
-                type="checkbox"
-                className="rounded-circle form-check-input bg-primary"
-                name="feature1"
-                checked
-                readOnly
-              ></input>
-              <label htmlFor="feature1" className="text-primary">
-                Everything on growth plan
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                type="checkbox"
-                className="rounded-circle form-check-input bg-primary"
-                checked
-                readOnly
-                name="faeature2"
-              ></input>
-              <label htmlFor="feature2" className="text-primary">
-                Up to 5,000,000 tracked visits
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                type="checkbox"
-                className="rounded-circle form-check-input bg-primary"
-                checked
-                readOnly
-                name="feature3"
-              ></input>
-              <label htmlFor="feature3" className="text-primary">
-                Dedicated support
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                type="checkbox"
-                className="rounded-circle form-check-input bg-primary"
-                checked
-                readOnly
-                name="feature4"
-              ></input>
-              <label htmlFor="feature4" className="text-primary">
-                Up to 50 team members
-              </label>
-            </div>
-            <p>
-              <span className=" display-4 text-primary">&#8358;{settings?.enterprisePlan}</span>{" "}
-              /5years
-            </p>
-
-            <button
-              onClick={() => planSubscribe(settings?.enterprisePlan)}
-              className="btn btn-block bg-primary btn-primary rounded-pill my-3 py-3"
-            >
-              Get started
-            </button>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-    }
+        </motion.div>
+      )}
     </>
   );
 }

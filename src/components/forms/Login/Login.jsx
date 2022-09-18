@@ -113,13 +113,13 @@ const Login = () => {
                 <div className={`${login.verify} col-md-12`}>
                   <div className="checkbox ">
                     <label>Don't have an account?</label>
-                    <label
+                    <a
                       htmlFor=""
                       onClick={() => navigate("/signin")}
-                      className="forgot-password"
+                      className="forgot-password ms-1"
                     >
-                      signup
-                    </label>
+                      SignUp
+                    </a>
                   </div>
                   <div className="forgot_password">
                     <label className="forgot-password" onClick={resetPassword}>

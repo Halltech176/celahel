@@ -1,0 +1,29 @@
+[
+  {
+    "size": "For Small",
+    "plan": "Basic",
+    "text": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, distinctio?",
+    "feature1": "All analytics features",
+    "feature2": "Up to 250,000 tracked visits",
+    "feature3": "Normal support",
+    "feature4": "Up to 3 team members"
+  },
+  {
+    "size": "For Startups",
+    "plan": "Growth",
+    "text": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, distinctio?",
+    "feature1": "Everything on basic plan",
+    "feature2": "Up to 1,000,000 tracked visits",
+    "feature3": "Premium support",
+    "feature4": "Up to 10 team members"
+  },
+  {
+    "size": "For Business",
+    "plan": "Enterprise",
+    "text": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, distinctio?",
+    "feature1": "Everything on growth plan",
+    "feature2": "Up to 5,000,000 tracked visits",
+    "feature3": "Dedicated support",
+    "feature4": "Up to 50 team members"
+  }
+]

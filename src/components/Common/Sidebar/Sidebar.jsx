@@ -2,8 +2,13 @@ import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { motion } from "framer-motion";
 import sidebar from "./Sidebar.module.css";
-import { Link } from "react-router-dom";
-import { MdClose } from "react-icons/md";
+import { Link, useLocation } from "react-router-dom";
+import {
+  MdClose,
+  MdOtherHouses,
+  MdRealEstateAgent,
+  MdOutlineAccountTree,
+} from "react-icons/md";
 import { AiOutlineMenuFold } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
 import { BsWalletFill } from "react-icons/bs";
@@ -20,6 +25,9 @@ import { LogoutModal } from "./LogoutModal";
 const Sidebar = () => {
   const [open, setOpen] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const path = location.pathname;
+  console.log(path);
 
   useEffect(() => {
     if (isOpen) {
@@ -55,7 +63,7 @@ const Sidebar = () => {
         ToggleModal={ToggleModal}
       />
       <div
-        className={`${sidebar.sidebar_nav} my-3 container  align-items-center`}
+        className={`${sidebar.sidebar_nav} my-1 container  align-items-center`}
       >
         <div>
           <Link to="/">
@@ -79,7 +87,7 @@ const Sidebar = () => {
       </div>
       <aside className={`${sidebar.sidebar_container} ${open && sidebar.show}`}>
         <div
-          className={`${sidebar.profile} d-flex flex-column justify-content-center align-items-center my-4`}
+          className={`d-flex flex-column justify-content-center align-items-center my-1`}
         >
           <Link to="/profile">
             <div className="profile-image-container-sb">
@@ -88,38 +96,53 @@ const Sidebar = () => {
                 className="profile-image"
                 alt="profile image"
               />
-              <h6
+              <p
                 className={`${sidebar.sidebar_link} sidebar_profile_text  mt-2`}
               >
                 {user?.firstName} {user?.lastName}
-              </h6>
+              </p>
             </div>
           </Link>
         </div>
 
         <ul className={`${sidebar.list_container}`}>
-          <li className={`${sidebar.sidebar_list}`}>
-            <img src={Vector} alt="img-1" className="me-2 d-inline-block" />
+          <li
+            className={`${sidebar.sidebar_list} ${
+              path === "/overview" ? sidebar.active_route : ""
+            }  `}
+          >
+            <MdOtherHouses className="me-2  d-inline-block" />
             <Link to="/overview" className={`${sidebar.sidebar_link}`}>
               Overview
             </Link>
           </li>
 
-          <li className={`${sidebar.sidebar_list}`}>
-            <img src={Vector1} alt="img-2" className="me-2 d-inline-block" />
-            <Link to="/properties" className={`${sidebar.sidebar_link}`}>
-              Properties
-            </Link>
-          </li>
-
-          <li className={`${sidebar.sidebar_list}`}>
-            <img src={Vector2} alt="img-3" className="me-2 d-inline-block" />
+          <li
+            className={`${sidebar.sidebar_list} ${
+              path === "/upgrade" ? sidebar.active_route : ""
+            }  `}
+          >
+            <MdOutlineAccountTree className="me-2  d-inline-block" />
             <Link to="/upgrade" className={`${sidebar.sidebar_link}`}>
               Account Plan
             </Link>
           </li>
 
-          <li className={`${sidebar.sidebar_list}`}>
+          <li
+            className={`${sidebar.sidebar_list} ${
+              path === "/properties" ? sidebar.active_route : ""
+            }  `}
+          >
+            <MdRealEstateAgent className="me-2  d-inline-block" />
+            <Link to="/properties" className={`${sidebar.sidebar_link}`}>
+              Properties
+            </Link>
+          </li>
+          <li
+            className={`${sidebar.sidebar_list} ${
+              path === "/notifications" ? sidebar.active_route : ""
+            }  `}
+          >
             {/* <img src={Vector} className="me-2 d-inline-block" /> */}
             <IoMdNotifications className="me-2  d-inline-block" />
             <Link to="/notifications" className={`${sidebar.sidebar_link}`}>
@@ -127,7 +150,11 @@ const Sidebar = () => {
             </Link>
           </li>
 
-          <li className={`${sidebar.sidebar_list}`}>
+          <li
+            className={`${sidebar.sidebar_list} ${
+              path === "/agent-wallet" ? sidebar.active_route : ""
+            }  `}
+          >
             <BsWalletFill className="me-2  d-inline-block" />
             <Link to="/agent-wallet" className={`${sidebar.sidebar_link}`}>
               Wallet

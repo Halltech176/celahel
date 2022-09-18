@@ -15,7 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../Common/Loader";
 
-export const RequestOTP = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
+export const FundWallet = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
   const [amount, setAmount] = useState("");
   const [Plan, setPlan] = useState("Wallet");
 
@@ -36,10 +36,15 @@ export const RequestOTP = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
         }
       );
       console.log(response.data.data);
+      console.log(process.env.NODE_ENV);
       if (response.status === 200) {
         const data = {
-          callback_url: "http://localhost:3000/agent-wallet",
-          // amount: response.data.data.amount,
+          callback_url: `${
+            process.env.NODE_ENV === "development"
+              ? "http://localhost:3000/properties"
+              : "celahel.vercel.app/properties"
+          }`,
+
           reference: response.data.data.reference,
         };
         console.log(data);
@@ -57,7 +62,6 @@ export const RequestOTP = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
             addmoney.data.data.authorization_url,
             "_blank"
           );
-          console.log(url);
         }
         console.log(addmoney);
       }
@@ -128,7 +132,7 @@ export const RequestOTP = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
   );
 };
 
-export const SendOTP = ({ open, setOpen, ToggleModal, bankID }) => {
+export const WithdrawMoney = ({ open, setOpen, ToggleModal, bankID }) => {
   const [values, setValues] = useState([]);
   const [value, setValue] = useState("");
   const [withdrawValue, setWithdrawValue] = useState("");

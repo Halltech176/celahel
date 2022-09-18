@@ -11,7 +11,7 @@ import searchBtn from "../../../Assets/SearchVector.png";
 import { ToastContainer, Zoom } from "react-toastify";
 import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
 import "react-toastify/dist/ReactToastify.css";
-import NoValues from '../NoValues'
+import NoValues from "../NoValues";
 
 const Properties = () => {
   const dispatch = useDispatch();
@@ -82,30 +82,9 @@ const Properties = () => {
     return result;
   };
 
-  // console.log(searchIt)
-  const GetProperty = async (id) => {
-    try {
-      console.log(id);
-      window.localStorage.setItem("id", JSON.stringify(id));
-      const response = await dispatch(Property(id));
-      if (response.type === "property/fulfilled") {
-        navigate("/editproperty");
-      }
-      if (response.type === "property/rejected") {
-        throw "please check your internet connection";
-      }
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-      ErrorNotification(err);
-    }
-  };
-
   useEffect(() => {
     dispatch(AllProperties());
   }, []);
-
-  console.log(properties?.docs);
 
   return (
     <>
@@ -124,8 +103,9 @@ const Properties = () => {
             handleDecrease={handleDecrease}
             handlePaginate={handlePaginate}
             properties={properties}
-            GetProperty={GetProperty}
             handleSearch={handleSearch}
+            count={count}
+            setCount={setCount}
           />
         </motion.div>
       )}

@@ -31,11 +31,9 @@ const Overview = () => {
   });
 
   const property_month = overview?.docs?.map((property) => {
-    return new Date(property.createdAt).toLocaleDateString("default", {
-      month: "short",
-    });
+    return new Date(property.createdAt).toLocaleDateString("default");
   });
-
+  console.log(property_month);
   const map = new Map();
   for (let i = 0; i <= property_month?.length; i++) {
     if (map.get(property_month[i])) {
@@ -51,7 +49,7 @@ const Overview = () => {
   console.log([...new Set(property_month)]);
 
   console.log(properties);
-  console.log(overview);
+
   // console.log(error);
   return (
     <>
@@ -65,7 +63,9 @@ const Overview = () => {
         >
           <Sidebar />
           <div className={`${overview_style.line_graph_container}`}>
-            <h1 className="text-primary property_overview_text">Properties overviews</h1>
+            <h1 className="text-primary property_overview_text">
+              Properties overviews
+            </h1>
             <Visuals
               property_month={[...new Set(property_month)]}
               sums={sums}
@@ -76,18 +76,18 @@ const Overview = () => {
                 Math.ceil((1 * property_slice?.length) / 4)
               )}
             />
-            {
-              properties?.docs.length !== 0 ? 
-           
-            <div className="d-flex justify-content-end">
-              <button
-                onClick={() => navigate("/properties")}
-                className="btn-primary h6 shadow-md px-4 my-3 border-0 rounded-1 py-2"
-              >
-                See More
-              </button>
-            </div> : ''
-             }
+            {properties?.docs.length !== 0 ? (
+              <div className="d-flex justify-content-end">
+                <button
+                  onClick={() => navigate("/properties")}
+                  className="btn-primary h6 shadow-md px-4 my-3 border-0 rounded-1 py-2"
+                >
+                  See More
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </motion.div>
       )}

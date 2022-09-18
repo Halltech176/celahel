@@ -1,7 +1,7 @@
 .property_container {
   margin: 2rem;
-  margin-left: 22rem;
-  font-family: "DM mono" monospace;
+  margin-left: 18rem;
+  font-family: "DM Mono", monospace !important;
 }
 .search_container {
   display: flex !important;
@@ -71,12 +71,10 @@
     display: block;
   }
   .main_img_container {
-    display: none;
+    display: flex;
     justify-content: center;
   }
-  .main_img_container > h1 {
-    font-family: "DM mono" monospace !important;
-  }
+
   .property_image {
     margin: 1rem;
     /* display: flex; */

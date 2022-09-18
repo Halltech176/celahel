@@ -25,7 +25,7 @@
     rgba(74, 58, 255, 0.54) 360deg
   );
   border-radius: 5px;
-  padding: 2rem 4rem;
+  padding: 1rem 2rem;
   color: #fff;
 }
 .bank_button {
@@ -63,7 +63,7 @@
   font-family: "DM mono" monospace !important;
 }
 .bank_form {
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 .transaction-heading {
   display: flex;

@@ -4,8 +4,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  bottom: 0;
-  padding: 0.5rem 2rem 1rem 0rem !important;
+  bottom: 0rem;
+  padding: 0.5rem 0rem 0rem 0rem !important;
   background-color: #2563eb;
 }
 .sidebar_nav {
@@ -31,12 +31,7 @@
     transform: rotate(360deg);
   } */
 }
-.profile_img {
-  background: transparent;
-  border: 1px solid blue;
-  padding: 0.5rem;
-  border-radius: 50%;
-}
+
 .profile_image {
   width: 4rem;
   height: 4rem;
@@ -44,36 +39,41 @@
 .list_container {
   padding: 0;
 }
-.sidebar_list:focus {
-  color: white;
-}
+
 .sidebar_list {
   display: flex;
-  align-items: center;
+  align-items: center !important;
+  /* justify-content: space-around; */
   font-family: "DM Mono", monospace;
-  margin: 0.5rem 0rem;
+  margin: 0.1rem 0rem;
   color: #fff;
-  font-size: 1.625rem;
   cursor: pointer;
-  padding-left: 2rem;
+  margin-left: 0.5rem;
+  padding: 0.3rem 0.8rem;
+  /* font-size: rem;; */
 }
-.sidebar_list > img {
-  width: 1.5rem;
+
+/* .sidebar_list > svg {
+  
+} */
+/* .sidebar_list:hover {
+  background-color: white;
+  color: #2563eb !important;
+  border-radius: 2rem 0px 0px 2rem;
+} */
+.active_route {
+  background-color: white;
+  color: #2563eb !important;
+  border-radius: 2rem 0px 0px 2rem;
 }
-.sidebar_list > svg {
-  width: 1.8rem;
-}
-.sidebar_list:hover {
-  border-left: 2px solid #fff;
-}
-.sidebar_list > a:hover {
-  color: #fff;
+.active_route > a {
+  color: #2563eb !important;
 }
 .sidebar_link {
   text-decoration: none;
   color: white;
   font-family: "DM Mono", monospace;
-  font-size: 1.2rem;
+  /* font-size: 1.2rem; */
 }
 
 .close_menu_btn {

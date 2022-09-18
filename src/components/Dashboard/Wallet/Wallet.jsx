@@ -3,28 +3,26 @@ import axios from "axios";
 import Modal from "react-modal";
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { RequestOTP, SendOTP } from "./WalletModal";
+import { FundWallet, WithdrawMoney } from "./WalletModal";
 import Sidebar from "../../Common/Sidebar/Sidebar";
 import { CgArrowLongLeft } from "react-icons/cg";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, Zoom } from "react-toastify";
-import ReactToPdf from 'react-to-pdf'
+import ReactToPdf from "react-to-pdf";
 import {
   ErrorNotification,
   SuccessNotification,
 } from "../../Common/ErrorToast";
-import { BankAccounts,  User} from "../../../Redux/actions";
+import { BankAccounts, User } from "../../../Redux/actions";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../Common/Loader";
-import NoValues from'../NoValues'
+import NoValues from "../NoValues";
 
 const Wallet = () => {
-  const ref = useRef()
+  const ref = useRef();
   Modal.setAppElement("#root");
-  const handleDownload = () => {
-
-  }
+  const handleDownload = () => {};
   const navigate = useNavigate();
   const { loading, error, bankaccounts } = useSelector((state) => state.banks);
   const {
@@ -65,8 +63,9 @@ const Wallet = () => {
     );
   });
 
+  
 
-//Available users accounts
+  //Available users accounts
   const userAccounts = user?.bankAccounts?.map((bank, index) => {
     return (
       <option key={index} value={bank?.accountNumber}>
@@ -77,23 +76,17 @@ const Wallet = () => {
 
   // Account details
 
- 
-    
-  
-
   let amountFormat = Intl.NumberFormat("en-US");
   //  ?.sort((a, b) => {
   //     return new Date(b?.updatedAt) - new Date(a?.updatedAt);
   //   })
   // const userTransactions = [...user?.wallet?.histories]
   // console.log(userTransactions)
-  let renderTransaction ;
-  if(user?.wallet?.histories?.length !== 0) {
-
- 
-   renderTransaction = user?.wallet?.histories?.map((data) => {
+  let renderTransaction;
+  if (user?.wallet?.histories?.length !== 0) {
+    renderTransaction = user?.wallet?.histories?.map((data) => {
       return (
-        <div  className={`${wallet.details_text}`}>
+        <div className={`${wallet.details_text}`}>
           <p>&#8358;{amountFormat.format(data?.amount)}.00</p>
           <p>{data?._id}</p>
           <p>{data?.type}</p>
@@ -107,31 +100,30 @@ const Wallet = () => {
         </div>
       );
     });
-  }else {
-    renderTransaction = <NoValues value='Transaction'/>
+  } else {
+    renderTransaction = <NoValues value="Transaction" />;
   }
- const getActive = user?.bankAccounts?.find((value) => {
+  const getActive = user?.bankAccounts?.find((value) => {
     return value?.accountNumber === activeBank;
   });
   const getCode = bankaccounts?.find((value) => {
     return value?.name === bank;
   });
-  console.log(getActive)
+  console.log(getActive);
   let accountDetails;
-  if(user?.bankAccounts?.length !== 0) {
+  if (user?.bankAccounts?.length !== 0) {
+    accountDetails = (
+      <div className={`${wallet.bank_account_text}`}>
+        <p>Account Name : {getActive?.accountName}</p>
 
-  
-  accountDetails =
-    <div className={`${wallet.bank_account_text}`}>
-                  <p>Account Name : {getActive?.accountName}</p>
+        <p>Account Number : {getActive?.accountNumber}</p>
+        <p>Account Number : {getActive?.bankName}</p>
+      </div>
+    );
+  } else {
+    accountDetails = <h1 className="text-center">No Account Added yet</h1>;
+  }
 
-                  <p>Account Number : {getActive?.accountNumber}</p>
-                  <p>Account Number : {getActive?.bankName}</p>
-                </div>}
-                else {
-                  accountDetails = <h1 className='text-center'>No  Account Added yet</h1>
-                }
- 
   console.log(activeBank);
   console.log(user?.bankAccounts);
   console.log(bank);
@@ -154,11 +146,14 @@ const Wallet = () => {
       );
       if (response.status === 200) {
         SuccessNotification(response.data.message);
-        dispatch(User())
+        dispatch(User());
       }
       console.log(response);
     } catch (err) {
       ErrorNotification(err?.response?.data?.message);
+      if (err.message === "Network Error") {
+        ErrorNotification("Please check your internet connections");
+      }
       console.log(err);
     }
 
@@ -177,13 +172,13 @@ const Wallet = () => {
         >
           <ToastContainer transition={Zoom} autoClose={800} />
           <Sidebar />
-          <RequestOTP
+          <FundWallet
             open={open}
             setOpen={setOpen}
             ToggleModal={ToggleModal}
             ToggleModal2={ToggleModal2}
           />
-          <SendOTP
+          <WithdrawMoney
             open={open2}
             bankID={getActive?._id}
             ToggleModal={ToggleModal2}
@@ -199,7 +194,6 @@ const Wallet = () => {
             </div>
             <div className={`${wallet.bank_details}`}>
               <div className={`${wallet.agent_bank}`}>
-        
                 {accountDetails}
                 <div className={`${wallet.bank_amount}`}>
                   <h1>
@@ -290,12 +284,10 @@ const Wallet = () => {
             <div>
               <div className={`${wallet.input_fields}`}>
                 <label>Transactions</label>
-              
-                  <ReactToPdf targetRef={ref} filename="transactions.pdf">
-        {({toPdf}) => (
-            <button onClick={toPdf}>Export</button>
-        )}
-    </ReactToPdf>
+
+                <ReactToPdf targetRef={ref} filename="transactions.pdf">
+                  {({ toPdf }) => <button onClick={toPdf}>Export</button>}
+                </ReactToPdf>
                 {/* <button onClick={handleDownload}>Export</button> */}
               </div>
             </div>

@@ -1,5 +1,8 @@
 .line_graph_container {
-  margin: 3rem 3rem 3rem 20rem;
+  margin: 3rem 3rem 3rem 16rem;
+}
+.mixedChart {
+  display: flex;
 }
 @media (max-width: 600px) {
   .line_graph_container {
@@ -8,5 +11,5 @@
   }
   /* .chart-container {
     overflow: scroll;
-  } */
+  }*/
 }

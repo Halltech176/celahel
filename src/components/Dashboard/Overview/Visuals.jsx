@@ -2,44 +2,83 @@ import Chart from "react-apexcharts";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import NoValues from "../NoValues";
-const data = {
-  // labels: properties.property_month,
-  datasets: [
-    {
-      label: "Properties  Overview",
-      lineTension: 0.1,
-      backgroundColor: "whitesmoke",
-      borderColor: "#2563eb",
-      borderWidth: 3,
-      pointRadius: 1,
-      pointHoverRadius: 10,
-      hoverBackgroundColor: "#2563eb",
-      // data: properties.sums,
-    },
-  ],
-};
+import style from "./Overview.module.css";
 
 const Visuals = (properties) => {
-  const options = {
+  const option1 = {
     chart: {
-      id: "apexchart-example",
+      id: "Property chart",
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 10,
+        dataLabels: {
+          position: "top", // top, center, bottom
+        },
+      },
+    },
+    dataLabels: {
+      enabled: false,
     },
     stroke: {
+      curve: "smooth",
       show: true,
       width: 2,
-      colors: ["transparent"],
     },
     xaxis: {
+      type: "datet/ime",
       categories: properties?.property_month,
     },
     fill: {
-      opacity: 1,
+      opacity: 0.7,
+    },
+  };
+  const option2 = {
+    chart: {
+      id: "Property chart",
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 10,
+        dataLabels: {
+          position: "top", // top, center, bottom
+        },
+      },
+    },
+    dataLabels: {
+      enabled: false,
+
+      style: {
+        fontSize: "12px",
+        colors: ["#304758"],
+      },
+    },
+    offsetY: -20,
+    stroke: {
+      curve: "smooth",
+      show: true,
+      width: 1,
+    },
+    xaxis: {
+      type: "datet/ime",
+      categories: properties?.property_month,
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        colorFrom: "red",
+        colorTo: "yellow",
+        stops: [0, 100],
+        opacityFrom: 0.7,
+        opacityTo: 0.9,
+      },
+      fillColors: ["#00E396", "#775DD0"],
     },
   };
 
   const series = [
     {
-      name: "properties",
+      name: "Number of Properties",
       data: properties?.sums,
     },
   ];
@@ -47,13 +86,23 @@ const Visuals = (properties) => {
   return (
     <>
       {properties?.sums?.length !== 0 ? (
-        <div className="row">
-          <div className="mixed-chart">
+        <div className="">
+          <div className={`${style.mixedChart}`}>
             <Chart
               className="chart-container"
-              options={options}
+              options={option1}
+              series={series}
+              type="area"
+              height="300"
+              width="500"
+            />
+            <Chart
+              className="chart-container"
+              options={option2}
               series={series}
               type="bar"
+              height="300"
+              width="500"
             />
           </div>{" "}
         </div>
