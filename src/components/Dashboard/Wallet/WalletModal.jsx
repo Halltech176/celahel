@@ -14,10 +14,13 @@ import { User } from "../../../Redux/actions";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../Common/Loader";
+import { PaystackButton } from "react-paystack";
+import { AiOutlineSync } from "react-icons/ai";
 
 export const FundWallet = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
   const [amount, setAmount] = useState("");
   const [Plan, setPlan] = useState("Wallet");
+  const [reference, setReference] = useState("");
 
   const generateTransaction = async () => {
     try {
@@ -35,42 +38,73 @@ export const FundWallet = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
           },
         }
       );
-      console.log(response.data.data);
-      console.log(process.env.NODE_ENV);
-      if (response.status === 200) {
-        const data = {
-          callback_url: `${
-            process.env.NODE_ENV === "development"
-              ? "http://localhost:3000/properties"
-              : "celahel.vercel.app/properties"
-          }`,
+      console.log(response.data.data.reference);
+      setReference(response.data.data.reference);
+      // console.log(process.env.NODE_ENV);
+      // if (response.status === 200) {
+      //   const data = {
+      //     callback_url: `${
+      //       process.env.NODE_ENV === "development"
+      //         ? "http://localhost:3000/properties"
+      //         : "celahel.vercel.app/properties"
+      //     }`,
 
-          reference: response.data.data.reference,
-        };
-        console.log(data);
-        const addmoney = await axios.post(
-          "https://celahl.herokuapp.com/api//transaction/initiate",
-          data,
-          {
-            headers: {
-              Authorization: `Bearer ${token} `,
-            },
-          }
-        );
-        if (addmoney.status === 200) {
-          const url = window.open(
-            addmoney.data.data.authorization_url,
-            "_blank"
-          );
-        }
-        console.log(addmoney);
-      }
-      await axios.get("https://celahl.herokuapp.com/api//transaction/verify");
+      //     reference: response.data.data.reference,
+      //   };
+      //   console.log(data);
+      //   const addmoney = await axios.post(
+      //     "https://celahl.herokuapp.com/api//transaction/initiate",
+      //     data,
+      //     {
+      //       headers: {
+      //         Authorization: `Bearer ${token} `,
+      //       },
+      //     }
+      //   );
+      //   if (addmoney.status === 200) {
+      //     const url = window.open(
+      //       addmoney.data.data.authorization_url,
+      //       "_blank"
+      //     );
+      //   }
+      //   console.log(addmoney);
+      // }
+      // await axios.get("https://celahl.herokuapp.com/api//transaction/verify");
     } catch (err) {
       ErrorNotification(err?.response?.data?.message);
       console.log(err);
     }
   };
+  const config = {
+    reference,
+    email: "devhalltech@gmail.com",
+    amount: 20000,
+    publicKey: "pk_test_834af034d162826c6ec4afc5396c60e62b28836b",
+  };
+  console.log(config);
+
+  // you can call this function anything
+  const handlePaystackSuccessAction = async (reference) => {
+    // Implementation for whatever you want to do with reference and after success call.
+    console.log(reference);
+    if (reference.status === "success") {
+      console.log(reference);
+    }
+  };
+
+  // you can call this function anything
+  const handlePaystackCloseAction = () => {
+    // implementation for  whatever you want to do when the Paystack dialog closed.
+    console.log("closed");
+  };
+
+  const componentProps = {
+    ...config,
+    text: "Paystack Button Implementation",
+    onSuccess: (reference) => handlePaystackSuccessAction(reference),
+    onClose: handlePaystackCloseAction,
+  };
+
   console.log(amount);
   Modal.setAppElement("#root");
   const navigate = useNavigate();
@@ -123,6 +157,10 @@ export const FundWallet = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
                 >
                   Fund Wallet
                 </button>
+                <PaystackButton
+                  className="btn px-4 my-2 btn-outline-primary text-center"
+                  {...componentProps}
+                />
               </div>
             </div>
           </motion.div>
