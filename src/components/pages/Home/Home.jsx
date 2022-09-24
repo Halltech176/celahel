@@ -49,16 +49,16 @@ const Home = () => {
     return (
       <motion.div
         key={index}
-        // initial={{
-        //   opacity: 0,
-        //   transform: "scaleX(0.1)",
-        // }}
-        // whileInView={{
-        //   opacity: 1,
-        //   transform: " scaleX(1.0)",
-        // }}
-        // viewport={{ once: false }}
-        // transition={{ duration: 0.5 }}
+        initial={{
+          opacity: 0,
+          transform: "scaleX(0.1)",
+        }}
+        whileInView={{
+          opacity: 1,
+          transform: " scaleX(1.0)",
+        }}
+        viewport={{ once: false }}
+        transition={{ duration: 0.5 }}
         className="col-lg"
       >
         <div className="card p-5 my-3 text-light shadow-lg">
@@ -79,16 +79,16 @@ const Home = () => {
     return (
       <motion.div
         key={index}
-        // initial={{
-        //   opacity: 0,
-        //   transform: "translateX(-20rem)",
-        // }}
-        // whileInView={{
-        //   opacity: 1,
-        //   transform: " translateX(1rem)",
-        // }}
-        // viewport={{ once: false }}
-        // transition={{ duration: 1 }}
+        initial={{
+          opacity: 0,
+          transform: `translateX(-${-20 * index}rem)`,
+        }}
+        whileInView={{
+          opacity: 1,
+          transform: " translateX(1rem)",
+        }}
+        viewport={{ once: false }}
+        transition={{ duration: 1 }}
         className="col mid_col"
       >
         <div className="card p-3 marq-card">
@@ -126,7 +126,7 @@ const Home = () => {
         <div className="d-lg-flex md:px-5 px-2 justify-content-between align-items-end hero bg-primary-100">
           <div className="col-12 col-md-6">
             <div className="container p-3 mb-5">
-              <div className="phone-container">
+              <div className="phone-container ">
                 <p className="text-white heading_text fw-bold">
                   <span className="dotted"> Discover</span> <br />
                   Most Suitable <br />
@@ -188,7 +188,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="container my-3 text-center">
+        <div className="container  my-3 text-center">
           <h2 className="semi_text">How It Works</h2>
           <p className="lead text_lead">
             Our Unique process gives you peace of mind for all our services
@@ -209,9 +209,9 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="lastSection">
+        {/* <div className="lastSection">
           <div className="container my-5">
-            <div className="d-lg-flex justify-content-between bg-primary rounded-sm p-5">
+            <div className="d-lg-flex justify-content-between bg-primary-100 rounded-sm p-5">
               <div className="col-lg-6 text-light">
                 <h3>Get Our App & Do More</h3>
                 <p>
@@ -229,7 +229,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         <Footer />
       </div>
     </motion.div>

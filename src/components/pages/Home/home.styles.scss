@@ -5,7 +5,7 @@
   max-width: 100%;
   box-sizing: border-box;
   z-index: 3;
-
+  overflow: hidden;
   .phone-header {
     display: none;
     animation-name: scaleup;
