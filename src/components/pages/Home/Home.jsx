@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from "react";
+import { AnimationOnScroll } from "react-animation-on-scroll";
+import "animate.css/animate.min.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -47,72 +49,58 @@ const Home = () => {
   };
   const renderFeatures = Features.map((data, index) => {
     return (
-      <motion.div
+      <AnimationOnScroll
         key={index}
-        initial={{
-          // opacity: 0,
-          transform: `translateX(-20rem)`,
-        }}
-        whileInView={{
-          // opacity: 1,
-          transform: " translateX(0rem)",
-        }}
-        viewport={{ once: false }}
-        transition={{ duration: 1 }}
         className="col-lg"
+        animateIn="animate__bounceIn"
       >
-        <div className="card p-5 my-3 text-light shadow-lg">
-          <div className="circle bg-white text-center text-dark">
-            <span>{index}</span>
+        <div>
+          <div className="card p-5 my-3 text-light shadow-lg">
+            <div className="circle bg-white text-center text-dark">
+              <span>{index}</span>
+            </div>
+            <h3 className="text-center card-title">{data.feature}</h3>
+            <p className="card-text">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              Voluptatum, repudiandae.
+            </p>
           </div>
-          <h3 className="text-center card-title">{data.feature}</h3>
-          <p className="card-text">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Voluptatum, repudiandae.
-          </p>
         </div>
-      </motion.div>
+      </AnimationOnScroll>
     );
   });
 
   const renderTestimonials = Testimonials.map((data, index) => {
     return (
-      <motion.div
+      <AnimationOnScroll
         key={index}
-        initial={{
-          // opacity: 0,
-          transform: `translateX(20rem)`,
-        }}
-        whileInView={{
-          // opacity: 1,
-          transform: " translateX(1rem)",
-        }}
-        viewport={{ once: false }}
-        transition={{ duration: 1 }}
         className="col mid_col"
+        animateIn="animate__bounceIn"
       >
-        <div className="card p-3 marq-card">
-          <div className="d-flex flex-column justify-content-start align-items-start mb-3">
-            <div>
-              <FaStar color="blue"></FaStar>
-              <FaStar color="blue"></FaStar>
-              <FaStar color="blue"></FaStar>
-              <FaStar color="blue"></FaStar>
-              <FaStar color="blue"></FaStar>
+        <div>
+          <div className="card p-3 marq-card">
+            <div className="d-flex flex-column justify-content-start align-items-start mb-3">
+              <div>
+                <FaStar color="blue"></FaStar>
+                <FaStar color="blue"></FaStar>
+                <FaStar color="blue"></FaStar>
+                <FaStar color="blue"></FaStar>
+                <FaStar color="blue"></FaStar>
+              </div>
             </div>
-          </div>
 
-          <div>
-            <q className="card-text text-left">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Laboriosam consequatur soluta, nam tenetur possimus excepturi
-              error debitis doloremque illo doloribus.
-            </q>
+            <div>
+              <q className="card-text text-left">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Laboriosam consequatur soluta, nam tenetur possimus excepturi
+                error debitis doloremque illo doloribus.
+              </q>
+            </div>
+            <p className="h3 text-primary card-title">John Carter</p>
+            <p className="small text-primary">Web Designer</p>
           </div>
-          <p className="h3 text-primary card-title">John Carter</p>
-          <p className="small text-primary">Web Designer</p>
         </div>
-      </motion.div>
+      </AnimationOnScroll>
     );
   });
   return (

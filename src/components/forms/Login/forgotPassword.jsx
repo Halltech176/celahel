@@ -23,7 +23,7 @@ const ForgotPassword = () => {
       );
       if (response.status === 200 || response.status === 201) {
          console.log(response);
-        navigate("/properties");
+        navigate("/agent/properties");
       }
       dispatch(userCredential(response.data.data))
       console.log(response.data.data);
