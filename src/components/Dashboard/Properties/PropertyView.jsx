@@ -64,11 +64,7 @@ const PropertyView = (docs) => {
           </Link>
         </div>
 
-        <div
-          className={` d-flex flex-wrap align-items-center justify-content-center`}
-        >
-          {agent_properties}
-        </div>
+        <div className={` ${properties.renderProps} `}>{agent_properties}</div>
 
         <div>
           {docs.properties?.totalPages === 1 ? (

@@ -24,6 +24,9 @@
   grid-template-columns: repeat(3, 1fr); */
   align-items: center;
 }
+.border-line {
+  
+}
 .property_image {
   /* margin: 0.5rem; */
   max-width: 7rem;

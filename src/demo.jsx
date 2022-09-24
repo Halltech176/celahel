@@ -128,3 +128,40 @@ const Navbar = () => {
   );
 };
 export default Navbar;
+
+
+
+
+
+
+<ul
+onClick={handleRoute}
+className={` ${path === "/" ? "" : "text-primary"} ${
+  open ? "toggle-show" : "hide"
+} nav-links`}
+>
+<Link
+  className={`${path === "/" ? "text-light" : "text-primary"}`}
+  to="/"
+>
+  <li className="text-link">Home</li>
+</Link>
+<Link
+  className={`${path === "/" ? "" : "text-primary"}`}
+  to="/about"
+>
+  <li className="text-link">About</li>
+</Link>
+<Link
+  className={`${path === "/" ? "text-light" : "text-primary"}`}
+  to="/contact"
+>
+  <li className="text-link">Contact</li>
+</Link>
+<Link
+  className={`${path === "/" ? "text-light" : "text-primary"}`}
+  to="/faqs"
+>
+  <li className="text-link">FAQs</li>
+</Link>
+</ul>

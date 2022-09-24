@@ -31,7 +31,7 @@ const PropertyCard = ({ property }) => {
 
   console.log(property);
   const settings = {
-    dots: true,
+    // dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -47,7 +47,7 @@ const PropertyCard = ({ property }) => {
     return (
       <div
         key={data?._id}
-        className={`${style.image_container} card my-3 mx-2`}
+        className={`${style.image_container} card my-4 mx-2`}
       >
         <div className="card-header  d-flex align-items-center justify-content-between">
           {" "}
@@ -68,19 +68,21 @@ const PropertyCard = ({ property }) => {
                 <img
                   src={img.url}
                   alt={img.name}
-                  className="img-fluid"
-                  className={`${style.property_image} mx-auto`}
+                  className={`${style.property_image} `}
                   loading="eager"
                 />
               </div>
             );
           })}
         </Slider>
-        <div style={{ opacity: 0 }}>.</div>
-        {/* </div> */}
-        <div className="card-footer">
-          <h5>price - {amountFormat.format(data?.price)}.00</h5>
-          <h5>location - {data?.address}</h5>
+
+        <div className="card-footer m-0">
+          <h5 className={`${style.property_price} `}>
+            price - {amountFormat.format(data?.price)}.00
+          </h5>
+          <h5 className={`${style.property_location} `}>
+            location - {data?.address}
+          </h5>
         </div>
         <div className="card-footer d-flex flex-wrap align-items-center justify-content-end">
           <div className="d-flex flex-wrap align-items-center">

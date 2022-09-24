@@ -38,34 +38,31 @@
   font-family: "DM mono", monospace;
 }
 
-/* .image_border {
-  border : 1px solid #ccc;
-  margin : 0.2rem;
-  padding : 0 5px;
-} */
+.renderProps {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  /* align-items  */
+}
 .search_input {
   border-radius: none !important;
   margin-right: -0.5rem;
   /* height: 2.3rem !important; */
 }
 .image_container {
-  width: 20rem !important;
+  width: 18rem !important;
   font-family: "General Sans", sans-serif;
   text-transform: capitalize;
   font-weight: 600 !important;
+  height: max-content !important;
 }
 .property_image {
   object-fit: cover;
-  width: 17rem;
+  width: 100%;
+  height: 12rem;
 
   /* border-radius: 15px; */
 }
-/* .image_border {
-  z-index: -2;
-
-  width: 17rem;
-  height: 19rem;
-} */
 
 .sell_badge {
   background-color: #ff476b;
@@ -84,14 +81,16 @@
   font-weight: 900;
   font-size: 1rem;
   letter-spacing: 0.2rem;
+  /* transform: scale(0.6); */
 }
 .property_location {
   margin: 0 !important;
   font-size: 0.75rem;
   padding: 0 !important;
-  color: #ff476b;
+  color: #15803d;
   font-size: 1rem;
   font-weight: 900;
+  /* transform: scale(0.6); */
   letter-spacing: 0.1rem;
 }
 .property_name {
@@ -129,6 +128,10 @@ a {
   .search_icon {
     width: 2rem !important;
   }
+  .renderProps {
+    /* display: block; */
+    justify-content: center;
+  }
   .image_container {
     /* box-shadow: 2px 2px 0.5rem 0.1rem rgb(195, 193, 193); */
     margin: 1rem 0rem;
@@ -137,9 +140,7 @@ a {
     /* transform: scale(0.9); */
     border-radius: 10px !important;
   }
-  .image_container:hover {
-    transform: scale(0.8);
-  }
+
   .search_container {
     display: block !important;
     margin: 1rem auto;
