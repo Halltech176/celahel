@@ -17,7 +17,7 @@ const PropertyCard = ({ property }) => {
       window.localStorage.setItem("id", JSON.stringify(id));
       const response = await dispatch(Property(id));
       if (response.type === "property/fulfilled") {
-        navigate("/editproperty");
+        navigate("/agent/editproperty");
       }
       if (response.type === "property/rejected") {
         throw "please check your internet connection";

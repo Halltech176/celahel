@@ -89,7 +89,7 @@ const Sidebar = () => {
         <div
           className={`d-flex flex-column justify-content-center align-items-center my-1`}
         >
-          <Link to="/profile">
+          <Link to="/agent/profile">
             <div className="profile-image-container-sb">
               <img
                 src={avatar?.url !== undefined ? avatar?.url : About2}
@@ -112,18 +112,18 @@ const Sidebar = () => {
             }  `}
           >
             <MdOtherHouses className="me-2  d-inline-block" />
-            <Link to="/overview" className={`${sidebar.sidebar_link}`}>
+            <Link to="/agent/overview" className={`${sidebar.sidebar_link}`}>
               Overview
             </Link>
           </li>
 
           <li
             className={`${sidebar.sidebar_list} ${
-              path === "/upgrade" ? sidebar.active_route : ""
+              path === "/.agent/upgrade" ? sidebar.active_route : ""
             }  `}
           >
             <MdOutlineAccountTree className="me-2  d-inline-block" />
-            <Link to="/upgrade" className={`${sidebar.sidebar_link}`}>
+            <Link to="/agent/upgrade" className={`${sidebar.sidebar_link}`}>
               Account Plan
             </Link>
           </li>
@@ -134,29 +134,35 @@ const Sidebar = () => {
             }  `}
           >
             <MdRealEstateAgent className="me-2  d-inline-block" />
-            <Link to="/properties" className={`${sidebar.sidebar_link}`}>
+            <Link to="/agent/properties" className={`${sidebar.sidebar_link}`}>
               Properties
             </Link>
           </li>
           <li
             className={`${sidebar.sidebar_list} ${
-              path === "/notifications" ? sidebar.active_route : ""
+              path === "/agent/notifications" ? sidebar.active_route : ""
             }  `}
           >
             {/* <img src={Vector} className="me-2 d-inline-block" /> */}
             <IoMdNotifications className="me-2  d-inline-block" />
-            <Link to="/notifications" className={`${sidebar.sidebar_link}`}>
+            <Link
+              to="/agent/notifications"
+              className={`${sidebar.sidebar_link}`}
+            >
               Notification
             </Link>
           </li>
 
           <li
             className={`${sidebar.sidebar_list} ${
-              path === "/agent-wallet" ? sidebar.active_route : ""
+              path === "/agent/agent-wallet" ? sidebar.active_route : ""
             }  `}
           >
             <BsWalletFill className="me-2  d-inline-block" />
-            <Link to="/agent-wallet" className={`${sidebar.sidebar_link}`}>
+            <Link
+              to="/agent/agent-wallet"
+              className={`${sidebar.sidebar_link}`}
+            >
               Wallet
             </Link>
           </li>
@@ -177,7 +183,7 @@ const Sidebar = () => {
           className={`${sidebar.upgrade_container} text-center d-flex flex-column justify-content-center align-items-center my-5 `}
         >
           <button className={`${sidebar.upgrade_btn} p-2 mb-2`}>
-            <Link className={`${sidebar.upgrade_link}`} to="/upgrade">
+            <Link className={`${sidebar.upgrade_link}`} to="/agent/upgrade">
               Upgrade
             </Link>
           </button>

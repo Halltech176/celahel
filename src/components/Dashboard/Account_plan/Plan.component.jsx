@@ -55,8 +55,8 @@ function Plan() {
           reference: generate_transaction.data.data.reference,
           callback_url: `${
             process.env.NODE_ENV === "development"
-              ? "http://localhost:3000/addproperty"
-              : "celahel.vercel.app/addproperty"
+              ? "http://localhost:3000/agent/addproperty"
+              : "celahel.vercel.app/agent/addproperty"
           }`,
         },
         {

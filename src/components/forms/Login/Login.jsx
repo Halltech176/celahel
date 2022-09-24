@@ -16,7 +16,7 @@ import axios from "axios";
 import { userCredential } from "../../../Redux/slices/userStates";
 
 const Login = () => {
-  const [email, setEmail] = useState("kunleolaakande@gmail.com");
+  const [email, setEmail] = useState("devhalltech@gmail.com");
   const [password, setPassword] = useState("12345678");
 
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ const Login = () => {
           JSON.stringify(payload.data.token)
         );
         // setTimeout(() => {
-        navigate("/properties");
+        navigate("/agent/properties");
         // }, 1000);
 
         SuccessNotification(payload.message);

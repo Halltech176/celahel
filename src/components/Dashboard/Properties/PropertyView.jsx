@@ -56,7 +56,7 @@ const PropertyView = (docs) => {
           className={`${properties.add_property} mt-2 col-md-12 justify-content-between d-flex flex-wrap`}
         >
           <p className={`${properties.property_heading}`}> My Properties</p>
-          <Link to="/addproperty">
+          <Link to="/agent/addproperty">
             {" "}
             <button className={`${properties.add_btn} btn btn-primary`}>
               Add New

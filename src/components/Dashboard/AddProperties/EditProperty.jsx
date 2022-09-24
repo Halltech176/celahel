@@ -153,7 +153,7 @@ const EditProperty = () => {
         console.log(response);
 
         if (response.type === "properties/fulfilled") {
-          navigate("/properties");
+          navigate("/agent/properties");
         }
       }
 
@@ -205,7 +205,7 @@ const EditProperty = () => {
               </h4>
               <div className={`${properties.properties_image} m3-4`}>
                 <div
-                  className={`${properties.main_img_container} mx-3 no-values`}
+                  className={`${properties.main_img_container} me-3 no-values`}
                 >
                   {mainImg ? (
                     <img
@@ -217,7 +217,7 @@ const EditProperty = () => {
                     <h4>click on the image to preview</h4>
                   )}
                 </div>
-                <div className={`${properties.image_container} mx-3 no-values`}>
+                <div className={`${properties.image_container}  no-values`}>
                   {images ? (
                     Array.from(images).map((item, index) => {
                       return (
@@ -240,7 +240,7 @@ const EditProperty = () => {
 
               <form
                 id="form-container"
-                className="w-100 my-3 px-5 row g-4 justify-content-start"
+                className="w-100 my-3  row g-4 justify-content-start"
               >
                 <div className="col-md-5">
                   <label htmlFor="" className="form-label">

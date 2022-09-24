@@ -144,7 +144,7 @@ const AddProperties = () => {
       if (response?.createdAt) {
         SuccessNotification("Property Successfully created");
         setTimeout(() => {
-          navigate("/properties");
+          navigate("/agent/properties");
         }, 2000);
       }
       console.log(response);
@@ -161,7 +161,7 @@ const AddProperties = () => {
       ErrorNotification(err?.response?.data?.message);
       if (err?.response?.data?.message?.split(" ").length > 12) {
         setTimeout(() => {
-          navigate("/upgrade");
+          navigate("/agent/upgrade");
         }, 3000);
       }
     }
@@ -191,9 +191,9 @@ const AddProperties = () => {
                 </h2>
               </div>
               <h4 className="text-primary my-4">Upload Property Picture</h4>
-              <div className={`${properties.properties_image} m3-4`}>
+              <div className={`${properties.properties_image} `}>
                 <div
-                  className={`${properties.main_img_container} mx-3 no-values`}
+                  className={`${properties.main_img_container} me-3 no-values`}
                 >
                   {mainImg ? (
                     <img
@@ -205,7 +205,7 @@ const AddProperties = () => {
                     <h4>click on the image to preview</h4>
                   )}
                 </div>
-                <div className={`${properties.image_container} mx-3 no-values`}>
+                <div className={`${properties.image_container}  no-values`}>
                   {images ? (
                     Array.from(images).map((item, index) => {
                       return (
@@ -228,7 +228,7 @@ const AddProperties = () => {
 
               <form
                 id="form-container"
-                className="w-100 my-3 px-5 row g-4 justify-content-start"
+                className="w-100 my-3  row g-4 justify-content-start"
               >
                 <div className="col-md-5">
                   <label htmlFor="" className="form-label">

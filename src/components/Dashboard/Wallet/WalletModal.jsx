@@ -45,8 +45,8 @@ export const FundWallet = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
         const data = {
           callback_url: `${
             process.env.NODE_ENV === "development"
-              ? "http://localhost:3000/properties"
-              : "celahel.vercel.app/properties"
+              ? "http://localhost:3000/agent/properties"
+              : "celahel.vercel.app/agent/properties"
           }`,
 
           reference: response.data.data.reference,

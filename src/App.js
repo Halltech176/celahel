@@ -88,19 +88,26 @@ function App() {
           <Route path="/uploading..." element={<Upload />} />
           <Route path="/forgottenPassword" element={<ForgotPassword />} />
           <Route path="/validateEmail" element={<EmailVal />} />
-          <Route path="/agent-wallet" element={<Wallet />} />
 
           <Route
-            path="/profile"
+            path="/agent/profile"
             element={
               <AgentAuth>
                 <Profile />
               </AgentAuth>
             }
           />
+          <Route
+            path="/agent/agent-wallet"
+            element={
+              <AgentAuth>
+                <Wallet />
+              </AgentAuth>
+            }
+          />
 
           <Route
-            path="/properties"
+            path={`${"/agent/properties"}`}
             element={
               <AgentAuth>
                 <Properties />
@@ -108,7 +115,7 @@ function App() {
             }
           />
           <Route
-            path="/addproperty"
+            path="/agent/addproperty"
             element={
               <AgentAuth>
                 <AddProperties />
@@ -116,7 +123,7 @@ function App() {
             }
           />
           <Route
-            path="/editproperty"
+            path="/agent/editproperty"
             element={
               id !== null ? (
                 <AgentAuth>
@@ -130,7 +137,7 @@ function App() {
             }
           />
           <Route
-            path="/upgrade"
+            path="/agent/upgrade"
             element={
               <AgentAuth>
                 <Plan />{" "}
@@ -138,7 +145,7 @@ function App() {
             }
           />
           <Route
-            path="/overview"
+            path="/agent/overview"
             element={
               <AgentAuth>
                 <Overview />
@@ -147,7 +154,7 @@ function App() {
           />
 
           <Route
-            path="/notifications"
+            path="/agent/notifications"
             element={
               <AgentAuth>
                 <Notifications />
