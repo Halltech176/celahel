@@ -50,15 +50,15 @@ const Home = () => {
       <motion.div
         key={index}
         initial={{
-          opacity: 0,
-          transform: "scaleX(0.1)",
+          // opacity: 0,
+          transform: `translateX(-20rem)`,
         }}
         whileInView={{
-          opacity: 1,
-          transform: " scaleX(1.0)",
+          // opacity: 1,
+          transform: " translateX(0rem)",
         }}
         viewport={{ once: false }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 1 }}
         className="col-lg"
       >
         <div className="card p-5 my-3 text-light shadow-lg">
@@ -81,7 +81,7 @@ const Home = () => {
         key={index}
         initial={{
           // opacity: 0,
-          transform: `translateX(-20rem)`,
+          transform: `translateX(20rem)`,
         }}
         whileInView={{
           // opacity: 1,
