@@ -80,11 +80,11 @@ const Home = () => {
       <motion.div
         key={index}
         initial={{
-          opacity: 0,
-          transform: `translateX(-${-20 * index}rem)`,
+          // opacity: 0,
+          transform: `translateX(-20rem)`,
         }}
         whileInView={{
-          opacity: 1,
+          // opacity: 1,
           transform: " translateX(1rem)",
         }}
         viewport={{ once: false }}
