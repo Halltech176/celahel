@@ -27,7 +27,9 @@ const Navbar = () => {
     <>
       <header>
         {/* navbar container */}
-        <nav className={`${path === "/" ? "bg-primary" : ""} nav-container`}>
+        <nav
+          className={`${path === "/" ? "bg-primary-100" : ""} nav-container`}
+        >
           <div className="site-logo">
             {/* conditionally rendering the logo coloe */}
             {path === "/" ? (

@@ -169,6 +169,12 @@
 .unread {
   background-color: #ff476b !important;
 }
+.bg-primary-100 {
+  background: #2562e9;
+}
+.text-primary-100 {
+  color: #2562e9;
+}
 .paginate-btn {
   padding: 0.3rem 1.2rem !important;
   border: none;

@@ -33,12 +33,23 @@
     font-weight: 400 !important;
     font-size: 5rem;
     font-family: "DM Serif Display", serif;
-    animation-name: slide;
-    animation-duration: 5s;
+    animation-name: rotate;
+    animation-duration: 2s;
     animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
+    animation-iteration-count: 1;
     animation-direction: normal;
-    animation-delay: 2s;
+    animation-delay: 0s;
+  }
+  @keyframes rotate {
+    25% {
+      transform: rotate(720deg);
+    }
+    50% {
+      transform: scale(0.4);
+    }
+    100% {
+      transform: rotate(0);
+    }
   }
   @keyframes slide {
     25% {
@@ -96,11 +107,6 @@
   width: 100%;
   position: relative;
   z-index: 6;
-  animation-name: slide;
-  animation-duration: 5s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  animation-direction: normal;
 
   .bg-primary {
     position: absolute;
