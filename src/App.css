@@ -170,10 +170,10 @@
   background-color: #ff476b !important;
 }
 .bg-primary-100 {
-  background: #2562e9;
+  background: #2562e9 !important;
 }
 .text-primary-100 {
-  color: #2562e9;
+  color: #2562e9 !important;
 }
 .paginate-btn {
   padding: 0.3rem 1.2rem !important;

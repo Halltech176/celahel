@@ -86,7 +86,7 @@ function Plan() {
   const renderPlan = PlanData.map((data) => {
     return (
       <div
-        className={`${data.plan === "Growth" ? "bg-primary" : "bg-light"} ${
+        className={`${data.plan === "Growth" ? "bg-primary-100" : "bg-light"} ${
           data.plan === "Growth" ? "text-light" : "text-dark"
         } col-12 col-md card shadow-lg borderless px-3 mx-2 py-5 regular`}
       >
@@ -103,7 +103,7 @@ function Plan() {
 
           <div className="plantext d-flex flex-column">
             <p className="lead text-secondary">{data.size}</p>
-            <p className="h2 text-primary">{data.plan}</p>
+            <p className="h2 text-primary-100">{data.plan}</p>
           </div>
         </div>
         <p className=" plan_tex">{data.text}</p>
@@ -113,13 +113,13 @@ function Plan() {
         <div>
           <div
             className={`${
-              data.plan === "Growth" ? "text-light" : "text-primary"
+              data.plan === "Growth" ? "text-light" : "text-primary-100"
             } form-check`}
           >
             <input
               type="checkbox"
               className={`${
-                data.plan === "Growth" ? "bg-light" : "bg-primary"
+                data.plan === "Growth" ? "bg-light" : "bg-primary-100"
               } rounded-circle  form-check-input`}
               name="feature1"
               checked
@@ -128,7 +128,7 @@ function Plan() {
             <label
               htmlFor="feature1"
               className={`${
-                data.plan === "Growth" ? "text-light" : "text-primary"
+                data.plan === "Growth" ? "text-light" : "text-primary-100"
               } form-check`}
             >
               {data.feature1}
@@ -138,7 +138,7 @@ function Plan() {
             <input
               type="checkbox"
               className={`${
-                data.plan === "Growth" ? "bg-light" : "bg-primary"
+                data.plan === "Growth" ? "bg-light" : "bg-primary-100"
               } rounded-circle  form-check-input`}
               checked
               readOnly
@@ -147,7 +147,7 @@ function Plan() {
             <label
               htmlFor="feature2"
               className={`${
-                data.plan === "Growth" ? "text-light" : "text-primary"
+                data.plan === "Growth" ? "text-light" : "text-primary-100"
               } form-check`}
             >
               {data.feature2}
@@ -157,9 +157,9 @@ function Plan() {
             <input
               type="checkbox"
               className={`${
-                data.plan === "Growth" ? "bg-light" : "bg-primary"
+                data.plan === "Growth" ? "bg-light" : "bg-primary-100"
               } rounded-circle  form-check-input`}
-              // className="form-check-input bg-primary"
+              // className="form-check-input bg-primary-100"
               checked
               readOnly
               name="feature3"
@@ -167,7 +167,7 @@ function Plan() {
             <label
               htmlFor="feature3"
               className={`${
-                data.plan === "Growth" ? "text-light" : "text-primary"
+                data.plan === "Growth" ? "text-light" : "text-primary-100"
               } form-check`}
             >
               {data.feature3}
@@ -177,7 +177,7 @@ function Plan() {
             <input
               type="checkbox"
               className={`${
-                data.plan === "Growth" ? "bg-light" : "bg-primary"
+                data.plan === "Growth" ? "bg-light" : "bg-primary-100"
               } rounded-circle  form-check-input`}
               checked
               readOnly
@@ -186,7 +186,7 @@ function Plan() {
             <label
               htmlFor="feature4"
               className={`${
-                data.plan === "Growth" ? "text-light" : "text-primary"
+                data.plan === "Growth" ? "text-light" : "text-primary-100"
               } form-check`}
             >
               {data.feature4}
@@ -195,13 +195,13 @@ function Plan() {
         </div>
         {data.plan === "Basic" ? (
           <p>
-            <span className="display-6 text-primary">Free Trial</span>{" "}
+            <span className="display-6 text-primary-100">Free Trial</span>{" "}
           </p>
         ) : data.plan === "Growth" ? (
           <p>
             <span
               className={`${
-                data.plan === "Growth" ? "text-light" : "text-primary"
+                data.plan === "Growth" ? "text-light" : "text-primary-100"
               }   display-6`}
             >
               &#8358;{settings?.growthPlan}
@@ -210,17 +210,17 @@ function Plan() {
           </p>
         ) : (
           <p>
-            <span className="display-6 text-primary">
+            <span className="display-6 text-primary-100">
               &#8358;{settings?.enterprisePlan}
             </span>{" "}
             / 5years
           </p>
         )}
-        {/* btn-primary bg-primary */}
+        {/* btn-primary bg-primary-100 */}
         <button
           className={`${
             data.plan === "Growth"
-              ? "text-primary" && "bg-light"
+              ? "text-primary-100" && "bg-light"
               : "btn-primary" && "bg-primary"
           }  btn btn-block  rounded-pill my-3 py-3`}
           // className="btn btn-block btn-primary bg-primary rounded-pill my-3 py-3"
@@ -252,8 +252,8 @@ function Plan() {
           <Sidebar />
           <div className={`${planstyle.planstyleContainer}`}>
             <div>
-              <h2 className="text-primary  small text-center h4">PRICING</h2>
-              <h1 className="h1 text-primary text-center">
+              <h2 className="text-primary-100  small text-center h4">PRICING</h2>
+              <h1 className="h1 text-primary-100 text-center">
                 Affordable pricing plans!!!
               </h1>
               <p className="m-3 lead plan_text">

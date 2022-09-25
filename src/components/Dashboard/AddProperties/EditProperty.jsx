@@ -4,29 +4,37 @@ import axios from "axios";
 import Sidebar from "../../Common/Sidebar/Sidebar";
 import { CgArrowLongLeft } from "react-icons/cg";
 import properties from "./AddProperties.module.css";
-import Loader from "../../Common/Loader";
 import property_image from "../../../Assets/house.png";
-import { Link } from "react-router-dom";
-import {
-  Properties as AllProperties,
-  Property as ActiveProperty,
-  EditProperty as Edit,
-} from "../../../Redux/actions";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import searchBtn from "../../../Assets/SearchVector.png";
 import { ToastContainer, Zoom } from "react-toastify";
-import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
+import { EditProperty as Edit, Properties as AllProperties, Property as ActiveProperty, } from "../../../Redux/actions";
+import { PropertiesSpecifications, PropertyType } from "./Specifications";
+import {
+  ErrorNotification,
+  InfoNotification,
+  SuccessNotification,
+} from "../../Common/ErrorToast";
 import "react-toastify/dist/ReactToastify.css";
-import { useSelector, useDispatch } from "react-redux";
-const EditProperty = () => {
-  const id = window.JSON.parse(localStorage.getItem("id"));
+import Loader from "../../Common/Loader";
+const EditProperties = () => {
+
+
+  console.log(PropertiesSpecifications);
+  console.log(PropertyType);
   const dispatch = useDispatch();
+
+
+
+   const id = window.JSON.parse(localStorage.getItem("id"));
+  
   useEffect(() => {
     ActiveProperty(id);
   }, []);
 
   const { loading, Property, error } = useSelector((state) => state.property);
-  const propt = useSelector((state) => state);
+ 
 
   const allprop = useSelector((state) => state.properties);
   const {
@@ -51,6 +59,74 @@ const EditProperty = () => {
   const [fileRef, setFileRef] = useState("");
   const [mainImg, setMainImg] = useState("");
 
+  const [specificationsValue, SetSpecificationsValue] = useState([])
+  
+
+
+  const GetSpecifications = (value) => {
+    const specs = PropertiesSpecifications.filter((data, index) => {
+      
+      return data.type === value
+    }) 
+    setSpecifications(specs)
+    console.log(specs)
+  }
+
+    const CheckSpecifications = (e) => {
+      
+       const {value, checked} = e.target 
+       if(checked) {
+         SetSpecificationsValue([...specificationsValue, value])
+       }
+       else {
+         SetSpecificationsValue(specificationsValue.filter((val) => val !== value))
+       }
+   
+  }
+  const CheckType = (e) => {
+    setType(e.target.value)
+    GetSpecifications(e.target.value)
+  }
+console.log(specifications)
+  const renderType = PropertyType.map((data, index) => {
+    return (
+      <div key={index } className="form-check form-check-inline">
+        <input
+          type="radio"
+          name="type"
+          id={data.type}
+          value={data.type}
+          checked= {type === data.type}
+          onChange={CheckType}
+          className="form-check-input"
+        />
+        <label htmlFor="" className="form-check-label">
+          {data.type}
+        </label>
+      </div>
+    );
+  });
+
+  const renderSpecifications = specifications.map((data, index) => {
+    return <div key={data.value} className="form-check form-check-inline">
+                    <input
+
+                      // checked 
+                      onChange={CheckSpecifications}
+                      value ={data.value}
+                      type="checkbox"
+                      
+                      className="form-check-input"
+                    />
+                    <label htmlFor="" className="form-check-label">
+                      {data.value}
+                    </label>
+                  </div>
+  })
+    
+
+  console.log(specificationsValue)
+
   const handleFile = (e) => {
     setMainImg(e.target.src);
   };
@@ -59,62 +135,8 @@ const EditProperty = () => {
   const checkPurpose = (e) => {
     setPurpose(e.target.id);
   };
-  const checkType = (e) => {
-    setType(e.target.id);
-    if (e.target.id === "house") {
-      setHouse(true);
-      setRelaxation(false);
-      setLand(false);
-      setHostel(false);
-      console.log(house);
-    }
-    if (e.target.id === "relaxation") {
-      console.log(e.target.id);
-      setRelaxation(true);
-      setHouse(false);
-      setLand(false);
-      setHostel(false);
-    }
+  
 
-    if (e.target.id === "hostel") {
-      setHostel(true);
-      setRelaxation(false);
-      setLand(false);
-      setHouse(false);
-    }
-
-    if (e.target.id === "land") {
-      setLand(true);
-      setRelaxation(false);
-      setHouse(false);
-      setHostel(false);
-    }
-  };
-
-  const checkSpecifications = (e) => {
-    console.log(e.target);
-    // console.log([...new Set(e.target.value.split(","))]);
-    const filtered = specifications.filter((spec) => {
-      return spec === e.target.id;
-    });
-
-    console.log(filtered);
-    console.log(filtered.length);
-    if (filtered.length === 0) {
-      setSpecifications(
-        [...new Set(e.target.value.split(",")), e.target.id].filter(
-          (val) => val !== ""
-        )
-      );
-    }
-    if (filtered.length === 1) {
-      setSpecifications(
-        [...new Set(e.target.value.split(",")), e.target.id].filter(
-          (val) => val !== filtered[0]
-        )
-      );
-    }
-  };
 
   const handleChange = (e) => {
     setImages(e.target.files);
@@ -181,7 +203,7 @@ const EditProperty = () => {
   };
   return (
     <>
-      {loading || editLoading ? (
+      {editLoading && !editError ? (
         <Loader />
       ) : (
         <motion.div
@@ -200,10 +222,8 @@ const EditProperty = () => {
                   Edit Property
                 </h2>
               </div>
-              <h4 className="text-primary my-4">
-                note:- Edit only features you need to update
-              </h4>
-              <div className={`${properties.properties_image} m3-4`}>
+              <h4 className="text-primary my-4">Upload Property Picture</h4>
+              <div className={`${properties.properties_image} `}>
                 <div
                   className={`${properties.main_img_container} me-3 no-values`}
                 >
@@ -237,6 +257,8 @@ const EditProperty = () => {
               <h5 className="text-primary fw-100">
                 Enter Correct Property Details
               </h5>
+             
+             
 
               <form
                 id="form-container"
@@ -259,7 +281,7 @@ const EditProperty = () => {
                     Address
                   </label>
                   <input
-                    type="email"
+                    type="text"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     className="form-control"
@@ -306,9 +328,10 @@ const EditProperty = () => {
                 </div>
 
                 <div className="col-md-5">
-                  <label htmlFor="" className="form-label">
+                  <label htmlFor="" className="form-label d-block">
                     Did you want to Sell Rent the property
-                  </label>
+                  </label> 
+
                   <div className="form-check form-check-inline">
                     <input
                       type="radio"
@@ -342,315 +365,29 @@ const EditProperty = () => {
                     Property type
                   </label>
                   <br />
-                  <div className="form-check form-check-inline">
-                    <input
-                      type="radio"
-                      name="type"
-                      id="house"
-                      value={type}
-                      onChange={checkType}
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      House
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      id="hostel"
-                      value={type}
-                      onChange={checkType}
-                      name="type"
-                      type="radio"
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      Hostel
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      id="land"
-                      value={type}
-                      onChange={checkType}
-                      name="type"
-                      type="radio"
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      land
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      id="relaxation"
-                      value={type}
-                      onChange={checkType}
-                      name="type"
-                      type="radio"
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      Relaxation
-                    </label>
-                  </div>
+                   {renderType}
+               
+               
                 </div>
 
-                <div
-                  className={`col-md-5 hide-spec ${house && "property-spec"}`}
-                >
-                  <label htmlFor="" className="form-label">
-                    House Specification
-                  </label>
-                  <br />
-                  <div className="form-check form-check-inline">
-                    <input
-                      value={specifications}
-                      onChange={checkSpecifications}
-                      type="checkbox"
-                      name="spec"
-                      id="bathroom"
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      Bathroom
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      value={specifications}
-                      onChange={checkSpecifications}
-                      type="checkbox"
-                      name="spec"
-                      id="toilet"
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      Toilet
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      value={specifications}
-                      onChange={checkSpecifications}
-                      type="checkbox"
-                      name="spec"
-                      id="waste bin"
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      Waste Bin
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      value={specifications}
-                      onChange={checkSpecifications}
-                      type="checkbox"
-                      id="fence"
-                      name="spec"
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      Fence
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      value={specifications}
-                      onChange={checkSpecifications}
-                      type="checkbox"
-                      id="well water"
-                      name="spec"
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      Well Water
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      value={specifications}
-                      onChange={checkSpecifications}
-                      type="checkbox"
-                      id="borehole"
-                      name="spec"
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      Borehole
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      value={specifications}
-                      onChange={checkSpecifications}
-                      type="checkbox"
-                      id="prepaid light source"
-                      name="spec"
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      Prepaid light source
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      value={specifications}
-                      onChange={checkSpecifications}
-                      type="checkbox"
-                      id="Postpaid light soure"
-                      name="spec"
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      post paid light source
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      value={specifications}
-                      onChange={checkSpecifications}
-                      type="checkbox"
-                      id="stable light"
-                      name="spec"
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      Stable Light
-                    </label>
-                  </div>
-                </div>
-
-                <div
-                  className={`col-md-5 hide-spec ${hostel && "property-spec"}`}
-                >
-                  <label htmlFor="" className="form-label">
-                    Hostel Specification
-                  </label>{" "}
-                  <br />
-                  <div className="form-check form-check-inline">
-                    <input
-                      value={specifications}
-                      onChange={checkSpecifications}
-                      type="checkbox"
-                      name="spec"
-                      id="self-contain"
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      self contain
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      value={specifications}
-                      onChange={checkSpecifications}
-                      type="checkbox"
-                      name="spec"
-                      id="single - room - general - kitchen"
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      Single Room General Kitchen
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      value={specifications}
-                      onChange={checkSpecifications}
-                      type="checkbox"
-                      name="spec"
-                      id="single - room - general - toilet"
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      Single Room General Toilet
-                    </label>
-                  </div>
-                </div>
-
-                <div
-                  className={`col-md-5 hide-spec ${land && "property-spec"}`}
-                >
-                  <label htmlFor="" className="form-label">
-                    Land Specification
-                  </label>{" "}
-                  <br />
-                  <div className="form-check form-check-inline">
-                    <input
-                      value={specifications}
-                      onChange={checkSpecifications}
-                      type="checkbox"
-                      name="spec"
-                      id="1-hectare"
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      1 hectare
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      value={specifications}
-                      onChange={checkSpecifications}
-                      type="checkbox"
-                      name="spec"
-                      id="2-more-hectare"
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      2 or more hectare
-                    </label>
-                  </div>
-                </div>
-
-                <div
-                  className={`col-md-5 hide-spec ${
-                    relaxation && "property-spec"
-                  }`}
-                >
-                  <label htmlFor="" className="form-label">
-                    Relaxation Specification
-                  </label>{" "}
-                  <br />
-                  <div className="form-check form-check-inline">
-                    <input
-                      value={specifications}
-                      onChange={checkSpecifications}
-                      type="checkbox"
-                      name="spec"
-                      id="kitchen"
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      Kitchen
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      value={specifications}
-                      onChange={checkSpecifications}
-                      type="checkbox"
-                      name="spec"
-                      id="family-bed"
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      Family Bed
-                    </label>
-                  </div>
-                </div>
+             {
+               specificationsValue.lenght === 0 ? "" : <label> {type} Specifications </label> 
+             }
+               <div className='d-flex flex-wrap '> 
+               {renderSpecifications}
+               </div>
+              
+                
                 <div className="d-flex justify-content-center mx-auto">
-                  {/* <Link to="/properties">
-                {" "} */}
-                  <button
+                   {/* <Link to="/agent/properties"> */}
+                {" "} 
+              <button
                     onClick={UpdateProperty}
                     className="btn btn-primary px-5"
                   >
                     Update
                   </button>
-                  {/* </Link> */}
+                 
                 </div>
               </form>
             </div>
@@ -661,4 +398,4 @@ const EditProperty = () => {
   );
 };
 
-export default EditProperty;
+export default EditProperties;

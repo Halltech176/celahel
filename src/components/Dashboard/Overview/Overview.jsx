@@ -79,7 +79,7 @@ const Overview = () => {
             {properties?.docs.length !== 0 ? (
               <div className="d-flex justify-content-end">
                 <button
-                  onClick={() => navigate("/properties")}
+                  onClick={() => navigate("/agent/properties")}
                   className="btn-primary h6 shadow-md px-4 my-3 border-0 rounded-1 py-2"
                 >
                   See More

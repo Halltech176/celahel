@@ -17,23 +17,6 @@ import displayImage2 from "../../../Assets/house2.png";
 import displayImage3 from "../../../Assets/img2.png";
 import iPhone from "../../../Assets/iPhone.png";
 
-{
-  /* <Slider {...settings}>
-{data?.images.map((img) => {
-  return (
-    <div key={img._id} className={`${style.image_border} mx-auto`}>
-      <img
-        src={img.url}
-        alt={img.name}
-        className={`${style.property_image} `}
-        loading="eager"
-      />
-    </div>
-  );
-})}
-</Slider> */
-}
-
 const Home = () => {
   const settings = {
     // dots: true,
@@ -96,8 +79,8 @@ const Home = () => {
                 error debitis doloremque illo doloribus.
               </q>
             </div>
-            <p className="h3 text-primary card-title">John Carter</p>
-            <p className="small text-primary">Web Designer</p>
+            <p className="h3 text-primary-100 card-title">John Carter</p>
+            <p className="small text-primary-100">Web Designer</p>
           </div>
         </div>
       </AnimationOnScroll>
@@ -178,7 +161,7 @@ const Home = () => {
 
         <div className="container  my-3 text-center">
           <h2 className="semi_text">How It Works</h2>
-          <p className="lead text_lead">
+          <p className=" text_lead">
             Our Unique process gives you peace of mind for all our services
           </p>
           <div className="row g-5 cards">{renderFeatures}</div>
@@ -197,7 +180,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        {/* <div className="lastSection">
+        <div className="lastSection">
           <div className="container my-5">
             <div className="d-lg-flex justify-content-between bg-primary-100 rounded-sm p-5">
               <div className="col-lg-6 text-light">
@@ -217,7 +200,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
         <Footer />
       </div>
     </motion.div>
