@@ -28,9 +28,7 @@ export const AgentAuth = ({ children }) => {
       else if(token !== null && !error && user?.status === 'active' && !user?.emailVerified ) {
     return <Navigate to='/verify'/>
   }
-     else if(token !== null && error && user === null && !loading ) {
-    return <NetworkError/>
-  }
+  
   else {
     return children
   }

@@ -30,9 +30,21 @@ const Home = () => {
     cssEase: "ease-in-out",
     // variableWidth: true,
   };
+  
   const renderFeatures = Features.map((data, index) => {
     return (
-      <AnimationOnScroll
+      <motion.div
+      key={index}
+          initial={{
+                    opacity: 0,
+                    transform: `${index % 2 === 0 ?  "translateX(-20rem)"  : "translateX(20rem)"} `
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    transform: " translateX(0rem)",
+                  }}
+                  viewport={{ once: false }}
+                  transition={{ duration: 0.6 }}
         key={index}
         className="col-lg"
         animateIn="animate__bounceIn"
@@ -49,16 +61,26 @@ const Home = () => {
             </p>
           </div>
         </div>
-      </AnimationOnScroll>
+      </motion.div>
     );
   });
-
+const index = 1
+console.log(index % 2)
   const renderTestimonials = Testimonials.map((data, index) => {
     return (
-      <AnimationOnScroll
+      <motion.div
         key={index}
         className="col mid_col"
-        animateIn="animate__bounceIn"
+            initial={{
+                    opacity: 0,
+                    transform: `${index % 2 === 0 ?  "translateX(-20rem)"  : "translateX(20rem)"} `
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    transform: " translateX(0rem)",
+                  }}
+                  viewport={{ once: false }}
+                  transition={{ duration: 0.6 }}
       >
         <div>
           <div className="card p-3 marq-card">
@@ -83,14 +105,14 @@ const Home = () => {
             <p className="small text-primary-100">Web Designer</p>
           </div>
         </div>
-      </AnimationOnScroll>
+      </motion.div>
     );
   });
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.7 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.3 }}
     >
       <Navbar />
       <div>
@@ -160,19 +182,34 @@ const Home = () => {
         </div>
 
         <div className="container  my-3 text-center">
-          <h2 className="semi_text">How It Works</h2>
+          <AnimationOnScroll
+      
+      
+        animateIn="animate__bounceIn"
+      >
+        <h2 className="semi_text">How It Works</h2>
           <p className=" text_lead">
             Our Unique process gives you peace of mind for all our services
           </p>
+      </AnimationOnScroll>
+            
+          
           <div className="row g-5 cards">{renderFeatures}</div>
 
           <div className="my-5 d-non p-3">
             <div className="container-fluid text-center">
-              <h2>What Our Clients Say</h2>
+              <AnimationOnScroll
+      
+      
+        animateIn="animate__bounceIn"
+      >
+        <h2>What Our Clients Say</h2>
               <p>
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste
                 laboriosam eos vero eaque cupiditate. Vero.
               </p>
+      </AnimationOnScroll>
+            
 
               <div className="row mid_col_container my-4">
                 {renderTestimonials}

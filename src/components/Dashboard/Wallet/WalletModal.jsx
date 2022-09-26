@@ -18,7 +18,8 @@ import { PaystackButton } from "react-paystack";
 import { AiOutlineSync } from "react-icons/ai";
 
 export const FundWallet = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
-  const location = useLocation()
+  const location = window.location
+  console.log(location)
   const [amount, setAmount] = useState("");
   const [Plan, setPlan] = useState("Wallet");
   const [reference, setReference] = useState("");
@@ -46,7 +47,7 @@ export const FundWallet = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
         const data = {
            callback_url: `${
             location.host.split(':')[0] === 'localhost' ?
-               `http://${location.host}/agent/addproperty` :  `https://${location.host}/agent/addproperty`
+               `http://${location.host}/agent/properties` :  `https://${location.host}/agent/properties`
           
           }`,
 
@@ -67,11 +68,15 @@ export const FundWallet = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
             addmoney.data.data.authorization_url,
             "_blank"
           );
+              await axios.get("https://celahl.herokuapp.com/api//transaction/verify");
         }
         console.log(addmoney);
       }
-      await axios.get("https://celahl.herokuapp.com/api//transaction/verify");
+  
     } catch (err) {
+      if(err.message === 'Network Error') {
+        ErrorNotification("Please check your internet Connections")
+      }
       ErrorNotification(err?.response?.data?.message);
       console.log(err);
     }
