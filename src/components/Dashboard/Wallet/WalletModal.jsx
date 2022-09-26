@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import wallet from "./Wallet.module.css";
 import { CgArrowLongLeft } from "react-icons/cg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate , useLocation} from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, Zoom } from "react-toastify";
 import {
@@ -18,6 +18,7 @@ import { PaystackButton } from "react-paystack";
 import { AiOutlineSync } from "react-icons/ai";
 
 export const FundWallet = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
+  const location = useLocation()
   const [amount, setAmount] = useState("");
   const [Plan, setPlan] = useState("Wallet");
   const [reference, setReference] = useState("");
@@ -43,10 +44,10 @@ export const FundWallet = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
       // console.log(process.env.NODE_ENV);
       if (response.status === 200) {
         const data = {
-          callback_url: `${
-            process.env.NODE_ENV === "development"
-              ? "http://localhost:3000/agent/properties"
-              : "celahel.vercel.app/agent/properties"
+           callback_url: `${
+            location.host.split(':')[0] === 'localhost' ?
+               `http://${location.host}/agent/addproperty` :  `https://${location.host}/agent/addproperty`
+          
           }`,
 
           reference: response.data.data.reference,

@@ -108,7 +108,7 @@ const Sidebar = () => {
         <ul className={`${sidebar.list_container}`}>
           <li
             className={`${sidebar.sidebar_list} ${
-              path === "/overview" ? sidebar.active_route : ""
+              path === "/agent/overview" ? sidebar.active_route : ""
             }  `}
           >
             <MdOtherHouses className="me-2  d-inline-block" />
@@ -119,7 +119,7 @@ const Sidebar = () => {
 
           <li
             className={`${sidebar.sidebar_list} ${
-              path === "/.agent/upgrade" ? sidebar.active_route : ""
+              path === "/agent/upgrade" ? sidebar.active_route : ""
             }  `}
           >
             <MdOutlineAccountTree className="me-2  d-inline-block" />
@@ -130,7 +130,7 @@ const Sidebar = () => {
 
           <li
             className={`${sidebar.sidebar_list} ${
-              path === "/properties" ? sidebar.active_route : ""
+              path === "/agent/properties" ? sidebar.active_route : ""
             }  `}
           >
             <MdRealEstateAgent className="me-2  d-inline-block" />

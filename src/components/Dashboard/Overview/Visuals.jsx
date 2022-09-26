@@ -66,13 +66,13 @@ const Visuals = (properties) => {
     fill: {
       type: "gradient",
       gradient: {
-        colorFrom: "red",
-        colorTo: "yellow",
-        stops: [0, 100],
-        opacityFrom: 0.7,
-        opacityTo: 0.9,
+        colorFrom: "#2562e9",
+        colorTo: "#00E396",
+        stops: [0, 90],
+        opacityFrom: 0.5,
+        opacityTo: 1,
       },
-      fillColors: ["#00E396", "#775DD0"],
+    
     },
   };
 

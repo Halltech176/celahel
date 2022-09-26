@@ -126,7 +126,7 @@ if(notifications?.docs?.length !== 0) {
                     <tr>
                       <th scope="col-3">Date</th>
                       <th scope="col-3">Body</th>
-                      <th scope="col-6">Mark as read</th>
+                      <th scope="col-6">read</th>
                     </tr>
                   </thead>
                   <tbody>{renderNotes}</tbody>

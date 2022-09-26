@@ -160,6 +160,11 @@ const Wallet = () => {
     console.log(accountNumber);
     console.log(bankCode);
   };
+  const options = {
+    orientation: 'landscape',
+    unit: 'in',
+    format: "a4"
+}
   return (
     <>
       {userLoading && !error && loading && !userError ? (
@@ -291,7 +296,7 @@ const Wallet = () => {
                 {/* <button onClick={handleDownload}>Export</button> */}
               </div>
             </div>
-            <div ref={ref}>
+            <div ref={ref} x={.5} y={.5} scale={0.8} options={options}>
               <div className={`${wallet.details_title}`}>
                 <label>AMOUNT</label>
                 <label>TRANSACTION-ID</label>

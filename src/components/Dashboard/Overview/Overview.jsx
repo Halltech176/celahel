@@ -63,13 +63,13 @@ const Overview = () => {
         >
           <Sidebar />
           <div className={`${overview_style.line_graph_container}`}>
-            <h1 className="text-primary mx-3 property_overview_text">
+            <h1 className="text-primary-100 font-mono mx-3 property_overview_text">
               Properties overviews
             </h1>
-            {/* <Visuals
+            <Visuals
               property_month={[...new Set(property_month)]}
               sums={sums}
-            /> */}
+            />
             <PropertySummary
               property_summary={property_slice?.splice(
                 0,

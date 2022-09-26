@@ -1,4 +1,5 @@
 import style from "../Properties/Properties.module.css";
+import style2 from './Overview.module.css'
 import PropertyCard from "../Properties/PropertyCard";
 import NoValues from "../NoValues";
 const PropertyView = (property) => {
@@ -13,7 +14,7 @@ const PropertyView = (property) => {
   return (
     <>
       <div
-        className={` d-flex flex-wrap align-items-center justify-content-center`}
+        className={` ${style2.agent_overview} d-flex flex-wrap  align-items-center `}
       >
         {agent_properties}
       </div>

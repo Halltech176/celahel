@@ -4,6 +4,9 @@
 .mixedChart {
   display: flex;
 }
+.agent_overview {
+  justify-content :space-between;
+}
 @media (max-width: 600px) {
   .line_graph_container {
     margin-left: 0;
@@ -13,5 +16,8 @@
     display: flex;
     flex-wrap: wrap;
     overflow: scroll;
+  }
+  .agent_overview {
+    justify-content :center;
   }
 }

@@ -10,7 +10,7 @@ import Sidebar from "../../Common/Sidebar/Sidebar";
 import { ToastContainer, Zoom } from "react-toastify";
 import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Loader from "../../Common/Loader";
 import { GetSettings } from "../../../Redux/actions";
 import PlanData from "./Plan";
@@ -23,6 +23,9 @@ function Plan() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = window.location
+  console.log(location.host.split(':'))
+  console.log(location.host)
   const { settings, loading } = useSelector((state) => state).settings;
 
   console.log(settings);
@@ -54,9 +57,9 @@ function Plan() {
         {
           reference: generate_transaction.data.data.reference,
           callback_url: `${
-            process.env.NODE_ENV === "development"
-              ? "http://localhost:3000/agent/addproperty"
-              : "celahel.vercel.app/agent/addproperty"
+            location.host.split(':')[0] === 'localhost' ?
+               `http://${location.host}/agent/addproperty` :  `https://${location.host}/agent/addproperty`
+          
           }`,
         },
         {
@@ -83,9 +86,9 @@ function Plan() {
     }
   };
 
-  const renderPlan = PlanData.map((data) => {
+  const renderPlan = PlanData.map((data, index) => {
     return (
-      <div
+      <div key={index}
         className={`${data.plan === "Growth" ? "bg-primary-100" : "bg-light"} ${
           data.plan === "Growth" ? "text-light" : "text-dark"
         } col-12 col-md card shadow-lg borderless px-3 mx-2 py-5 regular`}

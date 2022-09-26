@@ -8,6 +8,12 @@
   background-color: #15803d;
   color: white;
 }
+.font-mono {
+  font-family: "DM Serif Display", serif !important;
+}
+.font-sans {
+  font-family: "Public Sans", sans-serif !important;
+}
 .loader-icon {
   color: red;
   background: white;
@@ -238,8 +244,8 @@
   /* background-color: rebeccapurple; */
 }
 .property_overview_text {
-  font-family: "Public Sans", sans-serif !important;
-  font-size: 2rem;
+  
+  font-size: 1.5rem;
 }
 .no-values {
   border: 1px dashed #2562e9;
