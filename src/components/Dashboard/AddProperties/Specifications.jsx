@@ -26,7 +26,30 @@ export const PropertiesSpecifications = [
   },
   {
     type: "Hostel",
-    value: "Two/Three bedroom flat",
+    value: "self-contain",
+  },
+    {
+    type: "Hostel",
+    value: "Fence",
+  },
+    {
+    type: "Hostel",
+    value: "Prepaid-Light-Source",
+  },
+    {
+    type: "Hostel",
+    value: "Post-Paid-Light-Source",
+  },
+    {
+    type: "Hostel",
+    value: "Security",
+  },
+    {
+    type: "Hostel",
+    value: "water-source - well",
+  },  {
+    type: "Hostel",
+    value: "water-source - borehole",
   },
   {
     type: "Relaxation",
