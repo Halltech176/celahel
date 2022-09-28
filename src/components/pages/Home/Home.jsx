@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { AnimationOnScroll } from "react-animation-on-scroll";
+import ScrollAnimation  from "react-animate-on-scroll";
 import "animate.css/animate.min.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -80,7 +80,7 @@ console.log(index % 2)
                     transform: " translateX(0rem)",
                   }}
                   viewport={{ once: false }}
-                  transition={{ duration: 0.6 }}
+                  transition={{ duration: 0.5 }}
       >
         <div>
           <div className="card p-3 marq-card">
@@ -182,7 +182,7 @@ console.log(index % 2)
         </div>
 
         <div className="container  my-3 text-center">
-          <AnimationOnScroll
+          <ScrollAnimation
       
       
         animateIn="animate__bounceIn"
@@ -191,24 +191,20 @@ console.log(index % 2)
           <p className=" text_lead">
             Our Unique process gives you peace of mind for all our services
           </p>
-      </AnimationOnScroll>
+      </ScrollAnimation>
             
           
           <div className="row g-5 cards">{renderFeatures}</div>
 
           <div className="my-5 d-non p-3">
             <div className="container-fluid text-center">
-              <AnimationOnScroll
-      
-      
-        animateIn="animate__bounceIn"
-      >
+              <ScrollAnimation animateIn="animate__bounceIn">
         <h2>What Our Clients Say</h2>
               <p>
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste
                 laboriosam eos vero eaque cupiditate. Vero.
               </p>
-      </AnimationOnScroll>
+      </ScrollAnimation>
             
 
               <div className="row mid_col_container my-4">
