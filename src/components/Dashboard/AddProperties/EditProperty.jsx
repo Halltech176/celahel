@@ -9,7 +9,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import searchBtn from "../../../Assets/SearchVector.png";
 import { ToastContainer, Zoom } from "react-toastify";
-import { EditProperty as Edit, Properties as AllProperties, Property as ActiveProperty, } from "../../../Redux/actions";
+import {
+  EditProperty as Edit,
+  Properties as AllProperties,
+  Property as ActiveProperty,
+} from "../../../Redux/actions";
 import { PropertiesSpecifications, PropertyType } from "./Specifications";
 import {
   ErrorNotification,
@@ -19,22 +23,17 @@ import {
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../Common/Loader";
 const EditProperties = () => {
-
-
   console.log(PropertiesSpecifications);
   console.log(PropertyType);
   const dispatch = useDispatch();
 
+  const id = window.JSON.parse(localStorage.getItem("id"));
 
-
-   const id = window.JSON.parse(localStorage.getItem("id"));
-  
   useEffect(() => {
     ActiveProperty(id);
   }, []);
 
   const { loading, Property, error } = useSelector((state) => state.property);
- 
 
   const allprop = useSelector((state) => state.properties);
   const {
@@ -42,6 +41,7 @@ const EditProperties = () => {
     error: editError,
     editedproperty,
   } = useSelector((state) => state.editproperty);
+  console.log(Property);
 
   const [name, setName] = useState(Property?.name);
   const [description, setDescription] = useState(Property?.description);
@@ -55,48 +55,51 @@ const EditProperties = () => {
   const [land, setLand] = useState(false);
   const [hostel, setHostel] = useState(false);
   const [specifications, setSpecifications] = useState([]);
-  const [type, setType] = useState("");
+  const [type, setType] = useState(Property?.type);
   const [fileRef, setFileRef] = useState("");
   const [mainImg, setMainImg] = useState("");
 
-  const [specificationsValue, SetSpecificationsValue] = useState([])
+  const [specificationsValue, SetSpecificationsValue] = useState(Property?.specifications);
   
-
 
   const GetSpecifications = (value) => {
     const specs = PropertiesSpecifications.filter((data, index) => {
-      
-      return data.type === value
-    }) 
-    setSpecifications(specs)
-    console.log(specs)
-  }
+      return data.type === value;
+    });
+    setSpecifications(specs);
+    console.log(specs);
+  };
+  useEffect(() => {
+GetSpecifications(Property?.type)
+  }, [])
+  
 
-    const CheckSpecifications = (e) => {
-      
-       const {value, checked} = e.target 
-       if(checked) {
-         SetSpecificationsValue([...specificationsValue, value])
-       }
-       else {
-         SetSpecificationsValue(specificationsValue.filter((val) => val !== value))
-       }
-   
-  }
+  const CheckSpecifications = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      SetSpecificationsValue([...specificationsValue, value]);
+    } else {
+      SetSpecificationsValue(
+        specificationsValue.filter((val) => val !== value)
+      );
+    }
+  };
+  console.log(specificationsValue)
   const CheckType = (e) => {
-    setType(e.target.value)
-    GetSpecifications(e.target.value)
-  }
-console.log(specifications)
+    setType(e.target.value);
+    GetSpecifications(e.target.value);
+  };
+  const propertyPurpose = ["sale", "rent"];
+  
   const renderType = PropertyType.map((data, index) => {
     return (
-      <div key={index } className="form-check form-check-inline">
+      <div key={index} className="form-check form-check-inline">
         <input
           type="radio"
           name="type"
           id={data.type}
           value={data.type}
-          checked= {type === data.type}
+          checked={type === data.type}
           onChange={CheckType}
           className="form-check-input"
         />
@@ -106,26 +109,45 @@ console.log(specifications)
       </div>
     );
   });
-
-  const renderSpecifications = specifications.map((data, index) => {
-    return <div key={data.value} className="form-check form-check-inline">
-                    <input
-
-                      // checked 
-                      onChange={CheckSpecifications}
-                      value ={data.value}
-                      type="checkbox"
-                      
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      {data.value}
-                    </label>
-                  </div>
-  })
+  const renderPurpose = propertyPurpose.map((data, index) => {
+    return (
+      <div
+        key={index}
+        className="form-check flex  align-items-center form-check-inline"
+      >
+        <input
+          className="form-check-input "
+          type="radio"
+          name="purpose"
+          value={data}
+          checked={purpose === data}
+          onChange={(e) => setPurpose(e.target.value)}
+        />
+        <label htmlFor="" className="form-check-label">
+          {data}
+        </label>
+      </div>
+    );
+  });
+  const renderSpecifications = specifications?.map((data, index) => {
     
+    return (
+      <div key={data.value} className="form-check form-check-inline">
+        <input
+          checked = {specificationsValue.includes(data.value)}
+          onChange={CheckSpecifications}
+          value={data.value}
+          type="checkbox"
+          className="form-check-input"
+        />
+        <label htmlFor="" className="form-check-label">
+          {data.value}
+        </label>
+      </div>
+    );
+  });
 
-  console.log(specificationsValue)
+
 
   const handleFile = (e) => {
     setMainImg(e.target.src);
@@ -135,8 +157,6 @@ console.log(specifications)
   const checkPurpose = (e) => {
     setPurpose(e.target.id);
   };
-  
-
 
   const handleChange = (e) => {
     setImages(e.target.files);
@@ -257,8 +277,6 @@ console.log(specifications)
               <h5 className="text-primary fw-100">
                 Enter Correct Property Details
               </h5>
-             
-             
 
               <form
                 id="form-container"
@@ -329,35 +347,9 @@ console.log(specifications)
 
                 <div className="col-md-5">
                   <label htmlFor="" className="form-label d-block">
-                    Did you want to Sell Rent the property
-                  </label> 
-
-                  <div className="form-check form-check-inline">
-                    <input
-                      type="radio"
-                      value={purpose}
-                      name="purpose"
-                      id="sale"
-                      onChange={checkPurpose}
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      sell
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      type="radio"
-                      value={purpose}
-                      name="purpose"
-                      id="rent"
-                      onChange={checkPurpose}
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      Rent
-                    </label>
-                  </div>
+                    Did you want to Sell Rent the property?
+                  </label>
+                  {renderPurpose}
                 </div>
 
                 <div className="col-md-5">
@@ -365,29 +357,24 @@ console.log(specifications)
                     Property type
                   </label>
                   <br />
-                   {renderType}
-               
-               
+                  {renderType}
                 </div>
 
-             {
-               specificationsValue.lenght === 0 ? "" : <label> {type} Specifications </label> 
-             }
-               <div className='d-flex flex-wrap '> 
-               {renderSpecifications}
-               </div>
-              
-                
+                {specificationsValue.lenght === 0 ? (
+                  ""
+                ) : (
+                  <label> {type} Specifications </label>
+                )}
+                <div className="d-flex flex-wrap ">{renderSpecifications}</div>
+
                 <div className="d-flex justify-content-center mx-auto">
-                   {/* <Link to="/agent/properties"> */}
-                {" "} 
-              <button
+                  {/* <Link to="/agent/properties"> */}{" "}
+                  <button
                     onClick={UpdateProperty}
                     className="btn btn-primary px-5"
                   >
                     Update
                   </button>
-                 
                 </div>
               </form>
             </div>

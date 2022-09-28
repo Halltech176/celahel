@@ -6,11 +6,12 @@ import Loader from "../../Common/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { Properties as AllProperties, Property } from "../../../Redux/actions";
 import PropertyView from "./PropertyView";
-import properties from "./Properties.module.css";
+import styles from "./Properties.module.css";
 import searchBtn from "../../../Assets/SearchVector.png";
 import { ToastContainer, Zoom } from "react-toastify";
 import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
 import "react-toastify/dist/ReactToastify.css";
+import Sidebar from "../../Common/Sidebar/Sidebar";
 import NoValues from "../NoValues";
 
 const Properties = () => {
@@ -67,6 +68,7 @@ const Properties = () => {
       ErrorNotification(err);
     }
   };
+  const [search, setSearch] = useState("");
 
   const handleSearch = async (val) => {
     const response = properties?.docs?.filter((data) => {
@@ -81,6 +83,10 @@ const Properties = () => {
     console.log(result);
     return result;
   };
+  const searchFunction = (e) => {
+    setSearch(e.target.value);
+    handleSearch(search);
+  };
 
   useEffect(() => {
     dispatch(AllProperties());
@@ -88,9 +94,33 @@ const Properties = () => {
 
   return (
     <>
+      <Sidebar />
+      <div className={`${styles.search_container} `}>
+      <div> </div>
+        <div>
+          <input
+            value={search}
+            
+            // onBlur={searchFunction}
+            onChange={searchFunction}
+            className={`${styles.search_input}  form-control`}
+            placeholder="search by property name"
+          />
+          <span onClick={searchFunction}>
+            <img
+              className={`${styles.search_icon}`}
+              src={searchBtn}
+              alt="search icon"
+              // className='mx-n5'
+            />
+          </span>
+        </div>
+      </div>
       {loading && !error ? (
+        
         <Loader />
       ) : (
+        // <Loader />
         <motion.div
           initial={{ opacity: 0, scale: 0.7 }}
           animate={{ opacity: 1, scale: 1 }}

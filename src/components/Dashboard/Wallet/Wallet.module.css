@@ -147,7 +147,7 @@ input::-webkit-inner-spin-button {
   padding: 0.2rem 1.5rem !important;
   outline: none;
 }
-@media (max-width: 600px) {
+@media (max-width: 840px) {
   .wallet_container {
     margin: 1rem 1rem 1rem 1rem;
     /* font-size: 0.5rem; */

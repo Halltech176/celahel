@@ -5,7 +5,7 @@ import { MdOutlineDetails } from "react-icons/md";
 import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
 import properties from "./Properties.module.css";
 import "react-toastify/dist/ReactToastify.css";
-import Sidebar from "../../Common/Sidebar/Sidebar";
+
 import Loader from "../../Common/Loader";
 import { Link } from "react-router-dom";
 import searchBtn from "../../../Assets/SearchVector.png";
@@ -15,7 +15,8 @@ import { HandleIt } from "./PropertyUtils";
 const PropertyView = (docs) => {
   const [search, setSearch] = useState("");
 
-  const handleSearchFuntion = () => {
+  const handleSearchFunction = (e) => {
+    setSearch(e.target.value);
     docs?.handleSearch(search);
   };
   console.log(search);
@@ -29,29 +30,7 @@ const PropertyView = (docs) => {
   }
   return (
     <>
-      <Sidebar />
       <div className={`${properties.property_container} `}>
-        <div className={`${properties.search_container}`}>
-          <p className={`${properties.info_label}`}>
-            note : <br /> click on a property to edit{" "}
-          </p>
-          <div>
-            <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className={`${properties.search_input}  form-control`}
-              placeholder="search by property name"
-            />
-            <span onClick={handleSearchFuntion}>
-              <img
-                className={`${properties.search_icon}`}
-                src={searchBtn}
-                alt="search icon"
-                // className='mx-n5'
-              />
-            </span>
-          </div>
-        </div>
         <div
           className={`${properties.add_property} mt-2 col-md-12 justify-content-between d-flex flex-wrap`}
         >

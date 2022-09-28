@@ -3,7 +3,7 @@
   margin-top: 2rem;
   margin-left: 18rem;
 }
-@media (max-width: 600px) {
+@media (max-width: 840px) {
   .planstyleContainer {
     margin-left: 0rem;
   }

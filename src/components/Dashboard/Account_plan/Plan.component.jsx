@@ -229,7 +229,7 @@ function Plan() {
           // className="btn btn-block btn-primary bg-primary rounded-pill my-3 py-3"
           onClick={
             data.plan === "Basic"
-              ? () => navigate("/addproperty")
+              ? () => navigate("/agent/addproperty")
               : data.plan === "Growth"
               ? () => planSubscribe(settings?.growthPlan)
               : () => planSubscribe(settings?.enterprisePlan)

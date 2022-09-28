@@ -16,15 +16,13 @@
 }
 .loader-icon {
   color: red;
-  background: white;
+  /* background: white; */
   position: absolute;
-  top: 0rem;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  left: 0;
-  right: 0;
+  top: 50%;
+  left : 50%;
+
+  transform : translate(-50%, -50%);
+ 
   z-index: 5;
 }
 .sidebar_profile_text {

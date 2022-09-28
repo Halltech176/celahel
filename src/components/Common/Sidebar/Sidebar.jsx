@@ -63,7 +63,7 @@ const Sidebar = () => {
         ToggleModal={ToggleModal}
       />
       <div
-        className={`${sidebar.sidebar_nav} my-1 container  align-items-center`}
+        className={`${sidebar.sidebar_nav} my-1   justify-content-between align-items-center`}
       >
         <div>
           <Link to="/">

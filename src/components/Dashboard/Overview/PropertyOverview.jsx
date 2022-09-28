@@ -1,5 +1,5 @@
 import style from "../Properties/Properties.module.css";
-import style2 from './Overview.module.css'
+import style2 from "./Overview.module.css";
 import PropertyCard from "../Properties/PropertyCard";
 import NoValues from "../NoValues";
 const PropertyView = (property) => {

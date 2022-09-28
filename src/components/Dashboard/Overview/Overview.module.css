@@ -5,9 +5,9 @@
   display: flex;
 }
 .agent_overview {
-  justify-content :space-between;
+  justify-content: flex-start;
 }
-@media (max-width: 600px) {
+@media (max-width: 840px) {
   .line_graph_container {
     margin-left: 0;
     margin-right: 0;
@@ -18,6 +18,6 @@
     overflow: scroll;
   }
   .agent_overview {
-    justify-content :center;
+    justify-content: center;
   }
 }

@@ -4,7 +4,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  bottom: 0rem;
+  /* bottom: 0rem; */
   padding: 0.5rem 0rem 0rem 0rem !important;
   background-color: #2563eb;
 }
@@ -101,7 +101,7 @@
   text-decoration: none;
 }
 
-@media (max-width: 540px) {
+@media (max-width: 840px) {
   .sidebar_container {
     /* display: none; */
     z-index: 7;
@@ -133,7 +133,7 @@
   @keyframes Sidebar {
     0% {
       bottom: 80%;
-      width: 10%;
+      width: 0%;
       opacity: 0.2;
     }
     50% {
@@ -142,7 +142,7 @@
     }
     100% {
       bottom: 0;
-      width: 60%;
+      width: 12rem;
     }
   }
 }

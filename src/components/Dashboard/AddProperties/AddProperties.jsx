@@ -44,44 +44,40 @@ const AddProperties = () => {
   const [fileRef, setFileRef] = useState("");
   const [mainImg, setMainImg] = useState("");
 
-  const [specificationsValue, SetSpecificationsValue] = useState([])
-  
-
+  const [specificationsValue, SetSpecificationsValue] = useState([]);
 
   const GetSpecifications = (value) => {
     const specs = PropertiesSpecifications.filter((data, index) => {
-      
-      return data.type === value
-    }) 
-    setSpecifications(specs)
-    console.log(specs)
-  }
+      return data.type === value;
+    });
+    setSpecifications(specs);
+    console.log(specs);
+  };
 
-    const CheckSpecifications = (e) => {
-      
-       const {value, checked} = e.target 
-       if(checked) {
-         SetSpecificationsValue([...specificationsValue, value])
-       }
-       else {
-         SetSpecificationsValue(specificationsValue.filter((val) => val !== value))
-       }
-   
-  }
+  const CheckSpecifications = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      SetSpecificationsValue([...specificationsValue, value]);
+    } else {
+      SetSpecificationsValue(
+        specificationsValue.filter((val) => val !== value)
+      );
+    }
+  };
   const CheckType = (e) => {
-    setType(e.target.value)
-    GetSpecifications(e.target.value)
-  }
-console.log(specifications)
+    setType(e.target.value);
+    GetSpecifications(e.target.value);
+  };
+  console.log(specifications);
   const renderType = PropertyType.map((data, index) => {
     return (
-      <div key={index } className="form-check form-check-inline">
+      <div key={index} className="form-check form-check-inline">
         <input
           type="radio"
           name="type"
           id={data.type}
           value={data.type}
-          checked= {type === data.type}
+          checked={type === data.type}
           onChange={CheckType}
           className="form-check-input"
         />
@@ -93,24 +89,23 @@ console.log(specifications)
   });
 
   const renderSpecifications = specifications.map((data, index) => {
-    return <div key={data.value} className="form-check form-check-inline">
-                    <input
+    return (
+      <div key={data.value} className="form-check form-check-inline">
+        <input
+          // checked
+          onChange={CheckSpecifications}
+          value={data.value}
+          type="checkbox"
+          className="form-check-input"
+        />
+        <label htmlFor="" className="form-check-label">
+          {data.value}
+        </label>
+      </div>
+    );
+  });
 
-                      // checked 
-                      onChange={CheckSpecifications}
-                      value ={data.value}
-                      type="checkbox"
-                      
-                      className="form-check-input"
-                    />
-                    <label htmlFor="" className="form-check-label">
-                      {data.value}
-                    </label>
-                  </div>
-  })
-    
-
-  console.log(specificationsValue)
+  console.log(specificationsValue);
 
   const handleFile = (e) => {
     setMainImg(e.target.src);
@@ -120,8 +115,6 @@ console.log(specifications)
   const checkPurpose = (e) => {
     setPurpose(e.target.id);
   };
-  
-
 
   const handleChange = (e) => {
     setImages(e.target.files);
@@ -141,7 +134,7 @@ console.log(specifications)
       Array.from(images).forEach((item, index) => {
         formData.append("images", item);
       });
-      specifications.forEach((specs) => {
+      specificationsValue.forEach((specs) => {
         formData.append("specifications", specs);
       });
       formData.append("name", name);
@@ -156,12 +149,12 @@ console.log(specifications)
 
       console.log(formData);
       const response = await dispatch(CreateProperty(formData)).unwrap();
-      if (response?.createdAt) {
-        SuccessNotification("Property Successfully created");
-        setTimeout(() => {
-          navigate("/agent/properties");
-        }, 2000);
-      }
+      // if (response?.createdAt) {
+      //   SuccessNotification("Property Successfully created");
+      //   setTimeout(() => {
+      //     navigate("/agent/properties");
+      //   }, 2000);
+      // }
       console.log(response);
     } catch (err) {
       // if(err.)
@@ -240,8 +233,6 @@ console.log(specifications)
               <h5 className="text-primary fw-100">
                 Enter Correct Property Details
               </h5>
-             
-             
 
               <form
                 id="form-container"
@@ -313,7 +304,7 @@ console.log(specifications)
                 <div className="col-md-5">
                   <label htmlFor="" className="form-label d-block">
                     Did you want to Sell Rent the property
-                  </label> 
+                  </label>
 
                   <div className="form-check form-check-inline">
                     <input
@@ -348,29 +339,24 @@ console.log(specifications)
                     Property type
                   </label>
                   <br />
-                   {renderType}
-               
-               
+                  {renderType}
                 </div>
 
-             {
-               specificationsValue.lenght === 0 ? "" : <label> {type} Specifications </label> 
-             }
-               <div className='d-flex flex-wrap '> 
-               {renderSpecifications}
-               </div>
-              
-                
+                {specificationsValue.lenght === 0 ? (
+                  ""
+                ) : (
+                  <label> {type} Specifications </label>
+                )}
+                <div className="d-flex flex-wrap ">{renderSpecifications}</div>
+
                 <div className="d-flex justify-content-center mx-auto">
-                   {/* <Link to="/agent/properties"> */}
-                {" "} 
-              <button
+                  {/* <Link to="/agent/properties"> */}{" "}
+                  <button
                     onClick={createProperty}
                     className="btn btn-primary px-5"
                   >
                     SAVE
                   </button>
-                 
                 </div>
               </form>
             </div>
