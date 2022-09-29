@@ -40,7 +40,6 @@ export const login = createAsyncThunk(
 
 export const User = createAsyncThunk("allusers", async () => {
   try {
-    
     const response = await axios.get(
       "https://celahl.herokuapp.com/api//users/profile?populate=avatar&populate=wallet.histories&populate=bankAccounts&orderBy=wallet.histories.updatedAt",
       {
@@ -59,7 +58,6 @@ export const User = createAsyncThunk("allusers", async () => {
 export const Properties = createAsyncThunk("properties", async (parameters) => {
   console.log(parameters);
   try {
-    
     const response = await axios.get(
       `https://celahl.herokuapp.com/api/property?_searchBy=name&_keyword=${
         parameters?.value || ""
@@ -79,7 +77,6 @@ export const Properties = createAsyncThunk("properties", async (parameters) => {
 
 export const Overview = createAsyncThunk("overview", async (totalPage) => {
   try {
-    
     const response = await axios.get(
       `https://celahl.herokuapp.com/api/property?populate=images&page1=&limit=${totalPage}`,
       {
@@ -97,10 +94,8 @@ export const Overview = createAsyncThunk("overview", async (totalPage) => {
 
 export const Property = createAsyncThunk("property", async (id) => {
   try {
-    
-
     const response = await axios.get(
-      `https://celahl.herokuapp.com/api//data/property/${id}`,
+      `https://celahl.herokuapp.com/api//data/property/${id}?populate=images&populate=coverImage`,
       {
         headers: {
           Authorization: `Bearer ${token} `,
@@ -120,7 +115,6 @@ export const CreateProperty = createAsyncThunk(
     console.log(rejectWithValue());
     console.log(data);
     try {
-      
       // const id = window.JSON.parse(localStorage.getItem("id"));
 
       const response = await axios.post(
@@ -150,7 +144,6 @@ export const EditProperty = createAsyncThunk(
   "edit/property",
   async (data, { rejectWithValue }) => {
     try {
-      
       const id = window.JSON.parse(localStorage.getItem("id"));
 
       const response = await axios.put(
@@ -179,7 +172,6 @@ export const Notification = createAsyncThunk(
   "notifications",
   async (page = 1) => {
     try {
-      
       const response = await axios.get(
         `https://celahl.herokuapp.com/api//notification?page=${page}`,
         {
@@ -198,7 +190,6 @@ export const Notification = createAsyncThunk(
 
 export const BankAccounts = createAsyncThunk("bankaccounts", async () => {
   try {
-    
     const response = await axios.get(
       " https://celahl.herokuapp.com/api//wallet/banks",
       {
@@ -216,9 +207,24 @@ export const BankAccounts = createAsyncThunk("bankaccounts", async () => {
 
 export const GetSettings = createAsyncThunk("settings", async () => {
   try {
-    
     const response = await axios.get(
       `https://celahl.herokuapp.com/api//settings`,
+      {
+        headers: {
+          Authorization: `Bearer ${token} `,
+        },
+      }
+    );
+    return response.data.data;
+  } catch (err) {
+    throw err;
+  }
+});
+
+export const PropertyStat = createAsyncThunk("stats ", async () => {
+  try {
+    const response = await axios.get(
+      `https://celahl.herokuapp.com/api//property/stats`,
       {
         headers: {
           Authorization: `Bearer ${token} `,

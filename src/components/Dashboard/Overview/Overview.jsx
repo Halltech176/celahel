@@ -9,6 +9,7 @@ import PropertySummary from "./PropertyOverview";
 import {
   Overview as PropertyOverview,
   Properties,
+  PropertyStat
 } from "../../../Redux/actions";
 import Loader from "../../Common/Loader";
 const Overview = () => {
@@ -20,8 +21,13 @@ const Overview = () => {
     error: propertyError,
     properties,
   } = useSelector((state) => state.properties);
+  const {  loading: statsLoading,
+    error: statsError, stats} = useSelector((state) => state.stats);
+  console.log(stats?.propertiesPerMonth)
+  console.log(stats)
 
   useEffect(() => {
+    dispatch(PropertyStat())
     dispatch(Properties());
     dispatch(PropertyOverview(properties?.totalDocs));
   }, []);

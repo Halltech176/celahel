@@ -43,6 +43,9 @@ const AddProperties = () => {
   const [type, setType] = useState("");
   const [fileRef, setFileRef] = useState("");
   const [mainImg, setMainImg] = useState("");
+  const [coverImage, setCoverImage] = useState("");
+  const [availableRooms, setAvailableRooms] = useState("");
+  const [totalRooms, setTotalRooms] = useState("");
 
   const [specificationsValue, SetSpecificationsValue] = useState([]);
 
@@ -120,6 +123,11 @@ const AddProperties = () => {
     setImages(e.target.files);
     console.log(e.target.files);
   };
+  const handleMainImage = (e) => {
+    console.log(e.target.files[0]);
+    setCoverImage(e.target.files[0]);
+    // console.log(coverImage);
+  };
   // console.log(images);
   const token = window.JSON.parse(localStorage.getItem("token"));
   const createProperty = async (e) => {
@@ -144,17 +152,20 @@ const AddProperties = () => {
 
       formData.append("type", type);
       formData.append("purpose", purpose);
+      formData.append("totalRooms", totalRooms);
+      formData.append("availableRooms", availableRooms);
+      formData.append("coverImage", coverImage);
       console.log(specifications);
       console.log(Array.from(formData));
 
       console.log(formData);
       const response = await dispatch(CreateProperty(formData)).unwrap();
-      // if (response?.createdAt) {
-      //   SuccessNotification("Property Successfully created");
-      //   setTimeout(() => {
-      //     navigate("/agent/properties");
-      //   }, 2000);
-      // }
+      if (response?.createdAt) {
+        SuccessNotification("Property Successfully created");
+        setTimeout(() => {
+          navigate("/agent/properties");
+        }, 2000);
+      }
       console.log(response);
     } catch (err) {
       // if(err.)
@@ -200,20 +211,26 @@ const AddProperties = () => {
               </div>
               <h4 className="text-primary my-4">Upload Property Picture</h4>
               <div className={`${properties.properties_image} `}>
-                <div
-                  className={`${properties.main_img_container} me-3 no-values`}
-                >
-                  {mainImg ? (
+                <div className={`${properties.main_img_container} me-3`}>
+                  {coverImage ? (
                     <img
-                      src={mainImg}
+                      src={URL.createObjectURL(coverImage)}
                       className={`${properties.main_img}`}
                       alt="img"
                     />
                   ) : (
-                    <h4>click on the image to preview</h4>
+                    <div className={`${properties.main_img_container} me-3 `}>
+                      {" "}
+                      <div
+                        className={`${properties.main_img_container} mx-3 no-values`}
+                      >
+                        {" "}
+                        <h4>Cover image would be preview here </h4>{" "}
+                      </div>
+                    </div>
                   )}
                 </div>
-                <div className={`${properties.image_container}  no-values`}>
+                <div className={`${properties.image_container}  `}>
                   {images ? (
                     Array.from(images).map((item, index) => {
                       return (
@@ -226,7 +243,9 @@ const AddProperties = () => {
                       );
                     })
                   ) : (
-                    <h4>Selected images would be shown here</h4>
+                    <div className="no-values">
+                      <h4>Selected images would be shown here</h4>
+                    </div>
                   )}
                 </div>
               </div>
@@ -290,7 +309,19 @@ const AddProperties = () => {
                 </div>
                 <div className="col-md-5">
                   <label htmlFor="" className="form-label">
-                    upload file
+                    Property Cover image
+                  </label>
+                  <input
+                    // value={image}
+
+                    onChange={handleMainImage}
+                    type="file"
+                    className="form-control"
+                  />
+                </div>
+                <div className="col-md-5">
+                  <label htmlFor="" className="form-label">
+                    other images
                   </label>
                   <input
                     // value={image}
@@ -316,7 +347,7 @@ const AddProperties = () => {
                       className="form-check-input"
                     />
                     <label htmlFor="" className="form-check-label">
-                      sell
+                      Sell
                     </label>
                   </div>
                   <div className="form-check form-check-inline">
@@ -342,12 +373,41 @@ const AddProperties = () => {
                   {renderType}
                 </div>
 
-                {specificationsValue.lenght === 0 ? (
-                  ""
-                ) : (
-                  <label> {type} Specifications </label>
-                )}
+                {type === "" ? "" : <label> {type} Specifications </label>}
                 <div className="d-flex flex-wrap ">{renderSpecifications}</div>
+                <div>
+                  {purpose === "rent" ? (
+                    <div className="row flex">
+                      <div className="col-md-5">
+                        {" "}
+                        <label htmlFor="" className="form-label">
+                          Total Number of rooms
+                        </label>
+                        <input
+                          type="number"
+                          value={totalRooms}
+                          onChange={(e) => setTotalRooms(e.target.value)}
+                          className="form-control"
+                        />
+                      </div>
+                      <div className="col-md-5">
+                        {" "}
+                        <label htmlFor="" className="form-label">
+                          Total Number of Available rooms
+                        </label>
+                        <input
+                          type="number"
+                          value={availableRooms}
+                          onChange={(e) => setAvailableRooms(e.target.value)}
+                          // onChange={(e) => setAddress(e.target.value)}
+                          className="form-control"
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
 
                 <div className="d-flex justify-content-center mx-auto">
                   {/* <Link to="/agent/properties"> */}{" "}

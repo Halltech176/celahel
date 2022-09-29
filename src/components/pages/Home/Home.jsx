@@ -44,9 +44,9 @@ const Home = () => {
                     transform: " translateX(0rem)",
                   }}
                   viewport={{ once: false }}
-                  transition={{ duration: 0.6 }}
+                  transition={{ duration: 0.3 }}
         key={index}
-        className="col-lg"
+        className=""
         animateIn="animate__bounceIn"
       >
         <div>

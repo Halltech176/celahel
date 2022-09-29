@@ -87,22 +87,20 @@ const Visuals = (properties) => {
     <>
       {properties?.sums?.length !== 0 ? (
         <div className="">
-          <div className={`${style.mixedChart}`}>
+          <div className={`${style.mixedChart} my-5`}>
             <Chart
               className="chart-container"
               options={option1}
               series={series}
               type="area"
-              height="300"
-              width="500"
+              
             />
             <Chart
               className="chart-container"
               options={option2}
               series={series}
               type="bar"
-              height="300"
-              width="500"
+              
             />
           </div>{" "}
         </div>

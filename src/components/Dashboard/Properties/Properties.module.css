@@ -8,11 +8,10 @@
 }
 .search_container {
   display: flex !important;
-  justify-content:space-between !important;
+  justify-content: space-between !important;
   margin: 1rem 2rem;
   align-items: center;
   /* width: 70%; */
-  
 }
 .info_label {
   font-size: 1.2rem;
@@ -103,6 +102,7 @@
   text-transform: capitalize;
   letter-spacing: 0.2rem;
 }
+
 a {
   text-decoration: none;
 }
@@ -136,7 +136,7 @@ a {
   .image_container {
     /* box-shadow: 2px 2px 0.5rem 0.1rem rgb(195, 193, 193); */
     margin: 1rem 0rem;
-    width : 18rem !important;
+    width: 18rem !important;
     border-radius: 10px !important;
   }
 

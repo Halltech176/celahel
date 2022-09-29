@@ -256,6 +256,10 @@
   margin: 2rem auto;
   text-align: center;
 }
+.chart-container {
+width : 35rem;
+height : 20rem;
+}
 @media (max-width: 600px) {
   .no-values {
     width: 20rem;

@@ -8,6 +8,7 @@ import property_image from "../../../Assets/house.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import searchBtn from "../../../Assets/SearchVector.png";
+import {ImageModal} from './ImageModal';
 import { ToastContainer, Zoom } from "react-toastify";
 import {
   EditProperty as Edit,
@@ -47,7 +48,7 @@ const EditProperties = () => {
   const [description, setDescription] = useState(Property?.description);
   const [price, setPrice] = useState(Property?.price);
   const [address, setAddress] = useState(Property?.address);
-  const [images, setImages] = useState("");
+  const [images, setImages] = useState(Property?.images);
   const [image, setImage] = useState("properties");
   const [purpose, setPurpose] = useState(Property?.purpose);
   const [house, setHouse] = useState(false);
@@ -57,10 +58,22 @@ const EditProperties = () => {
   const [specifications, setSpecifications] = useState([]);
   const [type, setType] = useState(Property?.type);
   const [fileRef, setFileRef] = useState("");
-  const [mainImg, setMainImg] = useState("");
+  const [coverImage, setCoverImage] = useState(Property?.coverImage?.url);
+  const [availableRooms, setAvailableRooms] = useState(
+    Property?.availableRooms
+  );
+  const [totalRooms, setTotalRooms] = useState(Property?.totalRooms);
 
-  const [specificationsValue, SetSpecificationsValue] = useState(Property?.specifications);
-  
+  const [specificationsValue, SetSpecificationsValue] = useState(
+    Property?.specifications
+  );
+  const [open, setOpen] = useState(false)
+  const [img, setImg] = useState({})
+
+    const ToggleModal = () => {
+    setOpen(!open);
+  };
+
 
   const GetSpecifications = (value) => {
     const specs = PropertiesSpecifications.filter((data, index) => {
@@ -70,9 +83,8 @@ const EditProperties = () => {
     console.log(specs);
   };
   useEffect(() => {
-GetSpecifications(Property?.type)
-  }, [])
-  
+    GetSpecifications(Property?.type);
+  }, []);
 
   const CheckSpecifications = (e) => {
     const { value, checked } = e.target;
@@ -84,13 +96,13 @@ GetSpecifications(Property?.type)
       );
     }
   };
-  console.log(specificationsValue)
+  console.log(specificationsValue);
   const CheckType = (e) => {
     setType(e.target.value);
     GetSpecifications(e.target.value);
   };
   const propertyPurpose = ["sale", "rent"];
-  
+
   const renderType = PropertyType.map((data, index) => {
     return (
       <div key={index} className="form-check form-check-inline">
@@ -130,11 +142,10 @@ GetSpecifications(Property?.type)
     );
   });
   const renderSpecifications = specifications?.map((data, index) => {
-    
     return (
       <div key={data.value} className="form-check form-check-inline">
         <input
-          checked = {specificationsValue.includes(data.value)}
+          checked={specificationsValue.includes(data.value)}
           onChange={CheckSpecifications}
           value={data.value}
           type="checkbox"
@@ -147,10 +158,15 @@ GetSpecifications(Property?.type)
     );
   });
 
-
-
   const handleFile = (e) => {
-    setMainImg(e.target.src);
+    
+    const image = Property?.images.find((img, index) => {
+      return img?.url === e.target.src
+    })
+    setImg(image)
+    setOpen(true)
+   
+    console.log(image)
   };
   const navigate = useNavigate();
 
@@ -162,11 +178,20 @@ GetSpecifications(Property?.type)
     setImages(e.target.files);
     console.log(e.target.files);
   };
+  const handleMainImage = (e) => {
+    console.log(e.target.files[0]);
+    setCoverImage(e.target.files[0]);
+    // console.log(coverImage);
+  };
   // console.log(images);
   const token = window.JSON.parse(localStorage.getItem("token"));
   const UpdateProperty = async (e) => {
     e.preventDefault();
-
+    const handleMainImage = (e) => {
+      console.log(e.target.files[0]);
+      setCoverImage(e.target.files[0]);
+      // console.log(coverImage);
+    };
     try {
       let formData = new FormData();
 
@@ -184,6 +209,9 @@ GetSpecifications(Property?.type)
 
       formData.append("type", type);
       formData.append("purpose", purpose);
+      formData.append("totalRooms", totalRooms);
+      formData.append("availableRooms", availableRooms);
+      formData.append("coverImage", coverImage);
       console.log(specifications);
       console.log(Array.from(formData));
 
@@ -233,6 +261,7 @@ GetSpecifications(Property?.type)
         >
           <ToastContainer transition={Zoom} autoClose={800} />
           <Sidebar />
+          <ImageModal open={open}img={img} setOpen={setOpen} ToggleModal ={ToggleModal} />
           <div className={`${properties.property_container}`}>
             <div className="row">
               <div className="col-md-8 d-flex align-items-center">
@@ -243,34 +272,42 @@ GetSpecifications(Property?.type)
                 </h2>
               </div>
               <h4 className="text-primary my-4">Upload Property Picture</h4>
-              <div className={`${properties.properties_image} `}>
-                <div
-                  className={`${properties.main_img_container} me-3 no-values`}
-                >
-                  {mainImg ? (
+                <div className={`${properties.properties_image} `}>
+                <div className={`${properties.main_img_container} me-3`}>
+                  {coverImage ? (
                     <img
-                      src={mainImg}
+                      src={coverImage}
                       className={`${properties.main_img}`}
                       alt="img"
                     />
                   ) : (
-                    <h4>click on the image to preview</h4>
+                    <div className={`${properties.main_img_container} me-3 `}>
+                      {" "}
+                      <div
+                        className={`${properties.main_img_container} mx-3 no-values`}
+                      >
+                        {" "}
+                        <h4>Cover image would be preview here </h4>{" "}
+                      </div>
+                    </div>
                   )}
                 </div>
-                <div className={`${properties.image_container}  no-values`}>
+                <div className={`${properties.image_container}  `}>
                   {images ? (
-                    Array.from(images).map((item, index) => {
+                    images.map((item, index) => {
                       return (
                         <img
                           onClick={handleFile}
                           key={index}
                           className={`${properties.property_image}`}
-                          src={item ? URL.createObjectURL(item) : null}
+                          src={item ? item?.url : null}
                         />
                       );
                     })
                   ) : (
-                    <h4>Selected images would be shown here</h4>
+                    <div className="no-values">
+                      <h4>Selected images would be shown here</h4>
+                    </div>
                   )}
                 </div>
               </div>
@@ -334,7 +371,19 @@ GetSpecifications(Property?.type)
                 </div>
                 <div className="col-md-5">
                   <label htmlFor="" className="form-label">
-                    upload file
+                    Property Cover image
+                  </label>
+                  <input
+                    // value={image}
+
+                    onChange={handleMainImage}
+                    type="file"
+                    className="form-control"
+                  />
+                </div>
+                <div className="col-md-5">
+                  <label htmlFor="" className="form-label">
+                    other images
                   </label>
                   <input
                     // value={image}
@@ -360,12 +409,45 @@ GetSpecifications(Property?.type)
                   {renderType}
                 </div>
 
-                {specificationsValue.lenght === 0 ? (
+                {specificationsValue?.length === 0 ? (
                   ""
                 ) : (
                   <label> {type} Specifications </label>
                 )}
                 <div className="d-flex flex-wrap ">{renderSpecifications}</div>
+                <div>
+                  {purpose === "rent" ? (
+                    <div className="row flex">
+                      <div className="col-md-5">
+                        {" "}
+                        <label htmlFor="" className="form-label">
+                          Total Number of rooms
+                        </label>
+                        <input
+                          type="number"
+                          value={totalRooms}
+                          onChange={(e) => setTotalRooms(e.target.value)}
+                          className="form-control"
+                        />
+                      </div>
+                      <div className="col-md-5">
+                        {" "}
+                        <label htmlFor="" className="form-label">
+                          Total Number of Available rooms
+                        </label>
+                        <input
+                          type="number"
+                          value={availableRooms}
+                          onChange={(e) => setAvailableRooms(e.target.value)}
+                          // onChange={(e) => setAddress(e.target.value)}
+                          className="form-control"
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
 
                 <div className="d-flex justify-content-center mx-auto">
                   {/* <Link to="/agent/properties"> */}{" "}
