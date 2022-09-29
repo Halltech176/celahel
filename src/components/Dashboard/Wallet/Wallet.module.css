@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Mono&family=DM+Serif+Display&family=Fira+Code:wght@500&family=Inter:wght@500&family=Public+Sans&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,900;1,100;1,300;1,400;1,700&display=swap");
 .wallet_container {
-  margin: 2rem 2rem 2rem 18rem;
+  margin: 2rem 2rem 2rem 14rem;
   font-family: "DM mono", monospace !important;
 }
 .wallet_heading {

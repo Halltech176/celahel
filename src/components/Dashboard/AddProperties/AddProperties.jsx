@@ -225,7 +225,7 @@ const AddProperties = () => {
                         className={`${properties.main_img_container} mx-3 no-values`}
                       >
                         {" "}
-                        <h4>Cover image would be preview here </h4>{" "}
+                        <h4>Cover image <br/> would be preview here </h4>{" "}
                       </div>
                     </div>
                   )}
@@ -244,7 +244,7 @@ const AddProperties = () => {
                     })
                   ) : (
                     <div className="no-values">
-                      <h4>Selected images would be shown here</h4>
+                      <h4>Selected images <br/> would be shown here</h4>
                     </div>
                   )}
                 </div>

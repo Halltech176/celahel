@@ -8,7 +8,7 @@ import property_image from "../../../Assets/house.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import searchBtn from "../../../Assets/SearchVector.png";
-import {ImageModal} from './ImageModal';
+import {ImageModal, MoreImages} from './ImageModal';
 import { ToastContainer, Zoom } from "react-toastify";
 import {
   EditProperty as Edit,
@@ -68,12 +68,16 @@ const EditProperties = () => {
     Property?.specifications
   );
   const [open, setOpen] = useState(false)
+  const [open2, setOpen2] = useState(false)
   const [img, setImg] = useState({})
 
     const ToggleModal = () => {
     setOpen(!open);
   };
-
+    const ToggleModal2 = (e) => {
+      e.preventDefault()
+    setOpen2(!open2);
+  };
 
   const GetSpecifications = (value) => {
     const specs = PropertiesSpecifications.filter((data, index) => {
@@ -218,7 +222,7 @@ const EditProperties = () => {
       const response = await dispatch(Edit(formData)).unwrap();
 
       if (response !== null) {
-        InfoNotification("property successfully updated");
+        InfoNotification("Property successfully updated");
         const response = await dispatch(AllProperties());
         console.log(response);
 
@@ -261,7 +265,8 @@ const EditProperties = () => {
         >
           <ToastContainer transition={Zoom} autoClose={800} />
           <Sidebar />
-          <ImageModal open={open}img={img} setOpen={setOpen} ToggleModal ={ToggleModal} />
+          <ImageModal open={open} img={img} setOpen={setOpen} ToggleModal ={ToggleModal} />
+          <MoreImages open={open2} Property ={Property}  setOpen={setOpen2} ToggleModal ={ToggleModal2} />
           <div className={`${properties.property_container}`}>
             <div className="row">
               <div className="col-md-8 d-flex align-items-center">
@@ -371,7 +376,7 @@ const EditProperties = () => {
                 </div>
                 <div className="col-md-5">
                   <label htmlFor="" className="form-label">
-                    Property Cover image
+                    update cover image
                   </label>
                   <input
                     // value={image}
@@ -383,7 +388,7 @@ const EditProperties = () => {
                 </div>
                 <div className="col-md-5">
                   <label htmlFor="" className="form-label">
-                    other images
+                    update all images
                   </label>
                   <input
                     // value={image}
@@ -392,6 +397,9 @@ const EditProperties = () => {
                     type="file"
                     className="form-control"
                   />
+                </div>
+                 <div className="col-md-12">
+                  <button onClick={ToggleModal2} className='btn btn-primary'>Add More Images </button>
                 </div>
 
                 <div className="col-md-5">
