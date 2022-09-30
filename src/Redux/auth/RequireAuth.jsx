@@ -35,11 +35,3 @@ export const AgentAuth = ({ children }) => {
   console.log(token);
 };
 
-export const ContactAuth = ({ children }) => {
-  const token = JSON.parse(window.localStorage.getItem("token"));
-  if (token === null) {
-    return <Navigate to="/login" />;
-  } else {
-    return children;
-  }
-};

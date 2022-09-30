@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {useNavigate}from 'react-router-dom';
 import { motion } from "framer-motion";
 import contact from "./Contact.module.css";
 import { FaMapMarkerAlt, FaMarker } from "react-icons/fa";
@@ -8,25 +9,39 @@ import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 const Contact = () => {
+  const navigate = useNavigate()
   const [message, setMessage] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const sendMessage = async (e) => {
     e.preventDefault();
     try {
       const token = JSON.parse(window.localStorage.getItem("token"));
-      console.log(token);
+     const data = {message, firstName, lastName, email}
+     const response = await axios.post('https://celahl.herokuapp.com/api//users/contact', data)
+     console.log(response)
 
       console.log(message.split(" ").length);
       if (message.split(" ").length <= 3) {
         throw "Message should not be less than 3 words";
       }
-      InfoNotification("message sent successfully");
+      if(response.status === 200) {
+ InfoNotification("message sent successfully");
+ navigate('/faqs')
+      }
+     
     } catch (err) {
-      console.log(err);
-      ErrorNotification(err);
+      if(err.message === "Network Error") {
+        ErrorNotification('Please check your internet connection')
+      }
+      console.log(err.response.data.message);
+      ErrorNotification(err.response.data.message);
     }
   };
   return (
     <motion.div
+    
       initial={{ opacity: 0, scale: 0.7 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
@@ -46,7 +61,41 @@ const Contact = () => {
                 We'd love to hear from you <br /> Please out this form
               </p>
             </div>
-
+              <div className="col-6">
+                  <label htmlFor="" className="form-label">
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    className="form-control"
+                  />
+                </div>
+                  
+                <div className="col-6">
+                  <label htmlFor="" className="form-label">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    className="form-control"
+                  />
+                </div>
+                 <div className="col-6">
+                  <label htmlFor="" className="form-label">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="form-control"
+                  />
+                </div>
+<div className="col-6"> </div>
             <div className="col-md-12">
               <label htmlFor="" className="form-label">
                 Message

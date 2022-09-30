@@ -26,7 +26,7 @@ import Login from "./components/forms/Login/Login";
 import ForgotPassword from "./components/forms/Login/forgotPassword";
 import EmailVal from "./components/forms/Login/emailVal";
 import Faq from "./components/forms/Faq/Faq";
-import { AgentAuth, ContactAuth } from "./Redux/auth/RequireAuth";
+import { AgentAuth } from "./Redux/auth/RequireAuth";
 import "./App.css";
 import NoMatch from "./components/routes/NoMatch";
 import { useSelector } from "react-redux";
@@ -67,14 +67,7 @@ function App() {
             }
           />
           {/* <Route path="/demo" element={<Demo />} /> */}
-          <Route
-            path="/contact"
-            element={
-              <ContactAuth>
-                <Contact />
-              </ContactAuth>
-            }
-          />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/about" element={<About />} />
           <Route path="/auth-user" element={<UserRoute />} />

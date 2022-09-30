@@ -46,13 +46,13 @@ const Home = () => {
                   viewport={{ once: false }}
                   transition={{ duration: 0.3 }}
         key={index}
-        className=""
-        animateIn="animate__bounceIn"
+        className="col-md-4 "
+     
       >
         <div>
-          <div className="card p-5 my-3 text-light shadow-lg">
+          <div className={` ${index === 0 ? "bg-warning" : index === 1 ? "bg-danger" : ""} card bg-primary-100 p-5 my-3 text-light shadow-lg`}>
             <div className="circle bg-white text-center text-dark">
-              <span>{index}</span>
+              <span>{index + 1}</span>
             </div>
             <h3 className="text-center card-title">{data.feature}</h3>
             <p className="card-text">
@@ -152,7 +152,7 @@ console.log(index % 2)
                   <span className="badge bg-success p-3 shadow-lg">
                     Rent House
                   </span>
-                  <Slider {...settings}>
+                  <Slider {...settings} className='d-nn'>
                     <div className="  px-0">
                       <img
                         src={displayImage}
@@ -182,29 +182,29 @@ console.log(index % 2)
         </div>
 
         <div className="container  my-3 text-center">
-          <ScrollAnimation
+          {/* <ScrollAnimation
       
       
         animateIn="animate__bounceIn"
-      >
+      > */}
         <h2 className="semi_text">How It Works</h2>
           <p className=" text_lead">
             Our Unique process gives you peace of mind for all our services
           </p>
-      </ScrollAnimation>
+      {/* </ScrollAnimation> */}
             
           
-          <div className="row g-5 cards">{renderFeatures}</div>
+          <div className="row g-5 d-flex cards">{renderFeatures}</div>
 
           <div className="my-5 d-non p-3">
             <div className="container-fluid text-center">
-              <ScrollAnimation animateIn="animate__bounceIn">
+              {/* <ScrollAnimation animateIn="animate__bounceIn"> */}
         <h2>What Our Clients Say</h2>
               <p>
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste
                 laboriosam eos vero eaque cupiditate. Vero.
               </p>
-      </ScrollAnimation>
+      {/* </ScrollAnimation> */}
             
 
               <div className="row mid_col_container my-4">
