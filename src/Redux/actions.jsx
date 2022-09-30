@@ -236,3 +236,22 @@ export const PropertyStat = createAsyncThunk("stats ", async () => {
     throw err;
   }
 });
+
+export const GetTransactions = createAsyncThunk("transactions ", async () => {
+  try {
+    const response = await axios.get(
+      `https://celahl.herokuapp.com/api//transaction/`,
+      {
+        headers: {
+          'Access-Control-Allow-Origin' : '*',
+          Authorization: `Bearer ${token} `,
+        },
+      }
+    );
+    
+    return response.data.data;
+  } catch (err) {
+    
+    throw err;
+  }
+});

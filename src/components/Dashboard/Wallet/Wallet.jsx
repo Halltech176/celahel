@@ -3,7 +3,7 @@ import axios from "axios";
 import Modal from "react-modal";
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { FundWallet, WithdrawMoney } from "./WalletModal";
+import { FundWallet, WithdrawMoney , TransactionDetail} from "./WalletModal";
 import Sidebar from "../../Common/Sidebar/Sidebar";
 import { CgArrowLongLeft } from "react-icons/cg";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ import {
   ErrorNotification,
   SuccessNotification,
 } from "../../Common/ErrorToast";
-import { BankAccounts, User } from "../../../Redux/actions";
+import { BankAccounts, User, GetTransactions } from "../../../Redux/actions";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../Common/Loader";
 import NoValues from "../NoValues";
@@ -30,10 +30,14 @@ const Wallet = () => {
     error: userError,
     user,
   } = useSelector((state) => state.userprofile);
-  const el = useSelector((state) => state);
-  console.log(user);
+  const { loading: transactionsLoading,
+    error: transactionsError,
+    transactions,} = useSelector((state) => state.transactions);
+
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
+  const [open3, setOpen3] = useState(false);
+  const [to_print, setToPrint] = useState({});
   const [accountNumber, setAccountNumber] = useState("");
   const [bankCode, setBankCode] = useState("");
   const [activeBank, setActiveBank] = useState(
@@ -46,6 +50,7 @@ const Wallet = () => {
   useEffect(() => {
     dispatch(BankAccounts());
     dispatch(User());
+    dispatch(GetTransactions());
   }, []);
 
   const ToggleModal = () => {
@@ -54,6 +59,9 @@ const Wallet = () => {
 
   const ToggleModal2 = () => {
     setOpen2(!open2);
+  };
+  const ToggleModal3 = () => {
+    setOpen3(!open3);
   };
   const renderBanks = bankaccounts?.map((bank, index) => {
     return (
@@ -74,6 +82,9 @@ const Wallet = () => {
     );
   });
 
+const GetTransactionDetails = (id) => {
+  console.log(id)
+}
   // Account details
 
   let amountFormat = Intl.NumberFormat("en-US");
@@ -82,21 +93,40 @@ const Wallet = () => {
   //   })
   // const userTransactions = [...user?.wallet?.histories]
   // console.log(userTransactions)
+  
+
+  const GetDetail = (id) => {
+    // setOpen3(true)
+ const response = transactions?.docs?.find((data, index) => {
+    return data._id === id
+  })
+  if(response._id) {
+    setToPrint(response)
+    setOpen3(true)
+  }
+  
+  console.log(response)
+ 
+  return response
+}
+ console.log(to_print)
   let renderTransaction;
-  if (user?.wallet?.histories?.length !== 0) {
-    renderTransaction = user?.wallet?.histories?.map((data) => {
+  if (transactions?.docs.length !== 0) {
+    renderTransaction = transactions?.docs.map((data) => {
+      // console.log(data)
       return (
         <div className={`${wallet.details_text}`}>
           <p>&#8358;{amountFormat.format(data?.amount)}.00</p>
-          <p>{data?._id}</p>
-          <p>{data?.type}</p>
+        
+          {/* <p>{data?.type}</p> */}
           <p className={`${wallet.details_period}`}>
             {/* <span></span> */}
             {new Date(data?.updatedAt).toLocaleDateString()}
           </p>
-          <p className={`${wallet.details_status}`}>
-            {amountFormat.format(data?.previousBalance)}.00
+          <p className={`${data.status === 'pending' ? wallet.details_status_pending : wallet.details_status_completed}`}>
+            {data?.status}
           </p>
+          <button onClick={() => GetDetail(data?._id)} className='btn btn-outline-primary'>show more</button>
         </div>
       );
     });
@@ -109,7 +139,11 @@ const Wallet = () => {
   const getCode = bankaccounts?.find((value) => {
     return value?.name === bank;
   });
-  console.log(getActive);
+
+
+
+ 
+ 
   let accountDetails;
   if (user?.bankAccounts?.length !== 0) {
     accountDetails = (
@@ -124,9 +158,6 @@ const Wallet = () => {
     accountDetails = <h1 className="text-center">No Account Added yet</h1>;
   }
 
-  console.log(activeBank);
-  console.log(user?.bankAccounts);
-  console.log(bank);
 
   const AddAccount = async () => {
     const token = window.JSON.parse(localStorage.getItem("token"));
@@ -167,7 +198,7 @@ const Wallet = () => {
 }
   return (
     <>
-      {userLoading && !error && loading && !userError ? (
+      {userLoading && transactionsLoading && !error && loading && !userError ? (
         <Loader />
       ) : (
         <motion.div
@@ -188,6 +219,13 @@ const Wallet = () => {
             bankID={getActive?._id}
             ToggleModal={ToggleModal2}
             setOpen={setOpen2}
+          />
+          <TransactionDetail
+            open={open3}
+            detail = {to_print}
+            // bankID={getActive?._id}
+            ToggleModal={ToggleModal3}
+            setOpen={setOpen3}
           />
 
           <div className={`${wallet.wallet_container}`}>
@@ -299,10 +337,11 @@ const Wallet = () => {
             <div ref={ref} x={.5} y={.5} scale={0.8} options={options}>
               <div className={`${wallet.details_title}`}>
                 <label>AMOUNT</label>
-                <label>TRANSACTION-ID</label>
-                <label>PAYMENT-TYPE</label>
+              
+                {/* <label>PAYMENT-TYPE</label> */}
                 <label>DATE/TIME</label>
-                <label>PREV-BALANCE</label>
+                <label>STATUS</label>
+                <label>Details</label>
               </div>
 
               {renderTransaction}

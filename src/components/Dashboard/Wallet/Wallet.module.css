@@ -122,9 +122,15 @@ input::-webkit-inner-spin-button {
   font-weight: 500 !important;
   margin: 0.2rem 0.4rem;
 }
-.details_text .details_status {
+.details_text .details_status_pending {
   color: #ea3223 !important;
   background: #fdebe9;
+  border-radius: 4px;
+  padding: 0.3rem 0.8rem;
+}
+.details_text .details_status_completed {
+  color: #2563EB !important;
+  background: #EDEDFF;
   border-radius: 4px;
   padding: 0.3rem 0.8rem;
 }

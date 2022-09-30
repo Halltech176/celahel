@@ -8490,6 +8490,13 @@
     "html2canvas" "1.0.0-alpha.12"
     "jspdf" "^2.3.1"
 
+"react-to-print@^2.14.7":
+  "integrity" "sha512-lWVVAs9Co25uyE0toxcWeFsmaZObwUozXrJD9WMpDPclpBgk+WIzxlt3Q3omL/BCBG/cpf0XNvhayUWa+99YGw=="
+  "resolved" "https://registry.npmjs.org/react-to-print/-/react-to-print-2.14.7.tgz"
+  "version" "2.14.7"
+  dependencies:
+    "prop-types" "^15.8.1"
+
 "react-toastify@^9.0.8":
   "integrity" "sha512-EwM+teWt49HSHx+67qI08yLAW1zAsBxCXLCsUfxHYv1W7/R3ZLhrqKalh7j+kjgPna1h5LQMSMwns4tB4ww2yQ=="
   "resolved" "https://registry.npmjs.org/react-toastify/-/react-toastify-9.0.8.tgz"

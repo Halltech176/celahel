@@ -15,6 +15,7 @@ import VerifyUser from "./slices/VerifyUserSlice";
 import candidateReducer from "./slices/userStates";
 import { AllNotificationReducer } from "./slices/NotificationSlice";
 import { SettingsReducer } from "./slices/SettingsSlice";
+import { TransactionsReducer } from "./slices/TransactionsSlice";
 import { statsReducer } from "./slices/StatsSlice";
 
 const persistConfig = {
@@ -36,6 +37,7 @@ const reducers = combineReducers({
   banks: BanksReducer,
   settings: SettingsReducer,
   stats: statsReducer,
+  transactions: TransactionsReducer,
 });
 // const persistedReducers = persistReducer(persistConfig, reducers);
 const Store = configureStore({

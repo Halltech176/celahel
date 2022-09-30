@@ -19,7 +19,7 @@ import { AiOutlineSync } from "react-icons/ai";
 
 export const FundWallet = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
   const location = window.location
-  console.log(location)
+ 
   const [amount, setAmount] = useState("");
   const [Plan, setPlan] = useState("Wallet");
   const [reference, setReference] = useState("");
@@ -81,55 +81,7 @@ export const FundWallet = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
       console.log(err);
     }
   };
-  // const config = {
-  //   reference,
-  //   email: "devhalltech@gmail.com",
-  //   amount: 20000,
-  //   publicKey: "pk_test_834af034d162826c6ec4afc5396c60e62b28836b",
-  // };
-  // console.log(config);
-
-  // you can call this function anything
-  // const handlePaystackSuccessAction = async (reference) => {
-  // Implementation for whatever you want to do with reference and after success call.
-  // console.log(reference);
-  // if (reference.status === "success") {
-  //   const response = await axios.get(
-  //     "https://celahl.herokuapp.com/api//transaction/verify",
-  //     {
-  //       mode: "CORS",
-  //     },
-  //     {
-  //       headers: {
-  //         " Access-Control-Allow-Origin": "*",
-  //       },
-  //     }
-  //   );
-  //   console.log(response);
-  // }
-  // };
-
-  // you can call this function anything
-  // const handlePaystackCloseAction = () => {
-  //   // implementation for  whatever you want to do when the Paystack dialog closed.
-  //   console.log("closed");
-  // };
-
-  // const componentProps = {
-  //   ...config,
-  //   text: "Paystack Button Implementation",
-  //   onSuccess: (reference) => handlePaystackSuccessAction(reference),
-  //   onClose: handlePaystackCloseAction,
-  // };
-
-  // axios
-  //   .get("https://celahl.herokuapp.com/api//transaction/verify")
-  //   .then((response) => {
-  //     return response;
-  //   })
-  //   .then((data) => {
-  //     console.log(data);
-  //   });
+  
 
   console.log(amount);
   Modal.setAppElement("#root");
@@ -281,6 +233,76 @@ export const WithdrawMoney = ({ open, setOpen, ToggleModal, bankID }) => {
                     className="btn px-4 my-2 btn-outline-primary text-center"
                   >
                     Withdraw
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </Modal>
+        </div>
+      )}
+    </>
+  );
+};
+
+
+
+
+
+
+export const TransactionDetail = ({ open, setOpen, ToggleModal, detail }) => {
+  const [values, setValues] = useState([]);
+  const [value, setValue] = useState("");
+  console.log(detail)
+
+  const dispatch = useDispatch();
+  const { loading, error, user } = useSelector((state) => state.userprofile);
+
+
+
+  Modal.setAppElement("#root");
+  const navigate = useNavigate();
+  return (
+    <>
+      {loading && !error ? (
+        <Loader />
+      ) : (
+        <div>
+          <Modal
+            isOpen={open}
+            onRequestClose={ToggleModal}
+            content-label="My Dialog"
+            className={`${wallet.wallet_modal}`}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.7 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className=" d-flex align-items-center">
+                <CgArrowLongLeft size="1.8rem" onClick={() => setOpen(false)} />
+                <h4 className={`${wallet.wallet_heading} ms-4  `}>
+                  Transactions details
+                </h4>
+              </div>
+
+              <div className="col-10">
+               
+              <p><span className='text-primary'> Type: </span>  {detail?.type} </p>
+              {/* <p><span className='text-primary'> Amount </span>  : {detail?.type} </p> */}
+              <p><span className='text-primary'> Status: </span>   {detail?.status} </p>
+              <p><span className='text-primary'> Reference ID: </span>   {detail?.data?.reference} </p>
+              <p><span className='text-primary'> Amount: </span>   {detail?.amount} </p>
+              <p><span className='text-primary'> Message: </span>   {detail?.message} </p>
+              </div>
+              <div className="d-flex flex-column align-items-center justify-center">
+                <div className="d-flex mt-4 flex-wrap justify-between  align-items-center">
+                  <button
+                    type="submit"
+                    disabled
+                    // onClick={handleWithdraw}
+                    className="btn px-4 my-2 btn-outline-primary text-center"
+                  >
+                    Print
                   </button>
                 </div>
               </div>
