@@ -117,6 +117,9 @@ input::-webkit-inner-spin-button {
   padding: 0.2rem 0.4rem !important;
   display: block;
 }
+.details_container {
+  overflow-x: scroll;
+}
 .details_text > p {
   color: black !important;
   font-weight: 500 !important;
@@ -176,9 +179,5 @@ input::-webkit-inner-spin-button {
   .wallet_modal {
     width: 80%;
   }
-  .input_fields,
-  .details_title,
-  .details_text {
-    overflow: scroll;
-  }
+ 
 }

@@ -126,7 +126,7 @@ const GetTransactionDetails = (id) => {
           <p className={`${data.status === 'pending' ? wallet.details_status_pending : wallet.details_status_completed}`}>
             {data?.status}
           </p>
-          <button onClick={() => GetDetail(data?._id)} className='btn btn-outline-primary'>show more</button>
+          <button onClick={() => GetDetail(data?._id)} className='btn btn-outline-primary'>more</button>
         </div>
       );
     });
@@ -334,11 +334,10 @@ const GetTransactionDetails = (id) => {
                 {/* <button onClick={handleDownload}>Export</button> */}
               </div>
             </div>
-            <div ref={ref} x={.5} y={.5} scale={0.8} options={options}>
+            <div className={`${wallet.details_container}`} ref={ref} x={.5} y={.5} scale={0.8} options={options}>
               <div className={`${wallet.details_title}`}>
                 <label>AMOUNT</label>
               
-                {/* <label>PAYMENT-TYPE</label> */}
                 <label>DATE/TIME</label>
                 <label>STATUS</label>
                 <label>Details</label>
