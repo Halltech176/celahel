@@ -1,4 +1,4 @@
-import Modal from "react-modal";
+import Modal from "react-modal";  
 import { motion } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import wallet from "./Wallet.module.css";
@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../Common/Loader";
 import { PaystackButton } from "react-paystack";
 import { AiOutlineSync } from "react-icons/ai";
+import ReactToPdf from "react-to-pdf";
 
 export const FundWallet = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
   const location = window.location
@@ -250,6 +251,7 @@ export const WithdrawMoney = ({ open, setOpen, ToggleModal, bankID }) => {
 
 
 export const TransactionDetail = ({ open, setOpen, ToggleModal, detail }) => {
+  const ref = useRef()
   const [values, setValues] = useState([]);
   const [value, setValue] = useState("");
   console.log(detail)
@@ -268,6 +270,7 @@ export const TransactionDetail = ({ open, setOpen, ToggleModal, detail }) => {
       ) : (
         <div>
           <Modal
+          
             isOpen={open}
             onRequestClose={ToggleModal}
             content-label="My Dialog"
@@ -277,8 +280,10 @@ export const TransactionDetail = ({ open, setOpen, ToggleModal, detail }) => {
               initial={{ opacity: 0, scale: 0.7 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
+              
             >
-              <div className=" d-flex align-items-center">
+            <div ref={ref} >
+              <div className=" mx-5 d-flex align-items-center">
                 <CgArrowLongLeft size="1.8rem" onClick={() => setOpen(false)} />
                 <h4 className={`${wallet.wallet_heading} ms-4  `}>
                   Transactions details
@@ -294,18 +299,19 @@ export const TransactionDetail = ({ open, setOpen, ToggleModal, detail }) => {
               <p><span className='text-primary'> Amount: </span>   {detail?.amount} </p>
               <p><span className='text-primary'> Message: </span>   {detail?.message} </p>
               </div>
-              <div className="d-flex flex-column align-items-center justify-center">
-                <div className="d-flex mt-4 flex-wrap justify-between  align-items-center">
-                  <button
-                    type="submit"
-                    disabled
-                    // onClick={handleWithdraw}
-                    className="btn px-4 my-2 btn-outline-primary text-center"
-                  >
-                    Print
-                  </button>
-                </div>
+             
+            
+               
               </div>
+                  <div className="d-flex mt-4 flex-wrap justify-between  align-items-center">
+                 <ReactToPdf targetRef={ref} filename="details.pdf">
+        {({toPdf}) => (
+            <button  className="btn px-4 my-2 btn-outline-primary text-center" onClick={toPdf}>    Print</button>
+           
+        )}
+    </ReactToPdf>
+                 
+                </div>
             </motion.div>
           </Modal>
         </div>
