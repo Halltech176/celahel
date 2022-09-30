@@ -2,6 +2,7 @@ import style from "./Properties.module.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { ToastContainer, Zoom } from "react-toastify";
 import { FiEdit } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -97,6 +98,9 @@ const PropertyCard = ({ property }) => {
       </div>
     );
   });
-  return <>{agent_properties}</>;
+  return <> 
+   <ToastContainer transition={Zoom} autoClose={800} /> 
+  {agent_properties}
+  </>;
 };
 export default PropertyCard;

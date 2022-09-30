@@ -106,12 +106,14 @@ export const MoreImages = ({open,Property, setOpen, ToggleModal}) => {
     console.log(Property)
     return <>
        <ToastContainer transition={Zoom} autoClose={800} />
+  
       <Modal
           isOpen={open}
           onRequestClose={ToggleModal}
           content-label="My Dialog"
-          className={`${style.image_modal}`}
+          className={`${style.image_modal} `}
         >
+             <div className=''> 
          <div>
                   <label htmlFor="" className="form-label">
                    Add Images
@@ -124,12 +126,13 @@ export const MoreImages = ({open,Property, setOpen, ToggleModal}) => {
                     className="form-control"
                   />
                 </div>
-          <div className='flex justify-content-between my-5'> 
+          <div className='d-flex justify-content-between my-5'> 
 
         <button onClick={ToggleModal} className='btn btn-danger mx-5'> close </button>
         <button onClick={updateImage} className='btn btn-primary'> update </button>
        </div>
-    
+            </div>
         </Modal>
+
      </>
 }

@@ -31,7 +31,7 @@ const EditProperties = () => {
   const id = window.JSON.parse(localStorage.getItem("id"));
 
   useEffect(() => {
-    ActiveProperty(id);
+    dispatch(ActiveProperty(id));
   }, []);
 
   const { loading, Property, error } = useSelector((state) => state.property);
@@ -253,9 +253,10 @@ const EditProperties = () => {
   const Back = () => {
     navigate(-1);
   };
+  console.log(loading, error,Property)
   return (
     <>
-      {editLoading && !editError ? (
+      {editLoading && !editError && loading ? (
         <Loader />
       ) : (
         <motion.div
