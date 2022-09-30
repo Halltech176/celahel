@@ -33,7 +33,7 @@ const Wallet = () => {
   const { loading: transactionsLoading,
     error: transactionsError,
     transactions,} = useSelector((state) => state.transactions);
-
+console.log(transactions)
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
@@ -63,6 +63,56 @@ const Wallet = () => {
   const ToggleModal3 = () => {
     setOpen3(!open3);
   };
+
+
+   const [count, setCount] = useState(2);
+
+  const handleIncrease = async () => {
+    try {
+      console.log(count);
+      if (count === transactions?.totalPages) {
+        setCount(1);
+      }
+      setCount(count + 1);
+
+      // await dispatch(TransactionDetail(1));
+      const response = await dispatch(GetTransactions({ page: count }));
+      if (response.type === "transactions/rejected") {
+        throw "please check your internet connection";
+      }
+      console.log(response);
+    } catch (err) {
+      ErrorNotification(err);
+      console.error(err);
+    }
+  };
+  const handleDecrease = async () => {
+    try {
+      setCount(count - 1);
+
+      if (count === 1) {
+        setCount(transactions?.totalPages);
+      }
+
+      const response = await dispatch(GetTransactions({ page: count }));
+      if (response.type === "transactions/rejected") {
+        throw "please check your internet connection";
+      }
+    } catch (err) {
+      ErrorNotification(err);
+    }
+  };
+
+  const handlePaginate = async (index) => {
+    try {
+      const response = await dispatch(GetTransactions({ page: index }));
+      if (response.type === "properties/rejected") {
+        throw "please check your internet connection";
+      }
+    } catch (err) {
+      ErrorNotification(err);
+    }
+  };
   const renderBanks = bankaccounts?.map((bank, index) => {
     return (
       <option key={index} defaultValue={bank?.name}>
@@ -85,14 +135,12 @@ const Wallet = () => {
 const GetTransactionDetails = (id) => {
   console.log(id)
 }
+
+
   // Account details
 
   let amountFormat = Intl.NumberFormat("en-US");
-  //  ?.sort((a, b) => {
-  //     return new Date(b?.updatedAt) - new Date(a?.updatedAt);
-  //   })
-  // const userTransactions = [...user?.wallet?.histories]
-  // console.log(userTransactions)
+  
   
 
   const GetDetail = (id) => {
@@ -192,9 +240,10 @@ const GetTransactionDetails = (id) => {
     console.log(bankCode);
   };
   const options = {
-    orientation: 'landscape',
-    unit: 'in',
-    format: "a4"
+    orientation: 'p',
+    unit: 'mm',
+    format: "letter",
+    fill :'red'
 }
   return (
     <>
@@ -328,13 +377,13 @@ const GetTransactionDetails = (id) => {
               <div className={`${wallet.input_fields}`}>
                 <label>Transactions</label>
 
-                <ReactToPdf targetRef={ref} filename="transactions.pdf">
+                <ReactToPdf targetRef={ref} filename="transactions.pdf" x={2.5} y={2.5} scale={1} options={options}>
                   {({ toPdf }) => <button onClick={toPdf}>Export</button>}
                 </ReactToPdf>
                 {/* <button onClick={handleDownload}>Export</button> */}
               </div>
             </div>
-            <div className={`${wallet.details_container}`} ref={ref} x={.5} y={.5} scale={0.8} options={options}>
+            <div className={`${wallet.details_container}`} ref={ref} >
               <div className={`${wallet.details_title}`}>
                 <label>AMOUNT</label>
               
@@ -345,6 +394,50 @@ const GetTransactionDetails = (id) => {
 
               {renderTransaction}
             </div>
+            <div>
+          {transactions?.totalPages === 1 ? (
+            ""
+          ) : (
+            <div className="paginate-btns d-flex align-items-center justify-content-between my-3 flex-wrap ">
+              {transactions?.page === 1 ? (
+                <div> </div>
+              ) : (
+                <button className="paginate-btn" onClick={handleDecrease}>
+                  prev
+                </button>
+              )}
+
+              <ul className="d-flex align-items-center">
+                {transactions?.docs?.map((doc, index) => {
+                  // if(inde)
+                  return index < transactions?.totalPages ? (
+                    <li
+                      key={index}
+                      onClick={() => handlePaginate(index + 1)}
+                      className={`${
+                        transactions?.page === index + 1
+                          ? "active_page"
+                          : "inactive_page"
+                      } mx-2`}
+                    >
+                      {index + 1}
+                    </li>
+                  ) : (
+                    ""
+                  );
+                })}
+              </ul>
+              {transactions?.page === transactions?.totalPages ? (
+                <div> </div>
+              ) : (
+                
+                <button className="paginate-btn" onClick={handleIncrease}>
+                  next
+                </button>
+              )}
+            </div>
+          )}
+        </div>
           </div>
         </motion.div>
       )}

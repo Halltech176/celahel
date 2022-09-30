@@ -237,10 +237,10 @@ export const PropertyStat = createAsyncThunk("stats ", async () => {
   }
 });
 
-export const GetTransactions = createAsyncThunk("transactions ", async () => {
+export const GetTransactions = createAsyncThunk("transactions ", async (page = 1) => {
   try {
     const response = await axios.get(
-      `https://celahl.herokuapp.com/api//transaction/`,
+      `https://celahl.herokuapp.com/api//transaction?page=${page }`,
       {
         headers: {
           'Access-Control-Allow-Origin' : '*',

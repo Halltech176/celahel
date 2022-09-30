@@ -262,11 +262,11 @@ export const TransactionDetail = ({ open, setOpen, ToggleModal, detail }) => {
   const options = {
      orientation: 'p',
  unit: 'mm',
- format: 'a4',
+
  putOnlyUsedFonts:true,
  floatPrecision: 16,
   
-    format: [2,1]
+    format: "a6"
 };
 
 
@@ -292,12 +292,12 @@ export const TransactionDetail = ({ open, setOpen, ToggleModal, detail }) => {
               transition={{ duration: 0.5 }}
               
             >
-            <div ref={ref} x={2.5} y={2.5} scale={0.8}  options={options} >
+            <div ref={ref} >
               <div className=" mx-5 d-flex align-items-center">
                 <CgArrowLongLeft size="1.8rem" onClick={() => setOpen(false)} />
-                <h4 className={`${wallet.wallet_heading} ms-4  `}>
+                <h6 className={`${wallet.wallet_heading} ms-4  `}>
                   Transactions details
-                </h4>
+                </h6>
               </div>
 
               <div className="col-10 font-mono">
@@ -314,7 +314,7 @@ export const TransactionDetail = ({ open, setOpen, ToggleModal, detail }) => {
                
               </div>
                   <div className="d-flex mt-4 flex-wrap justify-between  align-items-center">
-                 <ReactToPdf targetRef={ref} filename="details.pdf">
+                 <ReactToPdf targetRef={ref} filename="details.pdf" x={2.5} y={2.5}  scale={1} options={options}>
         {({toPdf}) => (
             <button  className="btn px-4 my-2 btn-outline-primary text-center"  onClick={toPdf}>     Print</button>
            
