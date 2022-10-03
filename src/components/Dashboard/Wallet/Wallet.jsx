@@ -3,9 +3,10 @@ import axios from "axios";
 import Modal from "react-modal";
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { FundWallet, WithdrawMoney , TransactionDetail} from "./WalletModal";
+import { FundWallet, WithdrawMoney, TransactionDetail } from "./WalletModal";
 import Sidebar from "../../Common/Sidebar/Sidebar";
 import { CgArrowLongLeft } from "react-icons/cg";
+import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, Zoom } from "react-toastify";
@@ -30,24 +31,28 @@ const Wallet = () => {
     error: userError,
     user,
   } = useSelector((state) => state.userprofile);
-  const { loading: transactionsLoading,
+  const {
+    loading: transactionsLoading,
     error: transactionsError,
-    transactions,} = useSelector((state) => state.transactions);
-console.log(transactions)
+    transactions,
+  } = useSelector((state) => state.transactions);
+  console.log(transactions);
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
   const [to_print, setToPrint] = useState({});
   const [accountNumber, setAccountNumber] = useState("");
   const [bankCode, setBankCode] = useState("");
-  const [activeBank, setActiveBank] = useState(
-    user?.bankAccounts[0]?.accountNumber
-  );
+  const [activeBank, setActiveBank] = useState('');
+  // useEffect(() => )
   const [bank, setBank] = useState("Abbey Mortgage Bank");
   // const [bank, setBank] = useState("Abbey Mortgage Bank");
   const dispatch = useDispatch();
+  console.log(user?.bankAccounts[0].accountNumber)
 
   useEffect(() => {
+    setActiveBank(user?.bankAccounts[0]?.accountNumber)
     dispatch(BankAccounts());
     dispatch(User());
     dispatch(GetTransactions());
@@ -64,20 +69,18 @@ console.log(transactions)
     setOpen3(!open3);
   };
 
-
-   const [count, setCount] = useState(2);
+  const [count, setCount] = useState(2);
 
   const handleIncrease = async () => {
     try {
-      console.log(count);
       if (count === transactions?.totalPages) {
         setCount(1);
       }
       setCount(count + 1);
-
+      console.log(count);
       // await dispatch(TransactionDetail(1));
-      const response = await dispatch(GetTransactions({ page: count }));
-      if (response.type === "transactions/rejected") {
+      const response = await dispatch(GetTransactions(count));
+      if (response.type === "transactions /rejected") {
         throw "please check your internet connection";
       }
       console.log(response);
@@ -89,12 +92,12 @@ console.log(transactions)
   const handleDecrease = async () => {
     try {
       setCount(count - 1);
-
+      console.log(count);
       if (count === 1) {
         setCount(transactions?.totalPages);
       }
 
-      const response = await dispatch(GetTransactions({ page: count }));
+      const response = await dispatch(GetTransactions(count));
       if (response.type === "transactions/rejected") {
         throw "please check your internet connection";
       }
@@ -105,7 +108,8 @@ console.log(transactions)
 
   const handlePaginate = async (index) => {
     try {
-      const response = await dispatch(GetTransactions({ page: index }));
+      const response = await dispatch(GetTransactions(index));
+      console.log(index);
       if (response.type === "properties/rejected") {
         throw "please check your internet connection";
       }
@@ -121,8 +125,6 @@ console.log(transactions)
     );
   });
 
-  
-
   //Available users accounts
   const userAccounts = user?.bankAccounts?.map((bank, index) => {
     return (
@@ -132,49 +134,59 @@ console.log(transactions)
     );
   });
 
-const GetTransactionDetails = (id) => {
-  console.log(id)
-}
-
+  const GetTransactionDetails = (id) => {
+    console.log(id);
+  };
 
   // Account details
 
   let amountFormat = Intl.NumberFormat("en-US");
-  
-  
 
   const GetDetail = (id) => {
     // setOpen3(true)
- const response = transactions?.docs?.find((data, index) => {
-    return data._id === id
-  })
-  if(response._id) {
-    setToPrint(response)
-    setOpen3(true)
-  }
-  
-  console.log(response)
- 
-  return response
-}
- console.log(to_print)
+    const response = transactions?.docs?.find((data, index) => {
+      return data._id === id;
+    });
+    if (response._id) {
+      setToPrint(response);
+      setOpen3(true);
+    }
+
+    console.log(response);
+
+    return response;
+  };
+  console.log(to_print);
   let renderTransaction;
   if (transactions?.docs.length !== 0) {
     renderTransaction = transactions?.docs.map((data) => {
-      // console.log(data)
+      // console.log(da  ta)
       return (
-        <div className={`${wallet.details_text}`}>
-          <p>&#8358;{amountFormat.format(data?.amount)}.00</p>
-        
+        <div key={data?._id} onClick={() => GetDetail(data?._id)} className={`${wallet.details_text}`}>
+          <p className="w-25">&#8358;{amountFormat.format(data?.amount)}.00</p>
+
           {/* <p>{data?.type}</p> */}
-          <p className={`${wallet.details_period}`}>
+          <p className={`${wallet.details_period} w-25`}>
             {/* <span></span> */}
             {new Date(data?.updatedAt).toLocaleDateString()}
           </p>
-          <p className={`${data.status === 'pending' ? wallet.details_status_pending : wallet.details_status_completed}`}>
+          <p
+            className={`w-25 text-center ${
+              data.status === "pending"
+                ? wallet.details_status_pending
+                : wallet.details_status_completed
+            }`}
+          >
             {data?.status}
           </p>
-          <button onClick={() => GetDetail(data?._id)} className='btn btn-outline-primary'>more</button>
+          <span
+            style={{ cursor: "ponter" }}
+            
+            className="w-25 text-end"
+          >
+          {data?.type}
+            {/* <HiOutlineArrowNarrowRight /> */}
+          </span>
         </div>
       );
     });
@@ -184,14 +196,11 @@ const GetTransactionDetails = (id) => {
   const getActive = user?.bankAccounts?.find((value) => {
     return value?.accountNumber === activeBank;
   });
+  console.log(getActive)
   const getCode = bankaccounts?.find((value) => {
     return value?.name === bank;
   });
 
-
-
- 
- 
   let accountDetails;
   if (user?.bankAccounts?.length !== 0) {
     accountDetails = (
@@ -205,7 +214,6 @@ const GetTransactionDetails = (id) => {
   } else {
     accountDetails = <h1 className="text-center">No Account Added yet</h1>;
   }
-
 
   const AddAccount = async () => {
     const token = window.JSON.parse(localStorage.getItem("token"));
@@ -225,7 +233,10 @@ const GetTransactionDetails = (id) => {
       );
       if (response.status === 200) {
         SuccessNotification(response.data.message);
-        dispatch(User());
+        setTimeout(() => {
+          dispatch(User());
+          // navigatge
+        }, 1000);
       }
       console.log(response);
     } catch (err) {
@@ -240,14 +251,14 @@ const GetTransactionDetails = (id) => {
     console.log(bankCode);
   };
   const options = {
-    orientation: 'p',
-    unit: 'mm',
+    orientation: "l",
+    unit: "mm",
     format: "letter",
-    fill :'red'
-}
+    fill: "red",
+  };
   return (
     <>
-      {userLoading && transactionsLoading && !error && loading && !userError ? (
+      {userLoading || transactionsLoading || loading ? (
         <Loader />
       ) : (
         <motion.div
@@ -271,7 +282,7 @@ const GetTransactionDetails = (id) => {
           />
           <TransactionDetail
             open={open3}
-            detail = {to_print}
+            detail={to_print}
             // bankID={getActive?._id}
             ToggleModal={ToggleModal3}
             setOpen={setOpen3}
@@ -286,7 +297,16 @@ const GetTransactionDetails = (id) => {
             </div>
             <div className={`${wallet.bank_details}`}>
               <div className={`${wallet.agent_bank}`}>
+                {/* <div className={`${accountOpen ? "d-block" : "d-none"}`}> */}
                 {accountDetails}
+                {/* </div> */}
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setAccountOpen(!accountOpen)}
+                >
+                  {/* {accountOpen ? <span>open</span> : <span>close</span>} */}
+                </div>
+
                 <div className={`${wallet.bank_amount}`}>
                   <h1>
                     &#8358;{amountFormat.format(user?.wallet?.balance)}.00
@@ -344,9 +364,8 @@ const GetTransactionDetails = (id) => {
                     </label>
                     <input
                       disabled
-                      defaultValue={getCode?.code}
+                      value={getCode?.code}
                       onChange={(e) => setBankCode(e.target.value)}
-                      type="email"
                       className="form-control"
                     />
                   </div>
@@ -377,67 +396,88 @@ const GetTransactionDetails = (id) => {
               <div className={`${wallet.input_fields}`}>
                 <label>Transactions</label>
 
-                <ReactToPdf targetRef={ref} filename="transactions.pdf" x={2.5} y={2.5} scale={1} options={options}>
+                <ReactToPdf
+                  targetRef={ref}
+                  filename="transactions.pdf"
+                  x={2.5}
+                  y={2.5}
+                  scale={1}
+                  options={options}
+                >
                   {({ toPdf }) => <button onClick={toPdf}>Export</button>}
                 </ReactToPdf>
                 {/* <button onClick={handleDownload}>Export</button> */}
               </div>
             </div>
-            <div className={`${wallet.details_container}`} ref={ref} >
+            {/* <div className={`${wallet.details_container}`} ref={ref}>
               <div className={`${wallet.details_title}`}>
-                <label>AMOUNT</label>
-              
-                <label>DATE/TIME</label>
-                <label>STATUS</label>
-                <label>Details</label>
+                <label className="w-50">AMOUNT</label>
+
+                <label className="w-50">DATE/TIME</label>
+                <label className="w-25 text-center">STATUS</label>
+                <label className="w-25 text-end">DETAILS</label>
+              </div>
+
+              {renderTransaction}
+            </div> */}
+            <div
+              style={{ width: "100%", overflowX: "scroll !important" }}
+              className=""
+            >
+              <div className={`${wallet.details_title}`}>
+                <label className="w-25">AMOUNT</label>
+
+                <label className="w-25">DATE/TIME</label>
+               {/* <p className="w-25 text-center"> <label >sSTATUS</label> </p> */}
+                <label className="w-25 text-end">STATUS</label>
+                <label className="w-25 text-end">PURPOSE</label>
               </div>
 
               {renderTransaction}
             </div>
             <div>
-          {transactions?.totalPages === 1 ? (
-            ""
-          ) : (
-            <div className="paginate-btns d-flex align-items-center justify-content-between my-3 flex-wrap ">
-              {transactions?.page === 1 ? (
-                <div> </div>
+              {transactions?.totalPages === 1 ? (
+                ""
               ) : (
-                <button className="paginate-btn" onClick={handleDecrease}>
-                  prev
-                </button>
-              )}
-
-              <ul className="d-flex align-items-center">
-                {transactions?.docs?.map((doc, index) => {
-                  // if(inde)
-                  return index < transactions?.totalPages ? (
-                    <li
-                      key={index}
-                      onClick={() => handlePaginate(index + 1)}
-                      className={`${
-                        transactions?.page === index + 1
-                          ? "active_page"
-                          : "inactive_page"
-                      } mx-2`}
-                    >
-                      {index + 1}
-                    </li>
+                <div className="paginate-btns d-flex align-items-center justify-content-between my-3 flex-wrap ">
+                  {transactions?.page === 1 ? (
+                    <div> </div>
                   ) : (
-                    ""
-                  );
-                })}
-              </ul>
-              {transactions?.page === transactions?.totalPages ? (
-                <div> </div>
-              ) : (
-                
-                <button className="paginate-btn" onClick={handleIncrease}>
-                  next
-                </button>
+                    <button className="paginate-btn" onClick={handleDecrease}>
+                      prev
+                    </button>
+                  )}
+
+                  <ul className="d-flex align-items-center">
+                    {transactions?.docs?.map((doc, index) => {
+                      // if(inde)
+                      return index < transactions?.totalPages ? (
+                        <li
+                          key={index}
+                          onClick={() => handlePaginate(index + 1)}
+                          className={`${
+                            transactions?.page === index + 1
+                              ? "active_page"
+                              : "inactive_page"
+                          } mx-2`}
+                        >
+                          {index + 1}
+                        </li>
+                      ) : (
+                        ""
+                      );
+                    })}
+                  </ul>
+                  {transactions?.page === transactions?.totalPages ? (
+                    <div> </div>
+                  ) : (
+                    <button className="paginate-btn" onClick={handleIncrease}>
+                      next
+                    </button>
+                  )}
+                </div>
               )}
             </div>
-          )}
-        </div>
           </div>
         </motion.div>
       )}

@@ -81,13 +81,7 @@ const PropertyView = (docs) => {
               {docs?.properties?.page === docs.properties?.totalPages ? (
                 <div> </div>
               ) : (
-                // <button
-                //   onClick={() =>
-                //     HandleIt(docs.properties?.totalPages, docs.count)
-                //   }
-                // >
-                //   click me
-                // </button>
+                
                 <button className="paginate-btn" onClick={docs.handleIncrease}>
                   next
                 </button>

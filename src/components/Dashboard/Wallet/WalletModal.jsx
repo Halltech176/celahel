@@ -1,9 +1,9 @@
-import Modal from "react-modal";  
+import Modal from "react-modal";
 import { motion } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import wallet from "./Wallet.module.css";
 import { CgArrowLongLeft } from "react-icons/cg";
-import { Link, useNavigate , useLocation} from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, Zoom } from "react-toastify";
 import {
@@ -19,8 +19,8 @@ import { AiOutlineSync } from "react-icons/ai";
 import ReactToPdf from "react-to-pdf";
 
 export const FundWallet = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
-  const location = window.location
- 
+  const location = window.location;
+
   const [amount, setAmount] = useState("");
   const [Plan, setPlan] = useState("Wallet");
   const [reference, setReference] = useState("");
@@ -46,10 +46,10 @@ export const FundWallet = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
       // console.log(process.env.NODE_ENV);
       if (response.status === 200) {
         const data = {
-           callback_url: `${
-            location.host.split(':')[0] === 'localhost' ?
-               `http://${location.host}/agent/properties` :  `https://${location.host}/agent/properties`
-          
+          callback_url: `${
+            location.host.split(":")[0] === "localhost"
+              ? `http://${location.host}/agent/properties`
+              : `https://${location.host}/agent/properties`
           }`,
 
           reference: response.data.data.reference,
@@ -69,20 +69,20 @@ export const FundWallet = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
             addmoney.data.data.authorization_url,
             "_blank"
           );
-              await axios.get("https://celahl.herokuapp.com/api//transaction/verify");
+          await axios.get(
+            "https://celahl.herokuapp.com/api//transaction/verify"
+          );
         }
         console.log(addmoney);
       }
-  
     } catch (err) {
-      if(err.message === 'Network Error') {
-        ErrorNotification("Please check your internet Connections")
+      if (err.message === "Network Error") {
+        ErrorNotification("Please check your internet Connections");
       }
       ErrorNotification(err?.response?.data?.message);
       console.log(err);
     }
   };
-  
 
   console.log(amount);
   Modal.setAppElement("#root");
@@ -245,31 +245,24 @@ export const WithdrawMoney = ({ open, setOpen, ToggleModal, bankID }) => {
   );
 };
 
-
-
-
-
-
 export const TransactionDetail = ({ open, setOpen, ToggleModal, detail }) => {
-  const ref = useRef()
+  const ref = useRef();
   const [values, setValues] = useState([]);
   const [value, setValue] = useState("");
-  console.log(detail)
+  console.log(detail);
 
   const dispatch = useDispatch();
   const { loading, error, user } = useSelector((state) => state.userprofile);
-
+  // let amountFormat = Intl.NumberFormat("en-US");
   const options = {
-     orientation: 'p',
- unit: 'mm',
+    orientation: "p",
+    unit: "mm",
 
- putOnlyUsedFonts:true,
- floatPrecision: 16,
-  
-    format: "a6"
-};
+    putOnlyUsedFonts: true,
+    floatPrecision: 16,
 
-
+    format: "a6",
+  };
 
   Modal.setAppElement("#root");
   const navigate = useNavigate();
@@ -280,7 +273,6 @@ export const TransactionDetail = ({ open, setOpen, ToggleModal, detail }) => {
       ) : (
         <div>
           <Modal
-          
             isOpen={open}
             onRequestClose={ToggleModal}
             content-label="My Dialog"
@@ -290,38 +282,65 @@ export const TransactionDetail = ({ open, setOpen, ToggleModal, detail }) => {
               initial={{ opacity: 0, scale: 0.7 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              
             >
-            <div ref={ref} >
-              <div className=" mx-5 d-flex align-items-center">
-                <CgArrowLongLeft size="1.8rem" onClick={() => setOpen(false)} />
-                <h6 className={`${wallet.wallet_heading} ms-4  `}>
-                  Transactions details
-                </h6>
-              </div>
-
-              <div className="col-10 font-mono">
-               
-              <p><span className='text-primary'> Type: </span>  {detail?.type} </p>
-              {/* <p><span className='text-primary'> Amount </span>  : {detail?.type} </p> */}
-              <p><span className='text-primary'> Status: </span>   {detail?.status} </p>
-              <p><span className='text-primary'> Reference ID: </span>   {detail?.data?.reference} </p>
-              <p><span className='text-primary'> Amount: </span>   {detail?.amount} </p>
-              <p><span className='text-primary'> Message: </span>   {detail?.message} </p>
-              </div>
-             
-            
-               
-              </div>
-                  <div className="d-flex mt-4 flex-wrap justify-between  align-items-center">
-                 <ReactToPdf targetRef={ref} filename="details.pdf" x={2.5} y={2.5}  scale={1} options={options}>
-        {({toPdf}) => (
-            <button  className="btn px-4 my-2 btn-outline-primary text-center"  onClick={toPdf}>     Print</button>
-           
-        )}
-    </ReactToPdf>
-                 
+              <div ref={ref}>
+                <div className=" mx-5 d-flex align-items-center">
+                  <CgArrowLongLeft
+                    size="1.8rem"
+                    onClick={() => setOpen(false)}
+                  />
+                  <h6 className={`${wallet.wallet_heading} ms-4  `}>
+                    Transactions details
+                  </h6>
                 </div>
+
+                <div className="col-10 font-sans">
+                  <p>
+                    <span className="text-primary"> Type: </span> {detail?.type}{" "}
+                  </p>
+                  {/* <p><span className='text-primary'> Amount </span>  : {detail?.type} </p> */}
+                  <p>
+                    <span className="text-primary"> Status: </span>{" "}
+                    {detail?.status}{" "}
+                  </p>
+                  <p>
+                    <span className="text-primary"> Reference ID: </span>{" "}
+                    {detail?.data?.reference}{" "}
+                  </p>
+                  <p>
+                    <span className="text-primary"> Amount: </span>{" "}
+                    {detail?.amount}{" "}
+                  </p>
+                  <p>
+                    <span className="text-primary"> Message: </span>{" "}
+                    {detail?.message}{" "}
+                  </p>
+                  <p>
+                    <span className="text-primary"> Date: </span>{" "}
+                    {new Date(detail?.updatedAt).toLocaleDateString()}
+                  </p>
+                </div>
+              </div>
+              <div className="d-flex mt-4 flex-wrap justify-between  align-items-center">
+                <ReactToPdf
+                  targetRef={ref}
+                  filename="details.pdf"
+                  x={2.5}
+                  y={2.5}
+                  scale={1}
+                  options={options}
+                >
+                  {({ toPdf }) => (
+                    <button
+                      className="btn px-4 my-2 btn-outline-primary text-center"
+                      onClick={toPdf}
+                    >
+                      {" "}
+                      Print
+                    </button>
+                  )}
+                </ReactToPdf>
+              </div>
             </motion.div>
           </Modal>
         </div>

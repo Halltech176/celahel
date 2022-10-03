@@ -140,6 +140,7 @@ const AddProperties = () => {
 
       formData.append("file", image);
       Array.from(images).forEach((item, index) => {
+        console.log(item);
         formData.append("images", item);
       });
       specificationsValue.forEach((specs) => {
@@ -225,7 +226,9 @@ const AddProperties = () => {
                         className={`${properties.main_img_container} mx-3 no-values`}
                       >
                         {" "}
-                        <h4>Cover image <br/> would be preview here </h4>{" "}
+                        <h4>
+                          Cover image <br /> would be preview here{" "}
+                        </h4>{" "}
                       </div>
                     </div>
                   )}
@@ -244,7 +247,9 @@ const AddProperties = () => {
                     })
                   ) : (
                     <div className="no-values">
-                      <h4>Selected images <br/> would be shown here</h4>
+                      <h4>
+                        Selected images <br /> would be shown here
+                      </h4>
                     </div>
                   )}
                 </div>
@@ -376,37 +381,34 @@ const AddProperties = () => {
                 {type === "" ? "" : <label> {type} Specifications </label>}
                 <div className="d-flex flex-wrap ">{renderSpecifications}</div>
                 <div>
-                  {purpose === "rent" ? (
-                    <div className="row flex">
-                      <div className="col-md-5">
-                        {" "}
-                        <label htmlFor="" className="form-label">
-                          Total Number of rooms
-                        </label>
-                        <input
-                          type="number"
-                          value={totalRooms}
-                          onChange={(e) => setTotalRooms(e.target.value)}
-                          className="form-control"
-                        />
-                      </div>
-                      <div className="col-md-5">
-                        {" "}
-                        <label htmlFor="" className="form-label">
-                          Total Number of Available rooms
-                        </label>
-                        <input
-                          type="number"
-                          value={availableRooms}
-                          onChange={(e) => setAvailableRooms(e.target.value)}
-                          // onChange={(e) => setAddress(e.target.value)}
-                          className="form-control"
-                        />
-                      </div>
+                  {/* {purpose === "rent" ? ( */}
+                  <div className="row flex">
+                    <div className="col-md-5">
+                      {" "}
+                      <label htmlFor="" className="form-label">
+                        Total Number of rooms
+                      </label>
+                      <input
+                        type="number"
+                        value={totalRooms}
+                        onChange={(e) => setTotalRooms(e.target.value)}
+                        className="form-control"
+                      />
                     </div>
-                  ) : (
-                    ""
-                  )}
+                    <div className="col-md-5">
+                      {" "}
+                      <label htmlFor="" className="form-label">
+                        Total Number of Available rooms
+                      </label>
+                      <input
+                        type="number"
+                        value={availableRooms}
+                        onChange={(e) => setAvailableRooms(e.target.value)}
+                        // onChange={(e) => setAddress(e.target.value)}
+                        className="form-control"
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="d-flex justify-content-center mx-auto">

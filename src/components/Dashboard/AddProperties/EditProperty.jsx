@@ -8,7 +8,7 @@ import property_image from "../../../Assets/house.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import searchBtn from "../../../Assets/SearchVector.png";
-import {ImageModal, MoreImages} from './ImageModal';
+import { ImageModal, MoreImages } from "./ImageModal";
 import { ToastContainer, Zoom } from "react-toastify";
 import {
   EditProperty as Edit,
@@ -44,38 +44,45 @@ const EditProperties = () => {
   } = useSelector((state) => state.editproperty);
   console.log(Property);
 
-  const [name, setName] = useState(Property?.name);
-  const [description, setDescription] = useState(Property?.description);
-  const [price, setPrice] = useState(Property?.price);
-  const [address, setAddress] = useState(Property?.address);
-  const [images, setImages] = useState(Property?.images);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [address, setAddress] = useState("");
+  const [images, setImages] = useState([]);
   const [image, setImage] = useState("properties");
-  const [purpose, setPurpose] = useState(Property?.purpose);
-  const [house, setHouse] = useState(false);
-  const [relaxation, setRelaxation] = useState(false);
-  const [land, setLand] = useState(false);
-  const [hostel, setHostel] = useState(false);
+  const [purpose, setPurpose] = useState("");
+
   const [specifications, setSpecifications] = useState([]);
-  const [type, setType] = useState(Property?.type);
+  const [type, setType] = useState("");
   const [fileRef, setFileRef] = useState("");
   const [coverImage, setCoverImage] = useState(Property?.coverImage?.url);
   const [availableRooms, setAvailableRooms] = useState(
     Property?.availableRooms
   );
   const [totalRooms, setTotalRooms] = useState(Property?.totalRooms);
-
   const [specificationsValue, SetSpecificationsValue] = useState(
     Property?.specifications
   );
-  const [open, setOpen] = useState(false)
-  const [open2, setOpen2] = useState(false)
-  const [img, setImg] = useState({})
+  useEffect(() => {
+    setName(Property?.name);
+    setDescription(Property?.description);
+    setPrice(Property?.price);
+    setPurpose(Property?.purpose);
+    setAddress(Property?.address);
+    setImages(Property?.images);
+    setType(Property?.type);
+    SetSpecificationsValue(Property?.specifications);
+  }, []);
 
-    const ToggleModal = () => {
+  const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
+  const [img, setImg] = useState({});
+
+  const ToggleModal = () => {
     setOpen(!open);
   };
-    const ToggleModal2 = (e) => {
-      e.preventDefault()
+  const ToggleModal2 = (e) => {
+    e.preventDefault();
     setOpen2(!open2);
   };
 
@@ -149,7 +156,7 @@ const EditProperties = () => {
     return (
       <div key={data.value} className="form-check form-check-inline">
         <input
-          checked={specificationsValue.includes(data.value)}
+          checked={specificationsValue?.includes(data.value)}
           onChange={CheckSpecifications}
           value={data.value}
           type="checkbox"
@@ -163,14 +170,13 @@ const EditProperties = () => {
   });
 
   const handleFile = (e) => {
-    
     const image = Property?.images.find((img, index) => {
-      return img?.url === e.target.src
-    })
-    setImg(image)
-    setOpen(true)
-   
-    console.log(image)
+      return img?.url === e.target.src;
+    });
+    setImg(image);
+    setOpen(true);
+
+    console.log(image);
   };
   const navigate = useNavigate();
 
@@ -197,29 +203,20 @@ const EditProperties = () => {
       // console.log(coverImage);
     };
     try {
-      let formData = new FormData();
+      const updates = {
+        name,
+        price,
+        purpose,
+        specifications: specificationsValue,
+        description,
+        type,
+        availableRooms,
+        totalRooms,
+      };
+      console.log(updates);
 
-      formData.append("file", image);
-      Array.from(images).forEach((item, index) => {
-        formData.append("images", item);
-      });
-      specifications.forEach((specs) => {
-        formData.append("specifications", specs);
-      });
-      formData.append("name", name);
-      formData.append("description", description);
-      formData.append("price", price);
-      formData.append("address", address);
-
-      formData.append("type", type);
-      formData.append("purpose", purpose);
-      formData.append("totalRooms", totalRooms);
-      formData.append("availableRooms", availableRooms);
-      formData.append("coverImage", coverImage);
-      console.log(specifications);
-      console.log(Array.from(formData));
-
-      const response = await dispatch(Edit(formData)).unwrap();
+      const response = await dispatch(Edit(updates)).unwrap();
+      console.log(response);
 
       if (response !== null) {
         InfoNotification("Property successfully updated");
@@ -245,7 +242,7 @@ const EditProperties = () => {
       ErrorNotification(err?.response?.data?.message);
       if (err?.response?.data?.message?.split(" ").length > 12) {
         setTimeout(() => {
-          navigate("/upgrade");
+          // navigate("/agent/upgrade");
         }, 3000);
       }
     }
@@ -253,10 +250,10 @@ const EditProperties = () => {
   const Back = () => {
     navigate(-1);
   };
-  console.log(loading, error,Property)
+  console.log(loading, error, Property);
   return (
     <>
-      {editLoading && !editError && loading ? (
+      {loading || editLoading ? (
         <Loader />
       ) : (
         <motion.div
@@ -266,8 +263,18 @@ const EditProperties = () => {
         >
           <ToastContainer transition={Zoom} autoClose={800} />
           <Sidebar />
-          <ImageModal open={open} img={img} setOpen={setOpen} ToggleModal ={ToggleModal} />
-          <MoreImages open={open2} Property ={Property}  setOpen={setOpen2} ToggleModal ={ToggleModal2} />
+          <ImageModal
+            open={open}
+            img={img}
+            setOpen={setOpen}
+            ToggleModal={ToggleModal}
+          />
+          <MoreImages
+            open={open2}
+            Property={Property}
+            setOpen={setOpen2}
+            ToggleModal={ToggleModal2}
+          />
           <div className={`${properties.property_container}`}>
             <div className="row">
               <div className="col-md-8 d-flex align-items-center">
@@ -278,45 +285,7 @@ const EditProperties = () => {
                 </h2>
               </div>
               <h4 className="text-primary my-4">Upload Property Picture</h4>
-                <div className={`${properties.properties_image} `}>
-                <div className={`${properties.main_img_container} me-3`}>
-                  {coverImage ? (
-                    <img
-                      src={coverImage}
-                      className={`${properties.main_img}`}
-                      alt="img"
-                    />
-                  ) : (
-                    <div className={`${properties.main_img_container} me-3 `}>
-                      {" "}
-                      <div
-                        className={`${properties.main_img_container} mx-3 no-values`}
-                      >
-                        {" "}
-                        <h4>Cover image would be preview here </h4>{" "}
-                      </div>
-                    </div>
-                  )}
-                </div>
-                <div className={`${properties.image_container}  `}>
-                  {images ? (
-                    images.map((item, index) => {
-                      return (
-                        <img
-                          onClick={handleFile}
-                          key={index}
-                          className={`${properties.property_image}`}
-                          src={item ? item?.url : null}
-                        />
-                      );
-                    })
-                  ) : (
-                    <div className="no-values">
-                      <h4>Selected images would be shown here</h4>
-                    </div>
-                  )}
-                </div>
-              </div>
+
               <h5 className="text-primary fw-100">
                 Enter Correct Property Details
               </h5>
@@ -375,7 +344,7 @@ const EditProperties = () => {
                     className="form-control"
                   />
                 </div>
-                <div className="col-md-5">
+                {/* <div className="col-md-5">
                   <label htmlFor="" className="form-label">
                     update cover image
                   </label>
@@ -398,9 +367,11 @@ const EditProperties = () => {
                     type="file"
                     className="form-control"
                   />
-                </div>
-                 <div className="col-md-12">
-                  <button onClick={ToggleModal2} className='btn btn-primary'>Add More Images </button>
+                </div> */}
+                <div className="col-md-12">
+                  <button onClick={ToggleModal2} className="btn btn-primary">
+                    Update Images
+                  </button>
                 </div>
 
                 <div className="col-md-5">

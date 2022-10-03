@@ -13,7 +13,7 @@ export const AgentAuth = ({ children }) => {
   }, []);
   const { user, loading, error } = useSelector((state) => state.userprofile);
 
-  console.log(user, loading, error);
+ 
   
   if (token === null) {
     return <Navigate to='/login'/>

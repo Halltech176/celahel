@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export const LogoutModal = ({ open, setIsOpen, ToggleModal }) => {
   const navigate = useNavigate();
-  console.log(open);
+
   const handleLogout = () => {
     localStorage.clear();
     setIsOpen(!open);

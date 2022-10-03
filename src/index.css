@@ -4,7 +4,7 @@ body {
   overflow-x: hidden;
 }
 * {
-  outline : none !important;
+  outline: none !important;
 }
 .bg-purple {
   background-color: var(--bs-purple) !important;

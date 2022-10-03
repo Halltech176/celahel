@@ -92,8 +92,9 @@ export const Overview = createAsyncThunk("overview", async (totalPage) => {
   }
 });
 
-export const Property = createAsyncThunk("property", async (id) => {
+export const Property = createAsyncThunk("property", async () => {
   try {
+    const id = window.JSON.parse(localStorage.getItem("id"));
     const response = await axios.get(
       `https://celahl.herokuapp.com/api//data/property/${id}?populate=images&populate=coverImage`,
       {
@@ -112,8 +113,8 @@ export const Property = createAsyncThunk("property", async (id) => {
 export const CreateProperty = createAsyncThunk(
   "create/property",
   async (data, { rejectWithValue }) => {
-    console.log(rejectWithValue());
-    console.log(data);
+    // console.log(rejectWithValue());
+    // console.log(data);
     try {
       // const id = window.JSON.parse(localStorage.getItem("id"));
 
@@ -144,6 +145,7 @@ export const EditProperty = createAsyncThunk(
   "edit/property",
   async (data, { rejectWithValue }) => {
     try {
+      console.log(data);
       const id = window.JSON.parse(localStorage.getItem("id"));
 
       const response = await axios.put(
@@ -152,7 +154,6 @@ export const EditProperty = createAsyncThunk(
         data,
         {
           headers: {
-            "content-type": "multipart/form-data",
             Authorization: `Bearer ${token} `,
           },
         }
@@ -160,11 +161,12 @@ export const EditProperty = createAsyncThunk(
 
       return response.data.data;
     } catch (err) {
+      console.log(err);
+      console.log(rejectWithValue(err));
       if (err) {
         // console.log(rejectWithValue(err?.response?.data?.message));
         throw rejectWithValue(err);
       }
-      console.log(err);
     }
   }
 );
@@ -237,21 +239,45 @@ export const PropertyStat = createAsyncThunk("stats ", async () => {
   }
 });
 
-export const GetTransactions = createAsyncThunk("transactions ", async (page = 1) => {
-  try {
-    const response = await axios.get(
-      `https://celahl.herokuapp.com/api//transaction?page=${page }`,
-      {
-        headers: {
-          'Access-Control-Allow-Origin' : '*',
-          Authorization: `Bearer ${token} `,
-        },
-      }
-    );
-    
-    return response.data.data;
-  } catch (err) {
-    
-    throw err;
+export const GetTransactions = createAsyncThunk(
+  "transactions ",
+  async (page = 1) => {
+    try {
+      const response = await axios.get(
+        `https://celahl.herokuapp.com/api//transaction?page=${page}`,
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${token} `,
+          },
+        }
+      );
+
+      return response.data.data;
+    } catch (err) {
+      throw err;
+    }
   }
-});
+);
+
+
+export const GetTransactionsDetails = createAsyncThunk(
+  "transactions ",
+  async (page = 1) => {
+    try {
+      const response = await axios.get(
+        `https://celahl.herokuapp.com/api//transaction?page=${page}`,
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${token} `,
+          },
+        }
+      );
+
+      return response.data.data;
+    } catch (err) {
+      throw err;
+    }
+  }
+);

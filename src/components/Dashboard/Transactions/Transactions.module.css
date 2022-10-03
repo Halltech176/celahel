@@ -1,0 +1,10 @@
+.transactions {
+    margin: 2rem 2rem 2rem 14rem;
+  font-family: "DM mono", monospace !important;
+}
+@media (max-width: 840px) {
+  .transactions {
+    margin: 1rem 1rem 1rem 1rem;
+    /* font-size: 0.5rem; */
+  }
+}

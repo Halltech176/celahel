@@ -27,7 +27,6 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const path = location.pathname;
-  console.log(path);
 
   useEffect(() => {
     if (isOpen) {
@@ -53,7 +52,6 @@ const Sidebar = () => {
   };
 
   const avatar = user?.avatar;
-  console.log(notifications);
 
   return (
     <>
@@ -166,6 +164,19 @@ const Sidebar = () => {
               Wallet
             </Link>
           </li>
+          {/* <li
+            className={`${sidebar.sidebar_list} ${
+              path === "/agent/transactions" ? sidebar.active_route : ""
+            }  `}
+          >
+            <BsWalletFill className="me-2  d-inline-block" />
+            <Link
+              to="/agent/transactions"
+              className={`${sidebar.sidebar_link}`}
+            >
+              Transactions
+            </Link>
+          </li> */}
           <li className={`${sidebar.sidebar_list}  d-flex align-items-center`}>
             {/* <img src={Vector} className="me-2 d-inline-block" /> */}
             <BiLogOut className="me-2  d-inline-block" />

@@ -17,6 +17,7 @@ import AddProperties from "./components/Dashboard/AddProperties/AddProperties";
 import EditProperty from "./components/Dashboard/AddProperties/EditProperty";
 import Notifications from "./components/Dashboard/Notifications/Notifications.component";
 import Overview from "./components/Dashboard/Overview/Overview";
+import Transactions from "./components/Dashboard/Transactions/Transactions";
 import Plan from "./components/Dashboard/Account_plan/Plan.component";
 
 import Contact from "./components/forms/Contact/Contact";
@@ -151,6 +152,14 @@ function App() {
             element={
               <AgentAuth>
                 <Notifications />
+              </AgentAuth>
+            }
+          />
+          <Route
+            path="/agent/transactions"
+            element={
+              <AgentAuth>
+                <Transactions />
               </AgentAuth>
             }
           />
