@@ -163,30 +163,32 @@ const Wallet = () => {
       // console.log(da  ta)
       return (
         <div key={data?._id} onClick={() => GetDetail(data?._id)} className={`${wallet.details_text}`}>
-          <p className="w-25">&#8358;{amountFormat.format(data?.amount)}.00</p>
+          <p className="">&#8358;{amountFormat.format(data?.amount)}.00</p>
 
           {/* <p>{data?.type}</p> */}
-          <p className={`${wallet.details_period} w-25`}>
+          <p className={`${wallet.details_period} `}>
             {/* <span></span> */}
             {new Date(data?.updatedAt).toLocaleDateString()}
           </p>
-          <p
-            className={`w-25 text-center ${
+          <div className=''>
+            <p
+            className={`  text-center ${
               data.status === "pending"
                 ? wallet.details_status_pending
                 : wallet.details_status_completed
             }`}
           >
             {data?.status}
-          </p>
-          <span
-            style={{ cursor: "ponter" }}
+          </p> </div>
+         
+          <p className=' text-end'><span
+            // style={{ cursor: "ponter" }}
             
-            className="w-25 text-end"
+            className="text-end"
           >
           {data?.type}
-            {/* <HiOutlineArrowNarrowRight /> */}
-          </span>
+           
+          </span> </p>
         </div>
       );
     });
@@ -256,6 +258,7 @@ const Wallet = () => {
     format: "letter",
     fill: "red",
   };
+  console.log(window.innerWidth)
   return (
     <>
       {userLoading || transactionsLoading || loading ? (
@@ -420,18 +423,20 @@ const Wallet = () => {
 
               {renderTransaction}
             </div> */}
-            <div
-              style={{ width: "100%", overflowX: "scroll !important" }}
-              className=""
-            >
+            <div ref={ref}
+              // style={{ w/idth: "100%", overflowX: "scroll !important" }}
+              className={`${wallet.details_container}`}
+            > 
+           
               <div className={`${wallet.details_title}`}>
-                <label className="w-25">AMOUNT</label>
+                <label className="">AMOUNT</label>
 
-                <label className="w-25">DATE/TIME</label>
-               {/* <p className="w-25 text-center"> <label >sSTATUS</label> </p> */}
-                <label className="w-25 text-end">STATUS</label>
-                <label className="w-25 text-end">PURPOSE</label>
+                <label className="text-center">DATE/TIME</label>
+               {/* <p className=" text-center"> <label >sSTATUS</label> </p> */}
+                <label className=" text-center">STATUS</label>
+                <label className=" text-end">PURPOSE</label>
               </div>
+               <h2 className={`${wallet.watermark}`}> TRANSACTION </h2>
 
               {renderTransaction}
             </div>

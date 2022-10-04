@@ -35,10 +35,7 @@ const AddProperties = () => {
   const [images, setImages] = useState("");
   const [image, setImage] = useState("properties");
   const [purpose, setPurpose] = useState("");
-  const [house, setHouse] = useState(false);
-  const [relaxation, setRelaxation] = useState(false);
-  const [land, setLand] = useState(false);
-  const [hostel, setHostel] = useState(false);
+  
   const [specifications, setSpecifications] = useState([]);
   const [type, setType] = useState("");
   const [fileRef, setFileRef] = useState("");
@@ -70,6 +67,9 @@ const AddProperties = () => {
   const CheckType = (e) => {
     setType(e.target.value);
     GetSpecifications(e.target.value);
+    SetSpecificationsValue([])
+    // setspecificationsValue
+    console.log(specificationsValue)
   };
   console.log(specifications);
   const renderType = PropertyType.map((data, index) => {
@@ -117,7 +117,8 @@ const AddProperties = () => {
 
   const checkPurpose = (e) => {
     setPurpose(e.target.id);
-  };
+  }
+  console.log(purpose);
 
   const handleChange = (e) => {
     setImages(e.target.files);
@@ -381,7 +382,9 @@ const AddProperties = () => {
                 {type === "" ? "" : <label> {type} Specifications </label>}
                 <div className="d-flex flex-wrap ">{renderSpecifications}</div>
                 <div>
-                  {/* {purpose === "rent" ? ( */}
+      {
+        purpose === 'rent' ? 
+     
                   <div className="row flex">
                     <div className="col-md-5">
                       {" "}
@@ -409,6 +412,7 @@ const AddProperties = () => {
                       />
                     </div>
                   </div>
+                   : ""} 
                 </div>
 
                 <div className="d-flex justify-content-center mx-auto">

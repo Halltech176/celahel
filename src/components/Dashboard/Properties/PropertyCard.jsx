@@ -45,6 +45,7 @@ const PropertyCard = ({ property }) => {
   };
   let amountFormat = Intl.NumberFormat("en-US");
   const agent_properties = property?.map((data) => {
+    console.log(data.available)
     return (
       <div
         key={data?._id}
@@ -83,9 +84,15 @@ const PropertyCard = ({ property }) => {
           </h5>
           <h5 className={`${style.property_location} `}>
             location - {data?.address}
+          
           </h5>
         </div>
-        <div className="card-footer d-flex flex-wrap align-items-center justify-content-end">
+        <div className="card-footer d-flex flex-wrap align-items-center justify-content-between"> 
+        <div className ={` ${!data?.available  ? style.sell_badge : style.rent_badge}`}>
+        {
+          data?.available ? <span className='text-light badge'> Available </span> : <span className='text-light'>Not available </span>
+        }
+        </div> 
           <div className="d-flex flex-wrap align-items-center">
             edit:
             <FiEdit

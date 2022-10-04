@@ -1,9 +1,9 @@
 import Modal from "react-modal";
 import { motion } from "framer-motion";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, } from "react";
 import wallet from "./Wallet.module.css";
 import { CgArrowLongLeft } from "react-icons/cg";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import {   useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, Zoom } from "react-toastify";
 import {
@@ -150,8 +150,7 @@ export const FundWallet = ({ open, setOpen, ToggleModal, ToggleModal2 }) => {
 };
 
 export const WithdrawMoney = ({ open, setOpen, ToggleModal, bankID }) => {
-  const [values, setValues] = useState([]);
-  const [value, setValue] = useState("");
+
   const [withdrawValue, setWithdrawValue] = useState("");
   const dispatch = useDispatch();
   const { loading, error, user } = useSelector((state) => state.userprofile);
@@ -246,11 +245,9 @@ export const WithdrawMoney = ({ open, setOpen, ToggleModal, bankID }) => {
 };
 
 export const TransactionDetail = ({ open, setOpen, ToggleModal, detail }) => {
-  const ref = useRef();
-  const [values, setValues] = useState([]);
-  const [value, setValue] = useState("");
-  console.log(detail);
 
+  console.log(detail);
+  const ref = useRef()
   const dispatch = useDispatch();
   const { loading, error, user } = useSelector((state) => state.userprofile);
   // let amountFormat = Intl.NumberFormat("en-US");

@@ -74,6 +74,9 @@
   font-weight: 400;
   font-family: "DM mono", monospace;
 }
+.details_container {
+  position : relative !important;
+}
 .wallet_modal {
   position: absolute;
   top: 50%;
@@ -116,15 +119,16 @@ input::-webkit-inner-spin-button {
   font-family: "DM mono", monospace !important;
   padding: 0.2rem 0.4rem !important;
   display: block;
+  width : 25% !important;
 }
-.details_container {
-  overflow-x: scroll;
-}
+
 .details_text > p {
   color: black !important;
   font-weight: 500 !important;
   margin: 0.2rem 0.4rem;
+  width : 25% !important;
 }
+
 .details_text .details_status_pending {
   color: #ea3223 !important;
   background: #fdebe9;
@@ -156,14 +160,34 @@ input::-webkit-inner-spin-button {
   padding: 0.2rem 1.5rem !important;
   outline: none;
 }
+.watermark {
+  font-size : 8rem;
+  font-weight : 300;
+  color : grey;
+  /* color : rgba(0,0,0.8); */
+  opacity: 0.2;
+  transform : rotate(30deg);
+  position : absolute;
+  top : 13rem;
+  left : -3rem;
+  bottom : 0;
+  text-align :center;
+  /* right : 0; */
+}
 @media (max-width: 840px) {
   .wallet_container {
     margin: 1rem 1rem 1rem 1rem;
     /* font-size: 0.5rem; */
   }
+  .details_container {
+    overflow-x: scroll;
+  }
   .bank_details {
     display: block;
     /* justify-content: space-between; */
+  }
+  .details_text  > p, .details_text >  label {
+    width : auto !important;
   }
   .agent_bank {
     padding: 0.8rem;
@@ -178,6 +202,9 @@ input::-webkit-inner-spin-button {
   }
   .wallet_modal {
     width: 80%;
+  }
+  .watermark {
+    display : none !important;
   }
  
 }

@@ -128,7 +128,7 @@ const Sidebar = () => {
 
           <li
             className={`${sidebar.sidebar_list} ${
-              path === "/agent/properties" ? sidebar.active_route : ""
+              path === "/agent/properties" || path === '/agent/addproperty' || path === '/agent/editproperty' ? sidebar.active_route : ""
             }  `}
           >
             <MdRealEstateAgent className="me-2  d-inline-block" />

@@ -219,12 +219,16 @@ const EditProperties = () => {
       console.log(response);
 
       if (response !== null) {
-        InfoNotification("Property successfully updated");
+       
         const response = await dispatch(AllProperties());
         console.log(response);
 
         if (response.type === "properties/fulfilled") {
-          navigate("/agent/properties");
+           InfoNotification("Property successfully updated");
+           setTimeout(() => {
+             navigate("/agent/properties");
+           }, 2000);
+          
         }
       }
 
@@ -396,7 +400,7 @@ const EditProperties = () => {
                 )}
                 <div className="d-flex flex-wrap ">{renderSpecifications}</div>
                 <div>
-                  {purpose === "rent" ? (
+                  {/* {purpose === "rent" ? ( */}
                     <div className="row flex">
                       <div className="col-md-5">
                         {" "}
@@ -424,9 +428,9 @@ const EditProperties = () => {
                         />
                       </div>
                     </div>
-                  ) : (
+                  {/* ) : (
                     ""
-                  )}
+                  )} */}
                 </div>
 
                 <div className="d-flex justify-content-center mx-auto">

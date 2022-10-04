@@ -260,6 +260,7 @@
 width : 35rem;
 height : 20rem;
 }
+
 @media (max-width: 600px) {
   .no-values {
     width: 20rem;
