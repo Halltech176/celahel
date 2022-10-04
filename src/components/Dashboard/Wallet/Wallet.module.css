@@ -188,14 +188,19 @@ input::-webkit-inner-spin-button {
     overflow-x: scroll;
   }
   .bank_details {
-    display: block;
-    /* justify-content: space-between; */
+    flex-wrap : wrap;
+    /* display: block; */
+    /* justify-content: ; */
+    /* align-items : center; */
   }
   .details_text  > p, .details_text >  label {
     width : auto !important;
   }
   .agent_bank {
+    width : 20rem;
+    /* margin-top : 2rem; */
     padding: 0.8rem;
+    margin : 2rem auto;
   }
   .fund_btn,
   .withdraw_btn {

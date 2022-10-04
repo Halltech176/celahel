@@ -28,6 +28,8 @@ const Settings = () => {
   const [bankCode, setBankCode] = useState("");
   const [activeBank, setActiveBank] = useState('');
 
+ 
+
   const [bank, setBank] = useState("Abbey Mortgage Bank");
  
   const dispatch = useDispatch();
@@ -38,12 +40,23 @@ const Settings = () => {
     user,
   } = useSelector((state) => state.userprofile);
 
-     useEffect(() => {
+    
+
+
+console.log(user?.bankAccounts)
+
+const getId =  user?.bankAccounts?.find((data, index) => {
+    return data?.accountNumber === accountNumber
+})
+ useEffect(() => {
     setActiveBank(user?.bankAccounts[0]?.accountNumber)
     dispatch(BankAccounts());
     dispatch(User());
     dispatch(GetTransactions());
+   
   }, []);
+
+console.log(getId)
 
 
     const renderBanks = bankaccounts?.map((bank, index) => {
@@ -63,8 +76,9 @@ const Settings = () => {
       </option>
     );
   });
+      const token = window.JSON.parse(localStorage.getItem("token"));
    const AddAccount = async () => {
-    const token = window.JSON.parse(localStorage.getItem("token"));
+
     const data = {
       accountNumber,
       bankCode: getCode?.code,
@@ -95,6 +109,30 @@ const Settings = () => {
       console.log(err);
     }
     }
+
+    const DeleteAccount = async () => {
+            try {   
+                  const response = await axios.delete(
+        ` https://celahl.herokuapp.com/api//wallet/bank-account/${getId?._id}`,
+        
+        {
+          headers: {
+            Authorization: `Bearer ${token} `,
+          },
+        }
+      );
+      SuccessNotification(response.data.message);
+                    console.log(response)
+            }catch(err) {
+                if(err?.response?.data?.message === 'Invalid id') {
+                    ErrorNotification("Invalid Account Number")
+                } else {
+                        ErrorNotification(err?.response?.data?.message);
+                }
+             
+console.log(err)
+            }
+    }
   return (
     <>
     {
@@ -106,7 +144,7 @@ const Settings = () => {
           transition={{ duration: 0.5 }}
         > 
         <Sidebar/>
-    
+     <ToastContainer transition={Zoom} autoClose={800} />
    <div className={`${style.settings}`}>
          <div className={`${style.connect_bank} `}>
                 <h2>Connect Bank</h2>
@@ -158,27 +196,27 @@ const Settings = () => {
                 >
                   Add Bank
                 </button>
-                <div className="col-12">
-                  <label htmlFor="" className="form-label">
-                    Select Preferred account
-                  </label>
-                  <br/>
-                  <select
-                    name="type"
-                    value={activeBank}
-                    onChange={(e) => setActiveBank(e.target.value)}
-                    className="  p-2"
-                    id=""
-                  >
-                    {userAccounts}
-                  </select>
-                </div>
+                
 
 
               </div>
    <div> 
      <div className={`${style.connect_bank} my-5`}>
-               <h2> Delete bank </h2>
+               <h2> Remove Bank Account </h2>
+                 <div className="">
+                    <label htmlFor="" className="form-label">
+                      Enter Account Number
+                    </label>
+                    <input
+                    //   disabled
+                      value={accountNumber}
+                      onChange={(e) => setAccountNumber(e.target.value)}
+                      className="form-control"
+                    />
+                  </div>
+                  <div className='my-2'> 
+                    <button onClick={DeleteAccount} className='btn btn-primary'>Delete Account </button>
+                  </div>
                
                 </div>
    

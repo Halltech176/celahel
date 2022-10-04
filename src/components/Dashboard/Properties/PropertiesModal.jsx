@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
-import style from "../AddProperties/AddProperties.module.css";
+import style from "./Properties.module.css";
 import { ToastContainer, Zoom } from "react-toastify";
 import {
   ErrorNotification,
@@ -41,6 +41,7 @@ export const PropertiesModal = ({ open, data, ToggleModal }) => {
         content-label="My Dialog"
         className={`${style.image_modal}`}
       >
+      <div> 
      
         <div>
           <p>
@@ -80,6 +81,7 @@ export const PropertiesModal = ({ open, data, ToggleModal }) => {
             close{" "}
           </button>
           {/* <button onClick={updateImage} className='btn btn-primary'> update </button> */}
+        </div>
         </div>
       </Modal>
     </>

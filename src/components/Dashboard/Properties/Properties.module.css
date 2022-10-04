@@ -106,6 +106,29 @@
 a {
   text-decoration: none;
 }
+.image_modal  {
+padding :4rem;
+  /* height : 30rem; */
+  /* margin : -15rem 0rem 0rem -15rem; */
+  
+  /* margin: auto auto; */
+ 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right : 2rem;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 2rem;
+  
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  
+width : 30rem;
+}
+.image_modal div {
+  overflow-x : scroll !important;
+  overflow-y : scroll !important;
+}
 @media (max-width: 840px) {
   .property_container {
     margin-left: 0rem !important;
@@ -170,5 +193,14 @@ a {
     flex-wrap: nowrap;
     justify-content: center;
     /* margin-left: 0.1rem !important; */
+  }
+  .image_modal {
+    transform: translate(-50%, -50%) scale(0.6);
+    position : absolute;
+    left : 50%;
+    right : 0;
+    top : 50%;
+    margin :0rem;
+    height : auto;
   }
 }

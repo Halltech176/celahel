@@ -12,6 +12,7 @@ import {
 import { AiOutlineMenuFold } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
 import { BsWalletFill } from "react-icons/bs";
+import { MdOutlineSettings } from "react-icons/md";
 import { IoMdNotifications } from "react-icons/io";
 import LogoDark from "../../../Assets/DarkLogo.png";
 import Vector1 from "../../../Assets/Vector-1.png";
@@ -182,7 +183,7 @@ const Sidebar = () => {
               path === "/agent/settings" ? sidebar.active_route : ""
             }  `}
           >
-            <BsWalletFill className="me-2  d-inline-block" />
+            <MdOutlineSettings className="me-2  d-inline-block" />
             <Link
               to="/agent/settings"
               className={`${sidebar.sidebar_link}`}

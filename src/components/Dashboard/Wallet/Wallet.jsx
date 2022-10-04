@@ -48,7 +48,7 @@ const Wallet = () => {
   const [bankCode, setBankCode] = useState("");
   const [activeBank, setActiveBank] = useState('');
   // useEffect(() => )
-  const [bank, setBank] = useState("Abbey Mortgage Bank");
+
   // const [bank, setBank] = useState("Abbey Mortgage Bank");
   const dispatch = useDispatch();
   console.log(user?.bankAccounts[0].accountNumber)
@@ -58,8 +58,22 @@ const Wallet = () => {
     dispatch(BankAccounts());
     dispatch(User());
     dispatch(GetTransactions());
+    
   }, []);
+  console.log(user?.bankAccounts[0]?.accountNumber)
+  // window.addEventListener('load',() => {
+  //   
+  // })
+  useEffect(() => {
+ if(window.performance.navigation.type === window.performance.navigation.TYPE_RELOAD) {
+    setActiveBank(user?.bankAccounts[0]?.accountNumber)
+  }
+  }, [])
 
+ 
+  console.log(window.performance.navigation.type)
+  console.log(performance.navigation.TYPE_RELOAD)
+console.log(user)
   const ToggleModal = () => {
     setOpen(!open);
   };
@@ -119,22 +133,10 @@ const Wallet = () => {
       ErrorNotification(err);
     }
   };
-  const renderBanks = bankaccounts?.map((bank, index) => {
-    return (
-      <option key={index} defaultValue={bank?.name}>
-        {bank?.name}
-      </option>
-    );
-  });
+  
 
   //Available users accounts
-  const userAccounts = user?.bankAccounts?.map((bank, index) => {
-    return (
-      <option key={index} value={bank?.accountNumber}>
-        {bank?.accountName} : {bank?.accountNumber}
-      </option>
-    );
-  });
+  
 
   const GetTransactionDetails = (id) => {
     console.log(id);
@@ -201,10 +203,7 @@ const Wallet = () => {
     return value?.accountNumber === activeBank;
   });
   console.log(getActive)
-  const getCode = bankaccounts?.find((value) => {
-    return value?.name === bank;
-  });
-
+ 
   let accountDetails;
   if (user?.bankAccounts?.length !== 0) {
     accountDetails = (
@@ -219,41 +218,13 @@ const Wallet = () => {
     accountDetails = <h1 className="text-center">No Account Added yet</h1>;
   }
 
-  const AddAccount = async () => {
-    const token = window.JSON.parse(localStorage.getItem("token"));
-    const data = {
-      accountNumber,
-      bankCode: getCode?.code,
-    };
-    try {
-      const response = await axios.post(
-        " https://celahl.herokuapp.com/api//wallet/bank-account",
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token} `,
-          },
-        }
-      );
-      if (response.status === 200) {
-        SuccessNotification(response.data.message);
-        setTimeout(() => {
-          dispatch(User());
-          // navigatge
-        }, 1000);
-      }
-      console.log(response);
-    } catch (err) {
-      ErrorNotification(err?.response?.data?.message);
-      if (err.message === "Network Error") {
-        ErrorNotification("Please check your internet connections");
-      }
-      console.log(err);
-    }
-
-    console.log(accountNumber);
-    console.log(bankCode);
-  };
+ const userAccounts = user?.bankAccounts?.map((bank, index) => {
+    return (
+      <option key={index} value={bank?.accountNumber}>
+        {bank?.accountName} : {bank?.accountNumber}
+      </option>
+    );
+  });
   const options = {
     orientation: "l",
     unit: "mm",
@@ -353,71 +324,23 @@ const Wallet = () => {
                </div>
             </div>
               
-              {/* <div className={`${wallet.connect_bank} d-none`}>
-                <h2>Connect Bank</h2>
-                <p>
-                  any time you withdraw it will be sent to your connected bank
-                </p>
-                <div className={`${wallet.bank_form}`}>
-                  <div className="col-12">
-                    <label htmlFor="" className="form-label">
-                      Account Number
-                    </label>
-                    <input
-                      value={accountNumber}
-                      onChange={(e) => setAccountNumber(e.target.value)}
-                      type="email"
-                      className="form-control"
-                    />
-                  </div>
-                  <div className="col-12">
-                    <label htmlFor="" className="form-label">
-                      Bank Name
-                    </label>
-                    <select
-                      name="type"
-                      value={bank}
-                      onChange={(e) => setBank(e.target.value)}
-                      className="w-100  p-2"
-                      id=""
-                    >
-                      {renderBanks}
-                    </select>
-                  </div>
-                  <div className="col-12">
-                    <label htmlFor="" className="form-label">
-                      Bank Code
-                    </label>
-                    <input
-                      disabled
-                      value={getCode?.code}
-                      onChange={(e) => setBankCode(e.target.value)}
-                      className="form-control"
-                    />
-                  </div>
-                </div>
-                <button
-                  onClick={AddAccount}
-                  className="btn-primary border-0 my-2 px-5 py-1 rounded-2"
-                >
-                  Add Bank
-                </button>
-                <div className="col-12">
+          
+            </div>
+             <div className="col-12 my-4">
                   <label htmlFor="" className="form-label">
                     Select Preferred account
                   </label>
+                  <br/>
                   <select
                     name="type"
                     value={activeBank}
                     onChange={(e) => setActiveBank(e.target.value)}
-                    className="w-100  p-2"
+                    className="  p-2"
                     id=""
                   >
                     {userAccounts}
                   </select>
                 </div>
-              </div> */}
-            </div>
             <div>
               <div className={`${wallet.input_fields}`}>
                 <label>Transactions</label>
