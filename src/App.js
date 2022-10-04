@@ -18,6 +18,7 @@ import EditProperty from "./components/Dashboard/AddProperties/EditProperty";
 import Notifications from "./components/Dashboard/Notifications/Notifications.component";
 import Overview from "./components/Dashboard/Overview/Overview";
 import Transactions from "./components/Dashboard/Transactions/Transactions";
+import Settings from "./components/Dashboard/Settings/Settings";
 import Plan from "./components/Dashboard/Account_plan/Plan.component";
 
 import Contact from "./components/forms/Contact/Contact";
@@ -163,7 +164,14 @@ function App() {
               </AgentAuth>
             }
           />
-
+<Route
+            path="/agent/settings"
+            element={
+              <AgentAuth>
+                <Settings />
+              </AgentAuth>
+            }
+          />
           <Route path="*" element={<NoMatch />} />
         </Routes>
         {path === "/about" || path === "/faqs" || path === "/contact" ? (

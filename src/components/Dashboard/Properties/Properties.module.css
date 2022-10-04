@@ -130,7 +130,8 @@ a {
     width: 2rem !important;
   }
   .renderProps {
-    /* display: block; */
+    /* display: grid; */
+    /* grid-template-columns : repeat(2, 1fr); */
     justify-content: center;
   }
   .image_container {

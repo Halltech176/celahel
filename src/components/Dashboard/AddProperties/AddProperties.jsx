@@ -154,8 +154,11 @@ const AddProperties = () => {
 
       formData.append("type", type);
       formData.append("purpose", purpose);
-      formData.append("totalRooms", totalRooms);
+      if(purpose === 'rent') {
+        formData.append("totalRooms", totalRooms);
       formData.append("availableRooms", availableRooms);
+      }
+      
       formData.append("coverImage", coverImage);
       console.log(specifications);
       console.log(Array.from(formData));

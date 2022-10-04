@@ -11,12 +11,12 @@
   justify-content: space-between;
 }
 .bank_account_text {
-  text-align: center;
+  /* text-align: center; */
 }
 .agent_bank {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* display: flex; */
+  justify-content: flex-start;
+  align-items: flex-start;
   flex-direction: column;
   background: conic-gradient(
     from 172.45deg at 37.82% 32.87%,
@@ -25,8 +25,13 @@
     rgba(74, 58, 255, 0.54) 360deg
   );
   border-radius: 5px;
-  padding: 1rem 2rem;
+  padding: 5rem 2rem;
   color: #fff;
+  width : 28rem;
+}
+.cardStyle {
+  display : flex;
+  justify-content : space-between !important;
 }
 .bank_button {
   display: flex;

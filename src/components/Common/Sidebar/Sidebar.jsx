@@ -177,6 +177,19 @@ const Sidebar = () => {
               Transactions
             </Link>
           </li> */}
+              <li
+            className={`${sidebar.sidebar_list} ${
+              path === "/agent/settings" ? sidebar.active_route : ""
+            }  `}
+          >
+            <BsWalletFill className="me-2  d-inline-block" />
+            <Link
+              to="/agent/settings"
+              className={`${sidebar.sidebar_link}`}
+            >
+              Settings
+            </Link>
+          </li>
           <li className={`${sidebar.sidebar_list}  d-flex align-items-center`}>
             {/* <img src={Vector} className="me-2 d-inline-block" /> */}
             <BiLogOut className="me-2  d-inline-block" />

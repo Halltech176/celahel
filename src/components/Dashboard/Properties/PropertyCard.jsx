@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import style from "./Properties.module.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -8,17 +9,39 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ErrorNotification, InfoNotification } from "../../Common/ErrorToast";
 import { Property } from "../../../Redux/actions";
+import {PropertiesModal} from './PropertiesModal'
 
 const PropertyCard = ({ property }) => {
+  const [open, setOpen]= useState(false)
+  const [data, setData] = useState({})
+  const ToggleModal = () => {
+    setOpen(!open)
+  }
+ const GetData = (id) => {
+   const response = property?.find((data, index) => {
+     return data?._id === id
+   })
+   setOpen(true)
+   setData(response)
+   return response
+ }
+ console.log(data)
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const GetProperty = async (id) => {
+  const GetProperty = async (id, available) => {
     try {
-      console.log(id);
+      console.log(available);
       window.localStorage.setItem("id", JSON.stringify(id));
       const response = await dispatch(Property(id));
       if (response.type === "property/fulfilled") {
-        navigate("/agent/editproperty");
+        if(!available) {
+          alert("The selected property is no more available")
+        }
+        else{
+     navigate("/agent/editproperty");
+        }
+   
       }
       if (response.type === "property/rejected") {
         throw "please check your internet connection";
@@ -48,6 +71,7 @@ const PropertyCard = ({ property }) => {
     console.log(data.available)
     return (
       <div
+ 
         key={data?._id}
         className={`${style.image_container} card my-4 mx-2`}
       >
@@ -66,7 +90,7 @@ const PropertyCard = ({ property }) => {
         <Slider {...settings}>
           {data?.images.map((img) => {
             return (
-              <div key={img._id} className={`${style.image_border} mx-auto`}>
+              <div      onClick = {() => GetData(data?._id)} key={img._id} className={`${style.image_border} mx-auto`}>
                 <img
                   src={img.url}
                   alt={img.name}
@@ -98,7 +122,7 @@ const PropertyCard = ({ property }) => {
             <FiEdit
               className="ms-1"
               style={{ cursor: "pointer" }}
-              onClick={() => GetProperty(data?._id)}
+              onClick={() => GetProperty(data?._id, data?.available)}
             />
           </div>
         </div>
@@ -107,6 +131,7 @@ const PropertyCard = ({ property }) => {
   });
   return <> 
    <ToastContainer transition={Zoom} autoClose={800} /> 
+   <PropertiesModal open={open} ToggleModal={ToggleModal} data ={data}/>
   {agent_properties}
   </>;
 };

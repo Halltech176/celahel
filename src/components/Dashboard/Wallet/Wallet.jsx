@@ -17,6 +17,8 @@ import {
 } from "../../Common/ErrorToast";
 import { BankAccounts, User, GetTransactions } from "../../../Redux/actions";
 import "react-toastify/dist/ReactToastify.css";
+import card1 from "../../../Assets/card1.png";
+import card2 from "../../../Assets/card2.png";
 import Loader from "../../Common/Loader";
 import NoValues from "../NoValues";
 
@@ -299,10 +301,16 @@ const Wallet = () => {
               </h2>
             </div>
             <div className={`${wallet.bank_details}`}>
-              <div className={`${wallet.agent_bank}`}>
+              <div className={`${wallet.agent_bank} p-5`}>
                 {/* <div className={`${accountOpen ? "d-block" : "d-none"}`}> */}
                 {accountDetails}
                 {/* </div> */}
+               <div className={`${wallet.cardStyle} `}>
+               <span></span>
+                <span> 
+                <img src={card1} alt='card1'/>
+                </span>
+               </div>
                 <div
                   style={{ cursor: "pointer" }}
                   onClick={() => setAccountOpen(!accountOpen)}
@@ -310,12 +318,18 @@ const Wallet = () => {
                   {/* {accountOpen ? <span>open</span> : <span>close</span>} */}
                 </div>
 
-                <div className={`${wallet.bank_amount}`}>
+               
+                
+              </div>
+              <div className={`${wallet.agent_bank} p-5`} >
+              <div className={`${wallet.bank_amount}`}>
                   <h1>
                     &#8358;{amountFormat.format(user?.wallet?.balance)}.00
-                  </h1>
+                  </h1> 
                 </div>
-                <div className={`${wallet.bank_button}`}>
+              <div className={`${wallet.bank_button}`}>
+               
+                <div>
                   <button
                     onClick={ToggleModal}
                     className={`${wallet.fund_btn}`}
@@ -328,9 +342,18 @@ const Wallet = () => {
                   >
                     Withdraw
                   </button>
+                 </div>
+                
                 </div>
-              </div>
-              <div className={`${wallet.connect_bank}`}>
+                  <div className={`${wallet.cardStyle} `}>
+               <span></span>
+                <span> 
+                <img src={card2} alt='card1'/>
+                </span>
+               </div>
+            </div>
+              
+              {/* <div className={`${wallet.connect_bank} d-none`}>
                 <h2>Connect Bank</h2>
                 <p>
                   any time you withdraw it will be sent to your connected bank
@@ -393,7 +416,7 @@ const Wallet = () => {
                     {userAccounts}
                   </select>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div>
               <div className={`${wallet.input_fields}`}>
@@ -409,22 +432,12 @@ const Wallet = () => {
                 >
                   {({ toPdf }) => <button onClick={toPdf}>Export</button>}
                 </ReactToPdf>
-                {/* <button onClick={handleDownload}>Export</button> */}
+               
               </div>
             </div>
-            {/* <div className={`${wallet.details_container}`} ref={ref}>
-              <div className={`${wallet.details_title}`}>
-                <label className="w-50">AMOUNT</label>
-
-                <label className="w-50">DATE/TIME</label>
-                <label className="w-25 text-center">STATUS</label>
-                <label className="w-25 text-end">DETAILS</label>
-              </div>
-
-              {renderTransaction}
-            </div> */}
+            
             <div ref={ref}
-              // style={{ w/idth: "100%", overflowX: "scroll !important" }}
+             
               className={`${wallet.details_container}`}
             > 
            
